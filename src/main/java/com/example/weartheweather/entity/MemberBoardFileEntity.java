@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-@Table(name = "board_file_table")
+@Table(name = "member_board_file_table")
 public class MemberBoardFileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

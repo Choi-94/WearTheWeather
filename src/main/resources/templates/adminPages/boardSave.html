@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+
+<div id="section">
+    <form action="/adminBoard/save" method="post" enctype="multipart/form-data">
+        태그: <input type="text" name="hashTags"> <br>
+        <label>
+            <input type="radio" name="season" value="Spring">봄
+        </label>
+        <label>
+            <input type="radio" name="season" value="Summer">여름
+        </label>
+        <label>
+            <input type="radio" name="season" value="Fall">가을
+        </label>
+        <label>
+            <input type="radio" name="season" value="Winter">겨울
+        </label><br>
+        <label>
+            <input type="radio" name="weather" value="Sunny">맑음
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Cloudy">흐림
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Rain">비
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Snow">눈
+        </label><br>
+        <label>
+            <input type="radio" name="temp" value="Hot">더움
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Warm">따듯함
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Coolness">선선함
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Clod">추움
+        </label><br>
+        키(cm): <input type="text" name="height"> <br>
+        성별: <br>
+        남: <input type="radio" name="gender" value="male">
+        여: <input type="radio" name="gender" value="female"> <br><br>
+        [상의] <br>
+        종류: <input type="text" name="top"> <br>
+        상세설명: <input type="text" name="topDetail"> <br>
+        가격: <input type="text" name="topPrice"> <br><br>
+        [하의] <br>
+        종류: <input type="text" name="bottom"> <br>
+        상세설명: <input type="text" name="bottomDetail"> <br>
+        가격: <input type="text" name="bottomPrice"> <br><br>
+        [기타] <br>
+        종류: <input type="text" name="shoes"> <br>
+        상세설명: <input type="text" name="shoesDetail"> <br>
+        가격: <input type="text" name="shoesPrice"> <br>
+        <input type="file" name="boardFile">
+        <input type="submit" value="작성">
+    </form>
+</div>
+
+</body>
+</html>
