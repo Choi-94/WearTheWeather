@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@Entity
+
 @Table(name = "payment_table")
 public class MarketPaymentEntity {
     @Id
