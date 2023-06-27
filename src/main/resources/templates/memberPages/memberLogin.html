@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div>
+<!--    날씨에 따른 이미지 들어갈 공간-->
+</div>
+<form>
+<!--이메일 비밀번호 입력 받고 로그인 버튼-->
+</form>
+<a href="javascript:kakaoLogin()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQOJtNpYFKTS1T5QdhIDFFgLzQO93BuFjFw&usqp=CAU" style="height: 80px; width: auto"/></a>
+<div id="naver_id_login">
+
+</div>
+
+
+
+<script src="http://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    window.Kakao.init("f31bae96db856c23cb9c32e52a39f735");
+    function kakaoLogin(){
+        window.Kakao.Auth.login({
+            scope:'account_email,gender',
+            success: function (authObj){
+                console.log(authObj);
+                window.Kakao.API.request({
+                    url:'/v2/user/me',
+                    success: res => {
+                        const kakao_account = res.kakao_account;
+                        console.log(kakao_account);
+                    }
+                });
+            }
+        })
+    }
+</script>
+<script type="text/javascript">
+    var naver_id_login = new naver_id_login("mbFMi3FYzsY1IdZryEWO", "http://localhost8045/memberPages/memberLogin.html");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setButton("white", 20,80  );
+    naver_id_login.setDomain("YOUR_SERVICE_URL");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+</script>
+</body>
+</html>
