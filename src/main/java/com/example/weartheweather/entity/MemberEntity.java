@@ -31,6 +31,9 @@ public class MemberEntity {
     @Column(nullable = false)
     private String memberGender;
 
+    @Column
+    private Long memberWeatherPay;
+
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MemberGradeEntity> memberGradeEntityList = new ArrayList<>();
 
