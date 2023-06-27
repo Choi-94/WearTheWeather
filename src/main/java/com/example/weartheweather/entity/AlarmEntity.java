@@ -16,10 +16,10 @@ public class AlarmEntity {
     private Long id;
 
     @Column(length = 50)
-    private String writerId;
+    private Long writerId;
 
     @Column(length = 50)
-    private String loginId;
+    private Long loginId;
 
     @Column(length = 50)
     private String message;
