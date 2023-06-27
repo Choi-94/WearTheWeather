@@ -17,6 +17,7 @@ public class AdminBoardDTO {
     private String gender;
     private int boardHits;
     private int boardLikes;
+    private String temp;
     private String top;
     private String topDetail;
     private Long topPrice;

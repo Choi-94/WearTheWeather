@@ -26,6 +26,12 @@ public class AdminBoardEntity {
     private int height;
     @Column
     private String gender;
+    @Column
+    private int boardHits;
+    @Column
+    private int boardLikes;
+    @Column
+    private String temp;
     //상의
     @Column
     private String top;
