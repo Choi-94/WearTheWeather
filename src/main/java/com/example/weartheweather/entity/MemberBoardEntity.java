@@ -28,8 +28,7 @@ public class MemberBoardEntity {
     private int boardLikes;
     @Column
     private int boardHits;
-    @Column
-    private int fileAttached;
+
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AlarmEntity> alarmEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)

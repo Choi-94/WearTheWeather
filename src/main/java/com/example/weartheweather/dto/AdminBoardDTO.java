@@ -13,20 +13,21 @@ public class AdminBoardDTO {
     private String hashTags;
     private String season;
     private String weather;
+    private String temp;
     private int height;
     private String gender;
     private int boardHits;
     private int boardLikes;
-    private String temp;
+
     private String top;
     private String topDetail;
     private Long topPrice;
     private String bottom;
     private String bottomDetail;
     private Long bottomPrice;
-    private String shoes;
-    private String shoesDetail;
-    private Long shoesPrice;
+    private String etc;
+    private String etcDetail;
+    private Long etcPrice;
     private String createdAt;
     private MultipartFile boardFile;
 }

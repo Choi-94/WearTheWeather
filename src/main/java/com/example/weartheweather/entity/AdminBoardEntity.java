@@ -1,5 +1,6 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.AdminBoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,8 @@ public class AdminBoardEntity {
     @Column
     private String weather;
     @Column
+    private String temp;
+    @Column
     private int height;
     @Column
     private String gender;
@@ -30,8 +33,7 @@ public class AdminBoardEntity {
     private int boardHits;
     @Column
     private int boardLikes;
-    @Column
-    private String temp;
+
     //상의
     @Column
     private String top;
@@ -48,12 +50,33 @@ public class AdminBoardEntity {
     @Column
     private Long bottomPrice;
     @Column
-    private String shoes;
+    private String etc;
     @Column
-    private String shoesDetail;
+    private String etcDetail;
     @Column
-    private Long shoesPrice;
+    private Long etcPrice;
     @OneToMany(mappedBy = "adminBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AdminBoardFileEntity> adminBoardFileEntityList = new ArrayList<>();
 
+    public static AdminBoardEntity toSaveEntity(AdminBoardDTO adminBoardDTO) {
+        AdminBoardEntity adminBoardEntity = new AdminBoardEntity();
+        adminBoardEntity.setHashTags(adminBoardDTO.getHashTags());
+        adminBoardEntity.setSeason(adminBoardDTO.getSeason());
+        adminBoardEntity.setWeather(adminBoardDTO.getWeather());
+        adminBoardEntity.setTemp(adminBoardDTO.getTemp());
+        adminBoardEntity.setHeight(adminBoardDTO.getHeight());
+        adminBoardEntity.setGender(adminBoardDTO.getGender());
+        adminBoardEntity.setBoardHits(0);
+        adminBoardEntity.setBoardLikes(0);
+        adminBoardEntity.setTop(adminBoardDTO.getTop());
+        adminBoardEntity.setTopDetail(adminBoardDTO.getTopDetail());
+        adminBoardEntity.setTopPrice(adminBoardDTO.getTopPrice());
+        adminBoardEntity.setBottom(adminBoardDTO.getBottom());
+        adminBoardEntity.setBottomDetail(adminBoardDTO.getBottomDetail());
+        adminBoardEntity.setBottomPrice(adminBoardDTO.getBottomPrice());
+        adminBoardEntity.setEtc(adminBoardDTO.getEtc());
+        adminBoardEntity.setEtcDetail(adminBoardDTO.getEtcDetail());
+        adminBoardEntity.setEtcPrice(adminBoardDTO.getEtcPrice());
+        return adminBoardEntity;
+    }
 }
