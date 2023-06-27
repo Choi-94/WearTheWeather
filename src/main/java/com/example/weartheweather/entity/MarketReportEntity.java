@@ -29,4 +29,6 @@ public class MarketReportEntity {
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private MemberEntity memberEntity;  // 상품과의 관계 설정
+
+    // dwwrwwr
 }
