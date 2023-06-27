@@ -21,25 +21,31 @@ public class MarketProductEntity {
     @Column
     private int fileAttached;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String productSize;  // 상품 크기
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String productTitle;  // 글 제목
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String transactionArea;  // 거래 지역
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private int productPrice;  // 상품 가격
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String productContents;  // 상품 설명
 
     @Column(nullable = false)
     private String productSeason;  // 상품 계절
 
     @Column(nullable = false)
+    private String productWeather;  // 상품 날씨
+
+    @Column(nullable = false)
+    private String temp;  // 상품 온도
+
+    @Column(nullable = false, length = 100)
     private String hashTag;  // 해시 태그
 
     @Column

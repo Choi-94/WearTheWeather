@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+
+
+<button type="button" onclick="productSave()">상품등록</button>
+</body>
+<script>
+    const productSave = () =>{
+        window.location.href = "/market/save";
+    }
+</script>
+</html>

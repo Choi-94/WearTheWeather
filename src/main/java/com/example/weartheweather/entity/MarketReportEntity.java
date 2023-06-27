@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "report_table")
 public class MarketReportEntity {
     @Id
