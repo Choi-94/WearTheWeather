@@ -2,16 +2,29 @@
 <html lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div>
-<!--    날씨에 따른 이미지 들어갈 공간-->
+    <!--    날씨에 따른 이미지 들어갈 공간-->
+</div>
+<div id="section">
+    <form action="/member/memberlogin" method="post">
+        <input type="hidden" name="redirectURI" th:value="${redirectURI}">
+        <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
+        <input type="text" name="memberPassword" placeholder="비밀번호"  class="form-control"> <br>
+        <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 맞지 않습니다</p>
+        <input type="submit" value="로그인" onclick="login()">
+    </form>
+</div>
+<div>
+    <button onclick="saveForm()">회원가입</button>
 </div>
 <form>
-<!--이메일 비밀번호 입력 받고 로그인 버튼-->
+    <!--이메일 비밀번호 입력 받고 로그인 버튼-->
 </form>
 <a href="javascript:kakaoLogin()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQOJtNpYFKTS1T5QdhIDFFgLzQO93BuFjFw&usqp=CAU" style="height: 80px; width: auto"/></a>
 <div id="naver_id_login">
@@ -19,7 +32,7 @@
 </div>
 
 
-
+<!--카카오 로그인에 대한 자바스크립트 -->
 <script src="http://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
     window.Kakao.init("f31bae96db856c23cb9c32e52a39f735");
@@ -39,6 +52,7 @@
         })
     }
 </script>
+<!--네이버 로그인에 대한 자바스크립트 -->
 <script type="text/javascript">
     var naver_id_login = new naver_id_login("mbFMi3FYzsY1IdZryEWO", "http://localhost8045/memberPages/memberLogin.html");
     var state = naver_id_login.getUniqState();
@@ -47,6 +61,35 @@
     naver_id_login.setState(state);
     naver_id_login.setPopup();
     naver_id_login.init_naver_id_login();
+</script>
+
+<script>
+    const login = () => {
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res);
+            location.href = redirectURI;
+
+        }).catch(err => {
+            console.log("err", err);
+            document.getElementById("login-result").style.display = "block";
+        });
+    }
+</script>
+<!--회원가입 버튼을 눌렀을 때 onclick 적용 -->
+<script>
+    const saveForm = () => {
+        location.href = "/member/memberSave";
+    }
 </script>
 </body>
 </html>
