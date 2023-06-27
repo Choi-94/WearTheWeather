@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h2>index에용~</h2>
+<div th:replace="component/header :: header"></div>
+<a href="/member/memberLogin">로그인</a>
+<a href="/adminBoard/list">웨더코디HY</a>
+<a href="/memberBoard/list">코디콘테스트HY</a>
+<a href="/market/list">웨더마켓</a>
 </body>
 </html>
