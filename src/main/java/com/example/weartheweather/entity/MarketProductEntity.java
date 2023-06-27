@@ -52,7 +52,7 @@ public class MarketProductEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    @OneToMany(mappedBy = "MarketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MarketProductFileEntity> marketProductFileEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
