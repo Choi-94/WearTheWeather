@@ -11,4 +11,9 @@ public class MemberController {
     public String loginForm(){
         return "/memberPages/memberLogin";
     }
+
+    @GetMapping("/memberSave")
+    public String saveForm(){
+        return "/memberPages/memberSave";
+    }
 }
