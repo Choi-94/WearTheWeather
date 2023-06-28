@@ -26,6 +26,10 @@ public class MemberController {
     public String saveForm(){
         return "/memberPages/memberSave";
     }
+    @GetMapping("memberAnotherSave")
+    public String anotherSave(){
+        return "/memberPages/memberAnotherSave";
+    }
 
     @PostMapping("/memberSave")
     public String save(@ModelAttribute MemberDTO memberDTO, Model model){
