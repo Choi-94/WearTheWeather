@@ -1,5 +1,7 @@
 package com.example.weartheweather.dto;
 
+import com.example.weartheweather.entity.AdminBoardEntity;
+import com.example.weartheweather.util.UtilClass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,4 +32,33 @@ public class AdminBoardDTO {
     private Long etcPrice;
     private String createdAt;
     private MultipartFile boardFile;
+    private String originalFileName;
+    private String storedFileName;
+
+    public static AdminBoardDTO toDTO(AdminBoardEntity adminBoardEntity) {
+        AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
+        adminBoardDTO.setId(adminBoardEntity.getId());
+        adminBoardDTO.setHashTags(adminBoardEntity.getHashTags());
+        adminBoardDTO.setSeason(adminBoardEntity.getSeason());
+        adminBoardDTO.setWeather(adminBoardEntity.getWeather());
+        adminBoardDTO.setTemp(adminBoardEntity.getTemp());
+        adminBoardDTO.setHeight(adminBoardEntity.getHeight());
+        adminBoardDTO.setGender(adminBoardEntity.getGender());
+        adminBoardDTO.setBoardHits(adminBoardEntity.getBoardHits());
+        adminBoardDTO.setBoardLikes(adminBoardEntity.getBoardLikes());
+        adminBoardDTO.setTop(adminBoardEntity.getTop());
+        adminBoardDTO.setTopDetail(adminBoardEntity.getTopDetail());
+        adminBoardDTO.setTopPrice(adminBoardEntity.getTopPrice());
+        adminBoardDTO.setBottom(adminBoardEntity.getBottom());
+        adminBoardDTO.setBottomDetail(adminBoardEntity.getBottomDetail());
+        adminBoardDTO.setBottomPrice(adminBoardEntity.getBottomPrice());
+        adminBoardDTO.setEtc(adminBoardEntity.getEtc());
+        adminBoardDTO.setEtcDetail(adminBoardEntity.getEtcDetail());
+        adminBoardDTO.setEtcPrice(adminBoardEntity.getEtcPrice());
+        adminBoardDTO.setOriginalFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getOriginalFileName());
+        adminBoardDTO.setStoredFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getStoredFileName());
+        adminBoardDTO.setCreatedAt(UtilClass.dateFormat(adminBoardEntity.getCreatedAt()));
+
+        return adminBoardDTO;
+    }
 }

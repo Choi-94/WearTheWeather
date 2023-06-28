@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Getter
 @Table(name = "admin_board_table")
-public class AdminBoardEntity {
+public class AdminBoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

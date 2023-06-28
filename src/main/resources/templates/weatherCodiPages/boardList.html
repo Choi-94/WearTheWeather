@@ -10,7 +10,9 @@
 
 <div id="section">
     <a href="/adminBoard/save">저장하기</a>
-
+    <div th:each="board: ${adminBoardList}">
+        <img src="@{|/upload/${board.storedFileName}}" width="200" height="200" alt="">
+    </div>
 </div>
 
 </body>
