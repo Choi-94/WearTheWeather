@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +37,16 @@ public class AdminBoardService {
     @Transactional
     public List<AdminBoardDTO> findAll() {
         List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
+        System.out.println("서비스adminBoardEntityList = " + adminBoardEntityList);
         List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
         adminBoardEntityList.forEach(adminBoardEntity -> {
             adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity));
         });
         return adminBoardDTOList;
+    }
+    @Transactional
+    public AdminBoardDTO findById(Long id) {
+        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return AdminBoardDTO.toDTO(adminBoardEntity);
     }
 }
