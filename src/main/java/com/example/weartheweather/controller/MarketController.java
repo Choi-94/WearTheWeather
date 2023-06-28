@@ -26,6 +26,10 @@ public class MarketController {
         return "marketPages/marketList";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "marketPages/test";
+    }
 
 
 
