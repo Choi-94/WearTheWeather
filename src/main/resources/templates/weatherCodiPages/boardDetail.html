@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
     <title>Title</title>
 
@@ -28,8 +29,18 @@
             <p th:text="${boardDTO.etcDetail}"></p>
             <p th:text="${boardDTO.etcPrice}"></p>
         </div>
+        <div>
+            <button class="btn btn-primary" onclick="update()">수정</button>
+
+        </div>
 
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    const update = () => {
+
+    }
+
+</script>
 </html>
