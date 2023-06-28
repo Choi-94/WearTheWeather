@@ -26,43 +26,50 @@
         });
     </script>
 <body>
-<ul>
-    <li>위도:<span id="latitude"></span></li>
-    <li>경도:<span id="longitude"></span></li>
-</ul>
-<input id="btnStop" type="button" value="감시를 끝낸다" />
+<h1>실시간 날씨 정보</h1><br>
+<h5>(1분주기로 자동 업데이트)</h5>
+<div id="weatherResult"></div>
 </body>
 
 
 <script>
-    const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
+        const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
 
+        function displayWeather(temperature, weather) {
+        const resultElement = document.getElementById("weatherResult");
+        resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather}`;
+    }
 
-    function onGeoOk(position) {
+        function getWeather() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        // console.log(`You live in ${latitude} and ${longitude}`);
-
         fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
         )
-            .then(data => {
-                console.log(data);
-                console.log(`온도 : ${data.main.temp}, 날씨 : ${data.weather[0].main}`);
-                const temp = data.main.temp;
-                const weathers = data.weather[data.weather.length[0]];
-                weatherIcon.src = `https://openweathermap.org/img/wn/${weathers.icon}@2x.png`;
-                weatherSpan.innerHTML = `${temp}&#176;C ${weathers.main}`;
-            })
+        .then(response => response.json())
+        .then(data => {
+        const temperature = data.main.temp; // 온도
+        const weather = data.weather[0].main; // 날씨 상태
 
 
+        displayWeather(temperature, weather);
+    });
+    }, () => {
+        alert("위치 정보를 찾을 수 없습니다. 날씨 정보를 제공할 수 없습니다.");
+    });
+    } else {
+        alert("위치 정보를 지원하지 않는 브라우저입니다. 날씨 정보를 제공할 수 없습니다.");
+    }
     }
 
-    function onGeoError() {
-        alert("Can't find you. No weather for you.");
-    }
+        // 일정 간격으로 실시간으로 날씨 정보 업데이트
+        setInterval(getWeather, 60000); // 1분마다 업데이트
 
-    navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+        // 페이지 로드 시 초기 날씨 정보 출력
+        window.onload = getWeather;
+
 </script>
 </html>

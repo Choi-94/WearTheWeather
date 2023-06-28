@@ -1,42 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>날씨 정보</title>
     <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+    <script>
+        $(function() {
+            // Check if we can access the Geolocation API
+            if (navigator.geolocation) {
+                // Regularly get location information
+                var id = navigator.geolocation.watchPosition(
+                    function(pos) {
+                        $('#latitude').html(pos.coords.latitude); // 위도
+                        $('#longitude').html(pos.coords.longitude); // 경도
+                    });
+
+                // Stop monitoring with button click
+                $('#btnStop').click(function() {
+                    navigator.geolocation.clearWatch(id);
+                });
+            } else {
+                alert("이 브라우저에서는 Geolocation을 지원하지 않습니다.")
+            }
+
+        });
+    </script>
+
 </head>
 <body>
-<div th:replace="component/header :: header"></div>
-<a href="/member/memberLogin">로그인</a>
-<a href="/adminBoard/list">웨더코디HY</a>
-<a href="/memberBoard/list">코디콘테스트HY</a>
-<a href="/market/list">웨더마켓</a>
 <h1>실시간 날씨 정보</h1>
 <h5>(1분마다 자동 업데이트)</h5>
 <div id="weatherResult"></div>
-</body>
-<script>
-    $(function() {
-        // Check if we can access the Geolocation API
-        if (navigator.geolocation) {
-            // Regularly get location information
-            var id = navigator.geolocation.watchPosition(
-                function(pos) {
-                    $('#latitude').html(pos.coords.latitude); // 위도
-                    $('#longitude').html(pos.coords.longitude); // 경도
-                });
 
-            // Stop monitoring with button click
-            $('#btnStop').click(function() {
-                navigator.geolocation.clearWatch(id);
-            });
-        } else {
-            alert("이 브라우저에서는 Geolocation을 지원하지 않습니다.")
-        }
-
-    });
-</script>
 <script>
     const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
 
@@ -98,6 +93,5 @@
     // 페이지 로드 시 초기 날씨 정보 출력
     window.onload = getWeather;
 </script>
-
-
+</body>
 </html>
