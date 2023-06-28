@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="text-center">
+        <img th:src="@{|/upload/${boardDTO.storedFileName}}"
+             alt="" style="max-width: 100%; height: auto">
+    </div>
+    <div>
+        <h4>착용제품</h4>
+        <div>
+            <p th:text="${boardDTO.top}"></p>
+            <p th:text="${boardDTO.topDetail}"></p>
+            <p th:text="${boardDTO.topPrice}"></p>
+        </div>
+        <div>
+            <p th:text="${boardDTO.bottom}"></p>
+            <p th:text="${boardDTO.bottomDetail}"></p>
+            <p th:text="${boardDTO.bottomPrice}"></p>
+        </div>
+        <div>
+            <p th:text="${boardDTO.etc}"></p>
+            <p th:text="${boardDTO.etcDetail}"></p>
+            <p th:text="${boardDTO.etcPrice}"></p>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="update()">수정</button>
+
+        </div>
+
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    const update = () => {
+
+    }
+
+</script>
+</html>
