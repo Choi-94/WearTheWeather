@@ -7,6 +7,8 @@ import com.example.weartheweather.repository.AdminBoardFileRepository;
 import com.example.weartheweather.repository.AdminBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class AdminBoardService {
 
     }
 
+    @Transactional
     public List<AdminBoardDTO> findAll() {
         List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
         List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
