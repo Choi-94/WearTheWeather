@@ -1,4 +1,38 @@
 package com.example.weartheweather.service;
 
+import com.example.weartheweather.dto.MemberDTO;
+import com.example.weartheweather.entity.MemberEntity;
+import com.example.weartheweather.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
 public class MemberService {
+    private final MemberRepository memberRepository;
+
+    public int emailcheck(String memberEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public int nickcheck(String memberNickName) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
+        if (optionalMemberEntity.isPresent()) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public void save(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
+        memberRepository.save(memberEntity);
+    }
 }
