@@ -1,5 +1,6 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +26,6 @@ public class MemberEntity {
     @Column(length = 20, nullable = false, unique = true)
     private String memberNickName;
 
-    @Column(length = 30, nullable = false)
-    private String memberMobile;
 
     @Column(nullable = false)
     private String memberGender;
@@ -37,4 +36,21 @@ public class MemberEntity {
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MemberGradeEntity> memberGradeEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "writerMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<AlarmEntity> alarmEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer_id", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MemberBoardEntity> memberBoardEntityList = new ArrayList<>();
+    public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
+
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberNickName(memberDTO.getMemberNickName());
+        memberEntity.setMemberGender(memberDTO.getMemberGender());
+        return memberEntity;
+    }
 }
