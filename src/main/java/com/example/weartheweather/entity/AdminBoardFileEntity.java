@@ -23,4 +23,12 @@ public class AdminBoardFileEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adminBoard_id")
     private AdminBoardEntity adminBoardEntity;
+
+    public static AdminBoardFileEntity toSaveBoardFileEntity(AdminBoardEntity savedEntity, String originalFileName, String storedFileName) {
+        AdminBoardFileEntity adminBoardFileEntity = new AdminBoardFileEntity();
+        adminBoardFileEntity.setAdminBoardEntity(savedEntity);
+        adminBoardFileEntity.setOriginalFileName(originalFileName);
+        adminBoardFileEntity.setStoredFileName(storedFileName);
+        return adminBoardFileEntity;
+    }
 }

@@ -19,8 +19,6 @@ public class MemberBoardEntity {
     @Column(length = 10)
     private String season;
     @Column(length = 50)
-    private String boardWriter;
-    @Column(length = 50)
     private String boardTitle;
     @Column(length = 500)
     private String boardContents;
@@ -28,6 +26,10 @@ public class MemberBoardEntity {
     private int boardLikes;
     @Column
     private int boardHits;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private MemberEntity memberEntity;
 
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AlarmEntity> alarmEntityList = new ArrayList<>();

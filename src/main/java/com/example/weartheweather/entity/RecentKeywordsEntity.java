@@ -10,7 +10,43 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "recent_keywords_table")
-public class RecentKeywordsEntity {
+public class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RecentKeywordsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
