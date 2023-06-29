@@ -36,9 +36,17 @@ public class AdminBoardController {
 
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model) {
+        System.out.println("디테일 id = " + id);
         AdminBoardDTO adminBoardDTO = adminBoardService.findById(id);
-        model.addAttribute("boardDTO", adminBoardDTO);
+        model.addAttribute("board", adminBoardDTO);
         return "/weatherCodiPages/boardDetail";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        AdminBoardDTO adminBoardDTO = adminBoardService.findById(id);
+        model.addAttribute("board", adminBoardDTO);
+        return "/weatherCodiPages/boardUpdate";
     }
 
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+
+<div id="section">
+    <div class="text-center">
+        <img th:src="@{|/upload/${board.storedFileName}}"
+             alt="" style="max-width: 100%; height: auto">
+    </div>
+    <form action="/adminBoard/update" method="post" enctype="multipart/form-data">
+        태그: <input type="text" name="hashTags" th:value="${board.hashTags}"> <br>
+        <label>
+            <input type="radio" name="season" value="Spring" th:checked="${board.season == 'Spring'}">봄
+        </label>
+        <label>
+            <input type="radio" name="season" value="Summer" th:checked="${board.season == 'Summer'}">여름
+        </label>
+        <label>
+            <input type="radio" name="season" value="Fall" th:checked="${board.season == 'Fall'}">가을
+        </label>
+        <label>
+            <input type="radio" name="season" value="Winter" th:checked="${board.season == 'Winter'}">겨울
+        </label><br>
+        <label>
+            <input type="radio" name="weather" value="Sunny" th:checked="${board.weather == 'Sunny'}">맑음
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Cloudy" th:checked="${board.weather == 'Cloudy'}">흐림
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Rain" th:checked="${board.weather == 'Rain'}">비
+        </label>
+        <label>
+            <input type="radio" name="weather" value="Snow" th:checked="${board.weather == 'Snow'}">눈
+        </label><br>
+        <label>
+            <input type="radio" name="temp" value="Hot" th:checked="${board.temp == 'Hot'}">더움
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Warm" th:checked="${board.temp == 'Warm'}">따듯함
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Coolness" th:checked="${board.temp == 'Coolness'}">선선함
+        </label>
+        <label>
+            <input type="radio" name="temp" value="Clod" th:checked="${board.temp == 'Clod'}">추움
+        </label><br>
+        키(cm): <input type="text" name="height" th:value="${board.height}"> <br>
+        성별: <br>
+        남: <input type="radio" name="gender" value="male" th:checked="${board.gender == 'male'}">
+        여: <input type="radio" name="gender" value="female" th:checked="${board.gender == 'female'}"> <br><br>
+        [상의] <br>
+        종류: <input type="text" name="top" th:value="${board.top}"> <br>
+        상세설명: <input type="text" name="topDetail" th:value="${board.topDetail}"> <br>
+        가격: <input type="text" name="topPrice" th:value="${board.topPrice}"> <br><br>
+        [하의] <br>
+        종류: <input type="text" name="bottom" th:value="${board.bottom}"> <br>
+        상세설명: <input type="text" name="bottomDetail" th:value="${board.bottomDetail}"> <br>
+        가격: <input type="text" name="bottomPrice" th:value="${board.bottomPrice}"> <br><br>
+        [기타] <br>
+        종류: <input type="text" name="etc" th:value="${board.etc}"> <br>
+        상세설명: <input type="text" name="etcDetail" th:value="${board.etcDetail}"> <br>
+        가격: <input type="text" name="etcPrice" th:value="${board.etcPrice}"> <br>
+        <input type="submit" value="작성">
+    </form>
+</div>
+
+</body>
+</html>
