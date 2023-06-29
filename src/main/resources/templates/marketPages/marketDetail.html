@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <link rel="stylesheet" href="/static/css/boardList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div id="section">
+    <table class="table table-hover">
+        <tr>
+            <th>상품이미지</th>
+            <td th:each="fileName: ${ProductDTO.storedFileName}">
+                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+            </td>
+        </tr>
+        <tr>
+            <th>글번호</th>
+            <td th:text="${ProductDTO.id}"></td>
+        </tr>
+        <tr>
+            <th>상품제목</th>
+            <td th:text="${ProductDTO.productTitle}"></td>
+        </tr>
+        <tr>
+            <th>상품사이즈</th>
+            <td th:text="${ProductDTO.productSize}"></td>
+        </tr>
+        <tr>
+            <th>상품가격</th>
+            <td th:text="${ProductDTO.productPrice}"></td>
+        </tr>
+        <tr>
+            <th>거래지역</th>
+            <td th:text="${ProductDTO.transactionArea}"></td>
+        </tr>
+        <tr>
+            <th>찜수</th>
+            <td th:text="${ProductDTO.productDibs}"></td>
+        </tr>
+        <tr>
+            <th>해시태그</th>
+            <td th:text="${ProductDTO.productHashtag}"></td>
+        </tr>
+
+    </table>
+    <div class="container">
+        <button class="btn btn-primary" onclick="list_req()">목록</button>
+        <button class="btn btn-primary" onclick="req('update')">수정</button>
+        <button class="btn btn-primary" onclick="req('delete')">삭제</button>
+    </div>
+</div>
+</body>
+</html>

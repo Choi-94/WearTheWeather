@@ -1,5 +1,6 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.MarketProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class MarketProductEntity {
+public class MarketProductEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,10 +44,10 @@ public class MarketProductEntity {
     private String productWeather;  // 상품 날씨
 
     @Column(nullable = false)
-    private String temp;  // 상품 온도
+    private String productTemp;  // 상품 온도
 
     @Column(nullable = false, length = 100)
-    private String hashTag;  // 해시 태그
+    private String productHashtag;  // 해시 태그
 
     @Column
     private int productHits; // 게시글 조회수
@@ -63,4 +64,35 @@ public class MarketProductEntity {
 
     @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AlarmEntity> alarmEntityList = new ArrayList<>();
+
+    public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO) {
+        MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setProductSize(marketProductDTO.getProductSize());
+        marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
+        marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
+        marketProductEntity.setProductPrice(marketProductDTO.getProductPrice());
+        marketProductEntity.setProductContents(marketProductDTO.getProductContents());
+        marketProductEntity.setProductSeason(marketProductDTO.getProductSeason());
+        marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
+        marketProductEntity.setProductTemp(marketProductDTO.getProductTemp());
+        marketProductEntity.setProductHashtag(marketProductDTO.getProductHashtag());
+        marketProductEntity.setProductDibs(0);
+        marketProductEntity.setFileAttached(0);
+        return  marketProductEntity;
+    }
+    public static MarketProductEntity toSaveEntityWithFile(MarketProductDTO marketProductDTO) {
+        MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setProductSize(marketProductDTO.getProductSize());
+        marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
+        marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
+        marketProductEntity.setProductPrice(marketProductDTO.getProductPrice());
+        marketProductEntity.setProductContents(marketProductDTO.getProductContents());
+        marketProductEntity.setProductSeason(marketProductDTO.getProductSeason());
+        marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
+        marketProductEntity.setProductTemp(marketProductDTO.getProductTemp());
+        marketProductEntity.setProductHashtag(marketProductDTO.getProductHashtag());
+        marketProductEntity.setProductDibs(0);
+        marketProductEntity.setFileAttached(1);
+        return  marketProductEntity;
+    }
 }
