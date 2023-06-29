@@ -12,7 +12,7 @@
         <button type="button" onclick="getCurrentPos()">내 위치</button>
         <input type="button" onclick="searchLocation()" value="주소찾기"><br>
         <input type="text" id="sample6_postcode" placeholder="우편번호" style="display: none">
-        <input type="text" id="transactionArea" class="form-control" placeholder="주소"><br>
+        <input type="text" id="transactionArea" name="transactionArea" class="form-control" placeholder="주소"><br>
         <input type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
         <input type="text" id="sample6_extraAddress" placeholder="참고항목" style="display: none">
         <input type="text" name="productPrice" class="form-control" placeholder="상품가격"><br>
@@ -21,18 +21,18 @@
                   placeholder="구입연도, 브랜드, 사용감, 하자 유무 등 구매자에게 필요한 정보를 꼭 포함해주세요 (10자이상) "></textarea><br>
         <textarea name="productHashtag" cols="1" rows="1" class="form-control"
                   placeholder="연관태그를 입력해주세요 (최대 5개)"></textarea><br>
-        <label><input type="radio" name="season" value="Spring">봄</label>
-        <label><input type="radio" name="season" value="Summer">여름</label>
-        <label><input type="radio" name="season" value="Fall">가을</label>
-        <label><input type="radio" name="season" value="Winter">겨울</label><br>
-        <label><input type="radio" name="weather" value="Sunny">맑음</label>
-        <label><input type="radio" name="weather" value="Cloudy">흐림</label>
-        <label><input type="radio" name="weather" value="Rain">비</label>
-        <label><input type="radio" name="weather" value="Snow">눈</label><br>
-        <label><input type="radio" name="temp" value="Hot">더움</label>
-        <label><input type="radio" name="temp" value="Warm">따듯함</label>
-        <label><input type="radio" name="temp" value="Coolness">선선함</label>
-        <label><input type="radio" name="temp" value="Clod">추움</label><br>
+        <label><input type="radio" name="productSeason" value="Spring">봄</label>
+        <label><input type="radio" name="productSeason" value="Summer">여름</label>
+        <label><input type="radio" name="productSeason" value="Fall">가을</label>
+        <label><input type="radio" name="productSeason" value="Winter">겨울</label><br>
+        <label><input type="radio" name="productWeather" value="Sunny">맑음</label>
+        <label><input type="radio" name="productWeather" value="Cloudy">흐림</label>
+        <label><input type="radio" name="productWeather" value="Rain">비</label>
+        <label><input type="radio" name="productWeather" value="Snow">눈</label><br>
+        <label><input type="radio" name="productTemp" value="Hot">더움</label>
+        <label><input type="radio" name="productTemp" value="Warm">따듯함</label>
+        <label><input type="radio" name="productTemp" value="Coolness">선선함</label>
+        <label><input type="radio" name="productTemp" value="Clod">추움</label><br>
         <input type="submit" value="작성" class="btn btn-primary"><br>
     </form>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

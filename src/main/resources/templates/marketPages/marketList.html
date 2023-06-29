@@ -2,16 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <link rel="stylesheet" href="/static/css/boardList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
+<button type="button" onclick="productSave()">상품등록</button><br>
+
+<div id="section">
+    <div  id="product-list">
+        <table>
+            <th:block th:each="product, iterationStatus: ${marketProductList}">
+                <th:block th:if="${iterationStatus.index % 5 == 0}">
+                    <tr>
+                </th:block>
+                <td>
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName, '[', '').replace(']', '')}|}" width="200" height="200" alt="" th:onclick="productDetail([[${product.id}]])">
+                    <table>
+                        <tr>
+                            <td th:text="${product.productTitle}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="${product.productPrice+'won'}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <th:block th:if="${(iterationStatus.index + 1) % 5 == 0 or iterationStatus.last}">
+                    </tr>
+                </th:block>
+            </th:block>
+        </table>
 
 
-<button type="button" onclick="productSave()">상품등록</button>
+
+    </div>
+</div>
+
 </body>
-<script>
+<script th:inline="javascript">
     const productSave = () =>{
         window.location.href = "/market/save";
+    }
+    const productDetail = (id) =>{
+        window.location.href = "/market/" + id;
     }
 </script>
 </html>

@@ -1,12 +1,13 @@
 package com.example.weartheweather.controller;
 
+import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.MarketProductDTO;
+import com.example.weartheweather.service.AdminBoardService;
+import com.example.weartheweather.service.MarketProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,32 +16,31 @@ import java.util.List;
 @RequestMapping("/market")
 @Controller
 public class MarketController {
+    private final MarketProductService marketProductService;
 
     @GetMapping("/save")
     public String saveForm() {
         return "marketPages/marketSave";
     }
+    @PostMapping("/save")
+    public String save(@ModelAttribute MarketProductDTO marketProductDTO) throws IOException {
+        marketProductService.save(marketProductDTO);
+        return "redirect:/market/list";
+    }
 
     @GetMapping("/list")
-    public String list() {
+    public String list(Model model) {
+        List<MarketProductDTO> marketProductDTOList = marketProductService.findAll();
+        model.addAttribute("marketProductList", marketProductDTOList);
         return "marketPages/marketList";
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "marketPages/test";
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id, Model model) {
+        MarketProductDTO marketProductDTO = marketProductService.findById(id);
+        model.addAttribute("ProductDTO", marketProductDTO);
+        return "marketPages/marketDetail";
     }
-
-    @GetMapping("/test2")
-    public String test2() {
-        return "marketPages/test2";
-    }
-
-    @GetMapping("/test3")
-    public String test3() {
-        return "marketPages/test3";
-    }
-
 
 
 

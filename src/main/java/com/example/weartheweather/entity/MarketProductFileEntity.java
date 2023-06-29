@@ -24,4 +24,11 @@ public class MarketProductFileEntity {
     @JoinColumn(name = "product_id")
     private MarketProductEntity marketProductEntity;
 
+    public static MarketProductFileEntity toSaveMarketProductFileEntity(MarketProductEntity savedEntity, String originalFileName, String storedFileName) {
+        MarketProductFileEntity marketProductFileEntity = new MarketProductFileEntity();
+        marketProductFileEntity.setMarketProductEntity(savedEntity);
+        marketProductFileEntity.setOriginalFileName(originalFileName);
+        marketProductFileEntity.setStoredFileName(storedFileName);
+        return marketProductFileEntity;
+    }
 }
