@@ -26,32 +26,37 @@
 <form>
     <!--이메일 비밀번호 입력 받고 로그인 버튼-->
 </form>
-<a href="javascript:kakaoLogin()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQOJtNpYFKTS1T5QdhIDFFgLzQO93BuFjFw&usqp=CAU" style="height: 80px; width: auto"/></a>
+<a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type='code')}">
+    <img src="/image/kakao_login_medium_wide.png"/>
+</a>
+<!--<a href="https://kauth.kakao.com/oauth/authorize?client_id=cbfb51c5fe3c24569106a577d987998b&redirect_uri=http://localhost8045/auth/kakao/callback&response_type=code"> <img src="/image/kakao_login_medium_wide.png"/></a>-->
+<!--<a href="javascript:kakaoLogin()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQOJtNpYFKTS1T5QdhIDFFgLzQO93BuFjFw&usqp=CAU" style="height: 80px; width: auto"/></a>-->
 <div id="naver_id_login">
 
 </div>
 
 
 <!--카카오 로그인에 대한 자바스크립트 -->
-<script src="http://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-    window.Kakao.init("f31bae96db856c23cb9c32e52a39f735");
-    function kakaoLogin(){
-        window.Kakao.Auth.login({
-            scope:'account_email,gender',
-            success: function (authObj){
-                console.log(authObj);
-                window.Kakao.API.request({
-                    url:'/v2/user/me',
-                    success: res => {
-                        const kakao_account = res.kakao_account;
-                        console.log(kakao_account);
-                    }
-                });
-            }
-        })
-    }
-</script>
+<!--<script src="http://developers.kakao.com/sdk/js/kakao.js"></script>-->
+<!--<script>-->
+<!--    window.Kakao.init("f31bae96db856c23cb9c32e52a39f735");-->
+<!--    function kakaoLogin(){-->
+<!--        window.Kakao.Auth.login({-->
+<!--            scope:'account_email,gender',-->
+<!--            success: function (authObj){-->
+<!--                console.log(authObj);-->
+<!--                window.Kakao.API.request({-->
+<!--                    url:'/v2/user/me',-->
+<!--                    success: res => {-->
+
+<!--                        const kakao_account = res.kakao_account;-->
+<!--                        console.log(kakao_account);-->
+<!--                    }-->
+<!--                });-->
+<!--            }-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
 <!--네이버 로그인에 대한 자바스크립트 -->
 <script type="text/javascript">
     var naver_id_login = new naver_id_login("mbFMi3FYzsY1IdZryEWO", "http://localhost8045/memberPages/memberLogin.html");

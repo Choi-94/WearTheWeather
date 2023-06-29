@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member")
@@ -26,10 +23,7 @@ public class MemberController {
     public String saveForm(){
         return "/memberPages/memberSave";
     }
-    @GetMapping("memberAnotherSave")
-    public String anotherSave(){
-        return "/memberPages/memberAnotherSave";
-    }
+
 
     @PostMapping("/memberSave")
     public String save(@ModelAttribute MemberDTO memberDTO, Model model){
