@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="header" id="header">
-  <a href="/"><h1>Wear the weather</h1></a>
+<div th:fragment="header" class="container" id="header">
+    <div class="box" style="background-color: #558BCF;">
+        <ul>
+            <li>
+                <a href="/">
+                    <img src="/img/WearTheWeatherWhiteLogo.png" style="width: 130px; height: 130px; ">
+                </a>
+            </li>
+        </ul>
+        <ul>
+            <li class="login-name" id="login-area">
+                <a href="/member/memberLogin">로그인</a>
+                <a href="/member/memberSave ">회원가입</a>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

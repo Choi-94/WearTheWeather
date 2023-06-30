@@ -4,10 +4,11 @@
     <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 </head>
+
 <body>
 <div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
 <a href="/member/memberLogin">로그인</a>
 <a href="/adminBoard/list">웨더코디HY</a>
 <a href="/memberBoard/list">코디콘테스트HY</a>
@@ -15,6 +16,7 @@
 <h1>실시간 날씨 정보</h1>
 <h5>(1분마다 자동 업데이트)</h5>
 <div id="weatherResult"></div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script>
     $(function() {
@@ -46,18 +48,20 @@
 
         const weatherIconElement = document.createElement("img");
         weatherIconElement.classList.add("weather-icon");
+        weatherIconElement.style.width = "100px"; // 가로 크기 설정
+        weatherIconElement.style.height = "100px"; // 세로 크기 설정
         const iconFileName = getIconFileName(weather);
-        weatherIconElement.src = `resources/static/img/${iconFileName}`;
+        weatherIconElement.src = `/img/${iconFileName}`;
 
         resultElement.appendChild(weatherIconElement);
     }
 
     function getIconFileName(weather) {
         const weatherIcons = {
-            "Clear": "Clear.PNG",
-            "Clouds": "Clouds.PNG",
-            "Rain": "Rain.PNG",
-            "Snow": "Snow.PNG"
+            "Clear": "Clear4.png",
+            "Clouds": "Clouds4.png",
+            "Rain": "Rain4.png",
+            "Snow": "Snow4.png"
         };
 
         const weatherKey = Object.keys(weatherIcons).find(key => weather.includes(key));

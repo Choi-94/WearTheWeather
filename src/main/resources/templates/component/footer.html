@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css">
     <title>Title</title>
+
 </head>
 <body>
-
+<div th:fragment="footer" class="container" id="footer">
+    <div class="box" style="background-color: #558BCF;">
+        <script>
+            const date = new Date();
+            const year = date.getFullYear();
+            document.write('<p style="margin-left: 35%;">© ' + year + ' WearTheWeather All rights reserved. </p>');
+        </script>
+    </div>
+</div>
 </body>
+
 </html>
