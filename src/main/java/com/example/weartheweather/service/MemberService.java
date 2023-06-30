@@ -5,7 +5,9 @@ import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -34,5 +36,13 @@ public class MemberService {
     public void save(MemberDTO memberDTO) {
         MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
         memberRepository.save(memberEntity);
+    }
+
+
+    public MemberDTO loginAxios(MemberDTO memberDTO) {
+        MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
+                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
+        MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity);
+        return memberDTO1;
     }
 }

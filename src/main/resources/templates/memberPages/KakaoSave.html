@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+
+<form method="post" action="/member/memberSave">
+    <input type="text" th:value="${email}">
+
+
+</form>
+</body>
+</html>

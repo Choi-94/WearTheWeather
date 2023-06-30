@@ -1,14 +1,19 @@
 package com.example.weartheweather.controller;
 
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.model.KakaoProfile;
 import com.example.weartheweather.model.OAuthToken;
+import com.example.weartheweather.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
+import java.util.UUID;
 
 
 @Controller
 public class KakaoController {
+    @Autowired
+    private MemberService memberService;
     @GetMapping("/auth/kakao/callback")
-    public @ResponseBody String handleKakaoCallback(@RequestParam("code") String code) {
+    public String handleKakaoCallback(@RequestParam("code") String code, Model model) {
         System.out.println("code = " + code);
         //POST방식으로 key= value 데이터를 요청(카카오쪽으로)
 
@@ -95,10 +103,24 @@ public class KakaoController {
             throw new RuntimeException(e);
         }
         System.out.println("카카오아이디(번호)"+kakaoProfile.getId());
-        System.out.println("카카오이메일"+kakaoProfile.getKakaoAccount().getEmail());
-        System.out.println("성별"+kakaoProfile.getKakaoAccount().getGender());
+        System.out.println("카카오이메일"+kakaoProfile.kakao_account.getEmail());
+        System.out.println("성별"+kakaoProfile.kakao_account.getGender());
+        UUID garbage = UUID.randomUUID();
+        System.out.println("garbage = " + garbage);
 
-        return response2.getBody();
+        String memberEmail = kakaoProfile.kakao_account.getEmail();
+        String memberPassword = String.valueOf(garbage);
+        String memberGender = kakaoProfile.kakao_account.getGender();
 
+        model.addAttribute("email",memberEmail);
+        model.addAttribute("Password", memberPassword);
+        model.addAttribute("gender", memberGender);
+
+        return "/memberPages/KakaoSave";
+
+    }
+    @GetMapping("/memberPages/KakaoSave")
+    public String KakaoSaveForm(){
+        return "/memberPages/KakaoSave";
     }
 }
