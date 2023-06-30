@@ -5,6 +5,7 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
 <div id="section">
     <form action="/market/save" method="post" enctype="multipart/form-data">
         <input type="file" name="productImage" class="form-control" multiple><br>
@@ -39,6 +40,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4f00c5e6be03a9a079c25af63c69f776&autoload=false"></script>
 </div>
 </body>
+<div th:replace="component/footer :: footer"></div>
 <script>
     // gps로 위치불러오기
     function getCurrentPos(){

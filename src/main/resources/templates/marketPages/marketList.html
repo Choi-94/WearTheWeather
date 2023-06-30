@@ -7,6 +7,8 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+
 <button type="button" onclick="productSave()">상품등록</button><br>
 
 <div id="section">
@@ -37,7 +39,7 @@
 
     </div>
 </div>
-
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const productSave = () =>{
