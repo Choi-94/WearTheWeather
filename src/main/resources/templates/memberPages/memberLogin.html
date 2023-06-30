@@ -73,6 +73,8 @@
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
         const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        console.log("이메일",email);
+        console.log("비밀번호", password);
         axios({
             method: "post",
             url: "/member/login/axios",
@@ -82,7 +84,9 @@
             }
         }).then(res => {
             console.log("res", res);
-            location.href = redirectURI;
+            window.location.href = "http://localhost:8045/";
+            // location.href = redirectURI;
+
 
         }).catch(err => {
             console.log("err", err);

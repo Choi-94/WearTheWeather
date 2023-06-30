@@ -2,6 +2,7 @@ package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
     @Autowired
@@ -46,5 +50,13 @@ public class MemberController {
         int res = memberService.nickcheck(memberDTO.getMemberNickName());
         System.out.println("res"+res);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+    @PostMapping("/login/axios")
+    public ResponseEntity login(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
+        System.out.println("memberDTO컨트롤러확인 = " + memberDTO);
+        MemberDTO memberDTO1 = memberService.loginAxios(memberDTO);
+        session.setAttribute("loginEmail", memberDTO1.getMemberNickName());
+        System.out.println("닉네임 세션값 확인"+memberDTO1.getMemberNickName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
