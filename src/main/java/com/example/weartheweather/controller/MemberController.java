@@ -55,7 +55,7 @@ public class MemberController {
     public ResponseEntity login(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
         System.out.println("memberDTO컨트롤러확인 = " + memberDTO);
         MemberDTO memberDTO1 = memberService.loginAxios(memberDTO);
-        session.setAttribute("loginEmail", memberDTO1.getMemberNickName());
+        session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
         System.out.println("닉네임 세션값 확인"+memberDTO1.getMemberNickName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
