@@ -12,5 +12,4 @@ public class AdminBoardLikesDTO {
     private Long id;
     private Long memberId;
     private Long boardId;
-    private String createdAt;
 }

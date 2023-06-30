@@ -58,6 +58,8 @@ public class AdminBoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "adminBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AdminBoardFileEntity> adminBoardFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "adminBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<AdminBoardLikesEntity> adminBoardLikesEntityList = new ArrayList<>();
     public static AdminBoardEntity toSaveEntity(AdminBoardDTO adminBoardDTO) {
         AdminBoardEntity adminBoardEntity = new AdminBoardEntity();
         adminBoardEntity.setHashTags(adminBoardDTO.getHashTags());
