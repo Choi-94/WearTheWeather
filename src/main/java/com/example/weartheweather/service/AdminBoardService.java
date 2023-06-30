@@ -3,8 +3,12 @@ package com.example.weartheweather.service;
 import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.entity.AdminBoardEntity;
 import com.example.weartheweather.entity.AdminBoardFileEntity;
+import com.example.weartheweather.entity.AdminBoardLikesEntity;
+import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.AdminBoardFileRepository;
+import com.example.weartheweather.repository.AdminBoardLikesRepository;
 import com.example.weartheweather.repository.AdminBoardRepository;
+import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,8 @@ import java.util.NoSuchElementException;
 public class AdminBoardService {
     private final AdminBoardRepository adminBoardRepository;
     private final AdminBoardFileRepository adminBoardFileRepository;
+    private final MemberRepository memberRepository;
+    private final AdminBoardLikesRepository adminBoardLikesRepository;
     public Long save(AdminBoardDTO adminBoardDTO) throws IOException {
         AdminBoardEntity adminBoardEntity = AdminBoardEntity.toSaveEntity(adminBoardDTO);
         AdminBoardEntity savedEntity = adminBoardRepository.save(adminBoardEntity);
@@ -48,5 +54,26 @@ public class AdminBoardService {
     public AdminBoardDTO findById(Long id) {
         AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return AdminBoardDTO.toDTO(adminBoardEntity);
+    }
+
+    public void update(AdminBoardDTO adminBoardDTO) {
+        AdminBoardEntity adminBoardEntity = AdminBoardEntity.toUpdateEntity(adminBoardDTO);
+        adminBoardRepository.save(adminBoardEntity);
+    }
+
+    @Transactional
+    public void updateHits(Long id) {
+        adminBoardRepository.updateHits(id);
+    }
+
+    public void addBoardLikes(String memberNickName, Long id) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        adminBoardLikesRepository.save(AdminBoardLikesEntity.toSaveEntity(memberEntity, adminBoardEntity));
+    }
+
+    @Transactional
+    public int countBoardLikes(Long id) {
+        return adminBoardLikesRepository.countBoardLikes(id);
     }
 }

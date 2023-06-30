@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.lang.reflect.Member;
 
 @Entity
 @Setter
@@ -22,8 +23,12 @@ public class AdminBoardLikesEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    private MemberBoardEntity memberBoardEntity;
+    private AdminBoardEntity adminBoardEntity;
 
-
-
+    public static AdminBoardLikesEntity toSaveEntity(MemberEntity memberEntity, AdminBoardEntity adminBoardEntity) {
+        AdminBoardLikesEntity adminBoardLikesEntity = new AdminBoardLikesEntity();
+        adminBoardLikesEntity.setMemberEntity(memberEntity);
+        adminBoardLikesEntity.setAdminBoardEntity(adminBoardEntity);
+        return adminBoardLikesEntity;
+    }
 }

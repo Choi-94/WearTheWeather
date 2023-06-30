@@ -14,6 +14,11 @@
              alt="" style="max-width: 100%; height: auto">
     </div>
     <form action="/adminBoard/update" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${board.id}">
+        <input type="hidden" name="boardHits" th:value="${board.boardHits}">
+        <input type="hidden" name="boardLikes" th:value="${board.boardLikes}">
+        <input type="hidden" name="originalFileName" th:value="${board.originalFileName}">
+        <input type="hidden" name="storedFileName" th:value="${board.storedFileName}">
         태그: <input type="text" name="hashTags" th:value="${board.hashTags}"> <br>
         <label>
             <input type="radio" name="season" value="Spring" th:checked="${board.season == 'Spring'}">봄
