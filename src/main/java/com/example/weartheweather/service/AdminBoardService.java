@@ -49,4 +49,9 @@ public class AdminBoardService {
         AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return AdminBoardDTO.toDTO(adminBoardEntity);
     }
+
+    public void update(AdminBoardDTO adminBoardDTO) {
+        AdminBoardEntity adminBoardEntity = AdminBoardEntity.toUpdateEntity(adminBoardDTO);
+        adminBoardRepository.save(adminBoardEntity);
+    }
 }

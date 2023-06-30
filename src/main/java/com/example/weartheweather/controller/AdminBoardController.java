@@ -49,5 +49,11 @@ public class AdminBoardController {
         return "/weatherCodiPages/boardUpdate";
     }
 
+    @PostMapping("/update")
+    public String update(@ModelAttribute AdminBoardDTO adminBoardDTO) {
+        adminBoardService.update(adminBoardDTO);
+        return "redirect:/adminBoard/list";
+    }
+
 
 }

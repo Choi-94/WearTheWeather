@@ -79,4 +79,27 @@ public class AdminBoardEntity extends BaseEntity {
         adminBoardEntity.setEtcPrice(adminBoardDTO.getEtcPrice());
         return adminBoardEntity;
     }
+
+    public static AdminBoardEntity toUpdateEntity(AdminBoardDTO adminBoardDTO) {
+        AdminBoardEntity adminBoardEntity = new AdminBoardEntity();
+        adminBoardEntity.setId(adminBoardDTO.getId());
+        adminBoardEntity.setHashTags(adminBoardDTO.getHashTags());
+        adminBoardEntity.setSeason(adminBoardDTO.getSeason());
+        adminBoardEntity.setWeather(adminBoardDTO.getWeather());
+        adminBoardEntity.setTemp(adminBoardDTO.getTemp());
+        adminBoardEntity.setHeight(adminBoardDTO.getHeight());
+        adminBoardEntity.setGender(adminBoardDTO.getGender());
+        adminBoardEntity.setBoardHits(adminBoardDTO.getBoardHits());
+        adminBoardEntity.setBoardLikes(adminBoardDTO.getBoardLikes());
+        adminBoardEntity.setTop(adminBoardDTO.getTop());
+        adminBoardEntity.setTopDetail(adminBoardDTO.getTopDetail());
+        adminBoardEntity.setTopPrice(adminBoardDTO.getTopPrice());
+        adminBoardEntity.setBottom(adminBoardDTO.getBottom());
+        adminBoardEntity.setBottomDetail(adminBoardDTO.getBottomDetail());
+        adminBoardEntity.setBottomPrice(adminBoardDTO.getBottomPrice());
+        adminBoardEntity.setEtc(adminBoardDTO.getEtc());
+        adminBoardEntity.setEtcDetail(adminBoardDTO.getEtcDetail());
+        adminBoardEntity.setEtcPrice(adminBoardDTO.getEtcPrice());
+        return adminBoardEntity;
+    }
 }
