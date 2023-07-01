@@ -1,6 +1,7 @@
 package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.entity.AdminBoardEntity;
 import com.example.weartheweather.entity.AdminBoardFileEntity;
 import com.example.weartheweather.entity.AdminBoardLikesEntity;
@@ -72,8 +73,21 @@ public class AdminBoardService {
         adminBoardLikesRepository.save(AdminBoardLikesEntity.toSaveEntity(memberEntity, adminBoardEntity));
     }
 
-    @Transactional
+
     public int countBoardLikes(Long id) {
         return adminBoardLikesRepository.countBoardLikes(id);
     }
+
+//
+//    public AdminBoardLikesDTO findByBoardLikes(Long id, String memberNickName) {
+//        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+//        AdminBoardLikesEntity adminBoardLikesEntity = adminBoardLikesRepository.findByAdminBoardEntityIdAndMemberEntityId(id, memberEntity.getId());
+//        return AdminBoardLikesDTO.toDTO(adminBoardLikesEntity);
+//    }
+//
+//    @Transactional
+//    public void deleteBoardLikes(String memberNickName, Long id) {
+//        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+//        adminBoardLikesRepository.deleteByAdminBoardEntityIdAndMemberEntityId(id, memberEntity.getId());
+//    }
 }

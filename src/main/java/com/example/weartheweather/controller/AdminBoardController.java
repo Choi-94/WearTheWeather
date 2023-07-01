@@ -1,8 +1,11 @@
 package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,11 +67,26 @@ public class AdminBoardController {
 //        adminBoardService.
 //   }
 
-    @GetMapping("/addBoardLikes/{id}")
-    public String addBoardLikes(@PathVariable Long id, HttpSession session) {
-        String memberNickName = (String)session.getAttribute("memberNickName");
-        adminBoardService.addBoardLikes(memberNickName, id);
-        return "redirect:/adminBoard/detail/" + id;
-    }
+//    @GetMapping("/addBoardLikes/{id}")
+//    public String addBoardLikes(@PathVariable Long id, HttpSession session) {
+//        String memberNickName = (String)session.getAttribute("memberNickName");
+//        System.out.println("세션 memberNickName = " + memberNickName);
+//        adminBoardService.addBoardLikes(memberNickName, id);
+//        return "redirect:/adminBoard/detail/" + id;
+//    }
+
+//    @GetMapping("/boardLikesUpdate/{id}")
+//    public ResponseEntity boardLikesUpdate(@PathVariable Long id, HttpSession session) {
+//        String memberNickName = (String)session.getAttribute("memberNickName");
+//        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(id, memberNickName);
+//        if (adminBoardLikesDTO == null) {
+//            adminBoardService.addBoardLikes(memberNickName, id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } else {
+//            adminBoardService.deleteBoardLikes(memberNickName, id);
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//    }
 
 }
