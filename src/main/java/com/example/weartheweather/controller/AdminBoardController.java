@@ -89,4 +89,7 @@ public class AdminBoardController {
 //
 //    }
 
+//    @GetMapping("/likes")
+//    public
+
 }
