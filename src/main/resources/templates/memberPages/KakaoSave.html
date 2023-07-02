@@ -10,7 +10,18 @@
 <form method="post" action="/member/memberSave">
     <input type="text" th:value="${email}">
 
-
 </form>
+<li class="login-name" id="login-area">
+</li>
 </body>
+<script th:inline="javascript">
+    const loginArea = document.getElementById("login-area");
+    const loginEmail = [[${session.memberNickName}]];
+    if (loginEmail.length != 0) {
+        loginArea.innerHTML = "<a href='/mypage' style='color: black;'>" + loginEmail + "님 환영해요!</a>" +
+            "<a href='/logout'>logout</a>";
+    } else {
+        loginArea.innerHTML = "<a href='/login'>login</a>";
+    }
+</script>
 </html>

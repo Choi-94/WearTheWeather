@@ -2,6 +2,9 @@
 server:
   port: 8045
 
+cos:
+  key: cos1234
+
 # data base ?? ??
 spring:
   datasource:

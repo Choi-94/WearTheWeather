@@ -2,6 +2,7 @@ package com.example.weartheweather.dto;
 
 
 import com.example.weartheweather.entity.MemberEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,4 +26,6 @@ public class MemberDTO {
         memberDTO.setMemberNickName(memberEntity.getMemberNickName());
         return memberDTO;
     }
+
+
 }

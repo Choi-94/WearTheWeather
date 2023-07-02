@@ -19,7 +19,7 @@ public class MemberService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
         if (optionalMemberEntity.isPresent()) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
@@ -28,7 +28,7 @@ public class MemberService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
         if (optionalMemberEntity.isPresent()) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
@@ -44,5 +44,13 @@ public class MemberService {
                 .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
         MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity);
         return memberDTO1;
+    }
+
+
+    public MemberDTO findByEmail(String memberEmail) {
+        MemberDTO memberDTO = MemberDTO.tofindAll(memberRepository.findByMemberEmail(memberEmail).orElseThrow(()-> new NoSuchElementException()));
+
+
+        return memberDTO;
     }
 }

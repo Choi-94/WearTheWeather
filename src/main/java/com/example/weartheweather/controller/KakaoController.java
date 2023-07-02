@@ -8,7 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.User;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 
@@ -29,8 +32,12 @@ import java.util.UUID;
 public class KakaoController {
     @Autowired
     private MemberService memberService;
+    @Value("{cos.key}")
+    private String cosKey;
     @GetMapping("/auth/kakao/callback")
-    public String handleKakaoCallback(@RequestParam("code") String code, Model model) {
+
+    public String handleKakaoCallback(@RequestParam("code") String code, Model model, HttpSession session) {
+
         System.out.println("code = " + code);
         //POST방식으로 key= value 데이터를 요청(카카오쪽으로)
 
@@ -112,13 +119,27 @@ public class KakaoController {
         String memberPassword = String.valueOf(garbage);
         String memberGender = kakaoProfile.kakao_account.getGender();
 
-        model.addAttribute("email",memberEmail);
-        model.addAttribute("Password", memberPassword);
-        model.addAttribute("gender", memberGender);
 
-        return "/memberPages/KakaoSave";
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberEmail(memberEmail);
+        memberDTO.setMemberGender(memberGender);
+        memberDTO.setMemberPassword(memberPassword);
+        memberDTO.setMemberNickName(cosKey);
+
+        MemberDTO kakaoMember  = memberService.findByEmail(memberEmail);
+        if(kakaoMember.getMemberEmail()==null){
+            memberService.save(memberDTO);
+            session.setAttribute("memberNickName","저장후확인");
+            return "/memberPages/KakaoSave";
+        }else{
+            session.setAttribute("memberNickName","확인");
+            return "/memberPages/KakaoSave";
+        }
+
 
     }
+
+
     @GetMapping("/memberPages/KakaoSave")
     public String KakaoSaveForm(){
         return "/memberPages/KakaoSave";
