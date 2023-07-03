@@ -68,5 +68,15 @@ public class MemberService {
     }
 
 
+    public MemberDTO findById(Long value) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(value);
+        if(optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            MemberDTO memberDTO = MemberDTO.tofindAll(memberEntity);
+            return memberDTO;
+        }else{
+            return null;
+        }
     }
+}
 

@@ -16,6 +16,8 @@ public class MemberDTO {
     private String memberGender;
     private String memberPassword;
     private Long memberWeatherPay;
+    private int memberPoints;
+    private String platform;
 
     public static MemberDTO tofindAll(MemberEntity memberEntity){
         MemberDTO memberDTO = new MemberDTO();
@@ -25,6 +27,8 @@ public class MemberDTO {
         memberDTO.setMemberGender(memberEntity.getMemberGender());
         memberDTO.setMemberWeatherPay(memberEntity.getMemberWeatherPay());
         memberDTO.setMemberNickName(memberEntity.getMemberNickName());
+        memberDTO.setMemberPoints(memberEntity.getMemberPoints());
+        memberDTO.setPlatform(memberEntity.getPlatform());
         return memberDTO;
     }
 

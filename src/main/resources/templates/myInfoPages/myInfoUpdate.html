@@ -2,13 +2,31 @@
 <html lang="en">
 <head>
   <th:block th:replace="component/config :: config"></th:block>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-
-
+<form>
+  <input type="hidden" th:value="${member.id}">
+  <input type="text" th:value="${member.memberEmail}">
+  <input type="hidden" th:value="${member.platform}" id="platform">
+  <input type="text" th:value="${member.platform}">
+  <input type="password" id="PasswordInput" style="display: block" placeholder="비밀번호수정">
+</form>
 </body>
+<script>
+  const res = document.getElementById("platform").value;
+  console.log(res);
+  $(function (){
+    if(res.length!=0){
+      document.getElementById("PasswordInput").style.display="none";
+    }else{
+      document.getElementById("PasswordInput").style.display="";
+    }
+  })
+
+</script>
 </html>

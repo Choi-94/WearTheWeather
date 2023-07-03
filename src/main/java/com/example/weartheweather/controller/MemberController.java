@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -55,11 +57,13 @@ public class MemberController {
     public ResponseEntity login(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
 
         MemberDTO memberDTO1 = memberService.loginAxios(memberDTO);
-        session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
+
         System.out.println("닉네임 세션값 확인"+memberDTO1.getMemberNickName());
         if(memberDTO1==null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }else{
+            session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
+            session.setAttribute("memberEmail", memberDTO1.getMemberEmail());
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
@@ -68,8 +72,17 @@ public class MemberController {
         session.invalidate();
         return "index";
     }
-//    @GetMapping("/mypage")
-//    public String mypageForm(){
-//
-//    }
+    @GetMapping("/mypage")
+    public String mypageForm(HttpSession session, Model model){
+        String value = (String) session.getAttribute("memberEmail");
+        System.out.println("value = " + value);
+        MemberDTO memberDTO = memberService.findByEmail(value);
+        System.out.println("마이페이지 memberDTO = " + memberDTO);
+        if(memberDTO!=null){
+            model.addAttribute("member",memberDTO);
+            return "/myInfoPages/myInfoUpdate";
+        }else{
+            return "/myInfoPages/myInfoUpdate";
+        }
+    }
 }

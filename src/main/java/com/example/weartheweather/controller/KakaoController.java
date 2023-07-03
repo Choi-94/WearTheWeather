@@ -127,15 +127,18 @@ public class KakaoController {
         memberDTO.setMemberGender(memberGender);
         memberDTO.setMemberPassword(memberPassword);
         memberDTO.setMemberNickName(memberNickName);
+        memberDTO.setPlatform("카카오");
 
         MemberDTO kakaoMember  = memberService.findByEmail(memberEmail);
         if(kakaoMember==null){
 
             memberService.save(memberDTO);
             session.setAttribute("memberNickName",memberNickName);
+            session.setAttribute("memberEmail",memberEmail);
             return "index";
         }else{
             session.setAttribute("memberNickName",memberNickName);
+            session.setAttribute("memberEmail",memberEmail);
             return "index";
         }
 
