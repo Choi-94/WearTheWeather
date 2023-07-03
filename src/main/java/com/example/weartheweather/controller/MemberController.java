@@ -53,10 +53,19 @@ public class MemberController {
     }
     @PostMapping("/login/axios")
     public ResponseEntity login(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
-        System.out.println("memberDTO컨트롤러확인 = " + memberDTO);
+
         MemberDTO memberDTO1 = memberService.loginAxios(memberDTO);
         session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
         System.out.println("닉네임 세션값 확인"+memberDTO1.getMemberNickName());
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(memberDTO1==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }else{
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
     }
 }

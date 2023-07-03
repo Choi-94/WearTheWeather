@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -17,13 +17,29 @@
                 </a>
             </li>
         </ul>
-        <ul>
+        <ul id="area">
+            <li class="un-name" id="un-area">
+
+            </li>
             <li class="login-name" id="login-area">
-                <a href="/member/memberLogin">로그인</a>
-                <a href="/member/memberSave ">회원가입</a>
+
             </li>
         </ul>
+        <script th:inline="javascript">
+            const unArea = document.getElementById("un-area");
+            const loginArea = document.getElementById("login-area");
+            const memberNickName = [[${session.memberNickName}]];
+            if(memberNickName==null){
+                unArea.innerHTML =  "<a href='/member/memberLogin'>로그인</a>"
+            }else{
+                loginArea.innerHTML = "<a href='/member/mypage'>"+ memberNickName + "님 환영합니다!</a>"+"<a href='/member/logout'>" +
+                    "logout</a>";
+            }
+        </script>
     </div>
+
 </div>
+
 </body>
+
 </html>

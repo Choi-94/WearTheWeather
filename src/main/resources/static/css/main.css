@@ -31,9 +31,10 @@
     color: white;
 }
 
-#header ul li.login-name {
+
+#area{
     position: relative;
-    left: 830px;
+    left: 700px;
     list-style-type: none;
     display: inline-block;
     font-size: 20px;

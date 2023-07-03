@@ -17,7 +17,7 @@
         <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
         <input type="text" name="memberPassword" placeholder="비밀번호"  class="form-control"> <br>
         <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 맞지 않습니다</p>
-        <input type="submit" value="로그인" onclick="login()">
+        <input type="button" value="로그인" onclick="login()">
     </form>
 </div>
 <div>
@@ -84,7 +84,8 @@
             }
         }).then(res => {
             console.log("res", res);
-            window.location.href = "http://localhost:8045/";
+
+            location.href = "/";
             // location.href = redirectURI;
 
 
