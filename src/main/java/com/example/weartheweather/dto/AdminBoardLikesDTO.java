@@ -1,6 +1,7 @@
 package com.example.weartheweather.dto;
 
 import com.example.weartheweather.entity.AdminBoardLikesEntity;
+import com.example.weartheweather.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AdminBoardLikesDTO {
+public class AdminBoardLikesDTO extends BaseEntity {
 
     private Long id;
     private Long memberId;
