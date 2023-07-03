@@ -14,9 +14,13 @@ public interface AdminBoardLikesRepository extends JpaRepository<AdminBoardLikes
 
 
 
-    @Query(value = "select count(b) FROM AdminBoardLikesEntity b where b.adminBoardEntity.id =:id")
-    int countBoardLikes(Long id);
+//    @Query(value = "select count(b) FROM AdminBoardLikesEntity b where b.adminBoardEntity.id =:id")
+//    int countBoardLikes(Long id);
+
 
 
     Optional<AdminBoardLikesEntity> findByAdminBoardEntityAndMemberEntity(AdminBoardEntity adminBoardEntity, MemberEntity memberEntity);
+
+    @Query(value = "select count(b) FROM AdminBoardLikesEntity b where b.adminBoardEntity =:adminBoardEntity")
+    int countBoardLikes(AdminBoardEntity adminBoardEntity);
 }

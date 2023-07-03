@@ -39,12 +39,19 @@ public class AdminBoardController {
     }
 
     @GetMapping("/detail/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, HttpSession session, Model model) {
         adminBoardService.updateHits(id);
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
+        if (adminBoardLikesDTO == null) {
+            model.addAttribute("boardLikes", "bi-heart");
+        } else {
+            model.addAttribute("boardLikes", "bi-heart");
+        }
         int countBoardLikes = adminBoardService.countBoardLikes(id);
         AdminBoardDTO adminBoardDTO = adminBoardService.findById(id);
         model.addAttribute("board", adminBoardDTO);
-        model.addAttribute("boardLikes", countBoardLikes);
+        model.addAttribute("countBoardLikes", countBoardLikes);
         return "/weatherCodiPages/boardDetail";
     }
 
@@ -61,19 +68,6 @@ public class AdminBoardController {
         return "redirect:/adminBoard/list";
     }
 
-    // 좋아요 취소
-//   @GetMapping("/deleteBoardLikes/{id}")
-//    public String deleteBoardLikes(@PathVariable Long id) {
-//        adminBoardService.
-//   }
-
-//    @GetMapping("/addBoardLikes/{id}")
-//    public String addBoardLikes(@PathVariable Long id, HttpSession session) {
-//        String memberNickName = (String)session.getAttribute("memberNickName");
-//        System.out.println("세션 memberNickName = " + memberNickName);
-//        adminBoardService.addBoardLikes(memberNickName, id);
-//        return "redirect:/adminBoard/detail/" + id;
-//    }
 
     @GetMapping("/findByBoardLikes/{id}")
     public ResponseEntity findByBoardLikes(@PathVariable Long boardId, HttpSession session) {
