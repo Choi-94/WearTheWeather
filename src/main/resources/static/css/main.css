@@ -61,3 +61,10 @@
     font-size: 25px;
 }
 
+#grayBox {
+    width: 780px;
+    height: 3px;
+    background-color: gainsboro;
+    margin-top: -420px;
+    margin-left: 530px;
+}

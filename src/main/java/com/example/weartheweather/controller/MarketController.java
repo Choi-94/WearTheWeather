@@ -2,9 +2,12 @@ package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import com.example.weartheweather.service.MarketProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +44,6 @@ public class MarketController {
         model.addAttribute("ProductDTO", marketProductDTO);
         return "marketPages/marketDetail";
     }
-
 
 
 }

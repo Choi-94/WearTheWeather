@@ -2,6 +2,7 @@ package com.example.weartheweather.dto;
 
 import com.example.weartheweather.entity.MarketProductEntity;
 import com.example.weartheweather.entity.MarketProductFileEntity;
+import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.util.UtilClass;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -73,3 +75,5 @@ public class MarketProductDTO {
         }
 
     }
+
+
