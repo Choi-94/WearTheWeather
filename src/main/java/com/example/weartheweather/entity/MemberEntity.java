@@ -26,6 +26,8 @@ public class MemberEntity {
     @Column(length = 20, nullable = false, unique = true)
     private String memberNickName;
 
+    @Column(columnDefinition = "int default 0")
+    private int memberPoints;
 
     @Column(nullable = false)
     private String memberGender;
