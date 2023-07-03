@@ -75,8 +75,9 @@ public class AdminBoardService {
     }
 
 
-    public int countBoardLikes(Long id) {
-        return adminBoardLikesRepository.countBoardLikes(id);
+    public int countBoardLikes(Long boardId) {
+        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
+        return adminBoardLikesRepository.countBoardLikes(adminBoardEntity);
     }
 
 

@@ -17,7 +17,7 @@
     <div>
         <input type="hidden" id="id" th:value="${board.id}">
         조회수: <input type="text" th:value="${board.boardHits}">
-        좋아요수: <input type="text" th:value="${boardLikes}">
+        좋아요수: <input type="text" th:value="${countBoardLikes}">
         <h4>착용제품</h4>
         <div>
             <p th:text="${board.top}"></p>
@@ -34,7 +34,7 @@
             <p th:text="${board.etcDetail}"></p>
             <p th:text="${board.etcPrice}"></p>
         </div>
-        <div id="likeButton" class="btn btn-outline-secondary" th:onclick="boardLike([[${board.id}]])">
+        <div id="likeButton" class="btn btn-outline-secondary">
             <i id="likeIcon" class="bi bi-heart"></i> 좋아요
         </div>
         <div>
@@ -54,13 +54,11 @@
         const icon = document.getElementById("likeIcon");
         const button = document.getElementById("likeButton");
         const id = document.querySelector("#id").value;
+        console.log(id)
 
         axios({
             method: "get",
-            url: "/adminBoard/findByBoardLikes/" + id,
-            data: {
-                id: id
-            }
+            url: "/detail/" + id,
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.classList.add("bi-heart-fill");
@@ -70,21 +68,6 @@
             icon.classList.add("bi-heart");
             button.innerHTML = '<i id="likeIcon" class="bi bi-heart"></i> 좋아요';
         });
-
-        // 아이콘의 클래스를 확인하여 좋아요 상태인지 판별합니다.
-        if (icon.classList.contains("bi-heart")) {
-            // 좋아요 상태일 경우, 아이콘 클래스를 변경하여 빈 하트로 바꿉니다.
-            icon.classList.remove("bi-heart");
-            icon.classList.add("bi-heart-fill");
-            button.innerHTML = '<i id="likeIcon" class="bi bi-heart-fill"></i> 좋아요';
-
-        } else {
-            // 좋아요가 취소된 상태일 경우, 아이콘 클래스를 변경하여 색칠된 하트로 바꿉니다.
-            icon.classList.remove("bi-heart-fill");
-            icon.classList.add("bi-heart");
-            button.innerHTML = '<i id="likeIcon" class="bi bi-heart"></i> 좋아요';
-            location.href = "/adminBoard/addBoardLikes/" + id;
-        }
     }
 
     // 좋아요 버튼에 클릭 이벤트를 등록합니다.
