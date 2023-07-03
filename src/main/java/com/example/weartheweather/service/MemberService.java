@@ -5,7 +5,6 @@ import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -40,17 +39,34 @@ public class MemberService {
 
 
     public MemberDTO loginAxios(MemberDTO memberDTO) {
-        MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
-                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
-        MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity);
-        return memberDTO1;
+//        MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
+//                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
+//        MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity);
+//        return memberDTO1;
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
+        if(optionalMemberEntity.isPresent()){
+            MemberDTO memberDTO1 = MemberDTO.tofindAll(optionalMemberEntity.get());
+            return memberDTO1;
+        }else{
+            return null;
+        }
+
+
     }
 
 
     public MemberDTO findByEmail(String memberEmail) {
-        MemberDTO memberDTO = MemberDTO.tofindAll(memberRepository.findByMemberEmail(memberEmail).orElseThrow(()-> new NoSuchElementException()));
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
 
-
-        return memberDTO;
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            MemberDTO memberDTO = MemberDTO.tofindAll(memberEntity);
+            return memberDTO;
+        } else {
+            return null;
+        }
     }
-}
+
+
+    }
+

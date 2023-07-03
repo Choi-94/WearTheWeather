@@ -127,21 +127,21 @@ public class KakaoController {
         memberDTO.setMemberNickName(cosKey);
 
         MemberDTO kakaoMember  = memberService.findByEmail(memberEmail);
-        if(kakaoMember.getMemberEmail()==null){
+        if(kakaoMember==null){
+
             memberService.save(memberDTO);
             session.setAttribute("memberNickName","저장후확인");
-            return "/memberPages/KakaoSave";
+            return "index";
         }else{
             session.setAttribute("memberNickName","확인");
-            return "/memberPages/KakaoSave";
+            return "index";
         }
 
 
     }
 
 
-    @GetMapping("/memberPages/KakaoSave")
-    public String KakaoSaveForm(){
-        return "/memberPages/KakaoSave";
-    }
+
+
+
 }

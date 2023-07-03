@@ -2,10 +2,11 @@ package com.example.weartheweather.dto;
 
 
 import com.example.weartheweather.entity.MemberEntity;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Optional;
 
 @Getter@Setter@ToString
 public class MemberDTO {
