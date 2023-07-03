@@ -43,13 +43,15 @@ public class AdminBoardController {
         adminBoardService.updateHits(id);
         String memberNickName = (String)session.getAttribute("memberNickName");
         AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
+        String boardLikes = null;
         if (adminBoardLikesDTO == null) {
-            model.addAttribute("boardLikes", "bi-heart");
+            boardLikes = null;
         } else {
-            model.addAttribute("boardLikes", "bi-heart");
+            boardLikes = "bi-heart-fill";
         }
         int countBoardLikes = adminBoardService.countBoardLikes(id);
         AdminBoardDTO adminBoardDTO = adminBoardService.findById(id);
+        model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", adminBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
         return "/weatherCodiPages/boardDetail";
@@ -70,14 +72,15 @@ public class AdminBoardController {
 
 
     @GetMapping("/findByBoardLikes/{id}")
-    public ResponseEntity findByBoardLikes(@PathVariable Long boardId, HttpSession session) {
+    public ResponseEntity<String> findByBoardLikes(@PathVariable Long id, HttpSession session) {
         String memberNickName = (String)session.getAttribute("memberNickName");
-        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, boardId);
+        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
+        System.out.println("adminBoardLikesDTO = " + adminBoardLikesDTO);
         if (adminBoardLikesDTO == null) {
-            adminBoardService.addBoardLikes(memberNickName, boardId);
+            adminBoardService.addBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            adminBoardService.deleteBoardLikes(memberNickName, boardId);
+            adminBoardService.deleteBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 

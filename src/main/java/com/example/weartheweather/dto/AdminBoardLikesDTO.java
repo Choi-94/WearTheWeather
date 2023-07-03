@@ -18,8 +18,8 @@ public class AdminBoardLikesDTO extends BaseEntity {
     public static  AdminBoardLikesDTO toDTO(AdminBoardLikesEntity adminBoardLikesEntity) {
         AdminBoardLikesDTO adminBoardLikesDTO = new AdminBoardLikesDTO();
         adminBoardLikesDTO.setId(adminBoardLikesEntity.getId());
-        adminBoardLikesDTO.setMemberId(adminBoardLikesEntity.getId());
-        adminBoardLikesDTO.setBoardId(adminBoardLikesEntity.getId());
+        adminBoardLikesDTO.setMemberId(adminBoardLikesEntity.getMemberEntity().getId());
+        adminBoardLikesDTO.setBoardId(adminBoardLikesEntity.getAdminBoardEntity().getId());
         return adminBoardLikesDTO;
     }
 }
