@@ -33,6 +33,9 @@ public class MemberEntity {
     private String memberGender;
 
     @Column
+    private String platform;
+
+    @Column
     private Long memberWeatherPay;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -53,6 +56,7 @@ public class MemberEntity {
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberNickName(memberDTO.getMemberNickName());
         memberEntity.setMemberGender(memberDTO.getMemberGender());
+        memberEntity.setPlatform(memberDTO.getPlatform());
         return memberEntity;
     }
 }
