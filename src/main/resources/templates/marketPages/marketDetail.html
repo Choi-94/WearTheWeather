@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:top="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <link rel="stylesheet" href="/static/css/boardList.css">
@@ -7,45 +7,35 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-<div th:replace="component/nav :: nav"></div>
+<div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
-    <table class="table table-hover">
-        <tr>
-            <th>상품이미지</th>
-            <td th:each="fileName: ${ProductDTO.storedFileName}">
-                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
-            </td>
-        </tr>
-        <tr>
-            <th>글번호</th>
-            <td th:text="${ProductDTO.id}"></td>
-        </tr>
-        <tr>
-            <th>상품제목</th>
-            <td th:text="${ProductDTO.productTitle}"></td>
-        </tr>
-        <tr>
-            <th>상품사이즈</th>
-            <td th:text="${ProductDTO.productSize}"></td>
-        </tr>
-        <tr>
-            <th>상품가격</th>
-            <td th:text="${ProductDTO.productPrice}"></td>
-        </tr>
-        <tr>
-            <th>거래지역</th>
-            <td th:text="${ProductDTO.transactionArea}"></td>
-        </tr>
-        <tr>
-            <th>찜수</th>
-            <td th:text="${ProductDTO.productDibs}"></td>
-        </tr>
-        <tr>
-            <th>해시태그</th>
-            <td th:text="${ProductDTO.productHashtag}"></td>
-        </tr>
+    <div style="display: flex; align-items: flex-start;">
+        <img th:each="fileName: ${ProductDTO.storedFileName}" th:src="@{|/upload/${fileName}}" width="400" height="400" alt="" style="margin-left: 0%; margin-top: 2%">
+        <div style="margin-top: 20px; margin-left: 30px; font-size: 35px;">
+            <p th:text="${ProductDTO.productTitle}"></p>
+        </div>
+        <div style="display: flex; align-items: flex-start; margin-top: 80px;">
+            <div style="margin-top: 0; margin-left: -130px; font-size: 35px;">
+                <p th:text="${ProductDTO.getFormattedPrice()}"></p>
+            </div>
+        </div>
+    </div>
 
-    </table>
+    <h4>상품사이즈</h4>
+    <p th:text="${ProductDTO.productSize}"></p>
+
+    <h4>상품가격</h4>
+    <p th:text="${ProductDTO.productPrice}"></p>
+
+    <h4>거래지역</h4>
+    <p th:text="${ProductDTO.transactionArea}"></p>
+
+    <h4>찜수</h4>
+    <p th:text="${ProductDTO.productDibs}"></p>
+
+    <h4>해시태그</h4>
+    <p th:text="${ProductDTO.productHashtag}"></p>
+
     <div class="container">
         <button class="btn btn-primary" onclick="list_req()">목록</button>
         <button class="btn btn-primary" onclick="req('update')">수정</button>
