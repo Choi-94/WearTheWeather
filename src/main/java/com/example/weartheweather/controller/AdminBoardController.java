@@ -75,18 +75,18 @@ public class AdminBoardController {
 //        return "redirect:/adminBoard/detail/" + id;
 //    }
 
-//    @GetMapping("/boardLikesUpdate/{id}")
-//    public ResponseEntity boardLikesUpdate(@PathVariable Long id, HttpSession session) {
-//        String memberNickName = (String)session.getAttribute("memberNickName");
-//        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(id, memberNickName);
-//        if (adminBoardLikesDTO == null) {
-//            adminBoardService.addBoardLikes(memberNickName, id);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } else {
-//            adminBoardService.deleteBoardLikes(memberNickName, id);
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//    }
+    @GetMapping("/findByBoardLikes/{id}")
+    public ResponseEntity findByBoardLikes(@PathVariable Long boardId, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, boardId);
+        if (adminBoardLikesDTO == null) {
+            adminBoardService.addBoardLikes(memberNickName, boardId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            adminBoardService.deleteBoardLikes(memberNickName, boardId);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+    }
 
 }

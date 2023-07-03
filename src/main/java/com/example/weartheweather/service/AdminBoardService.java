@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -78,16 +79,26 @@ public class AdminBoardService {
         return adminBoardLikesRepository.countBoardLikes(id);
     }
 
-//
-//    public AdminBoardLikesDTO findByBoardLikes(Long id, String memberNickName) {
-//        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
-//        AdminBoardLikesEntity adminBoardLikesEntity = adminBoardLikesRepository.findByAdminBoardEntityIdAndMemberEntityId(id, memberEntity.getId());
-//        return AdminBoardLikesDTO.toDTO(adminBoardLikesEntity);
-//    }
-//
-//    @Transactional
-//    public void deleteBoardLikes(String memberNickName, Long id) {
-//        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
-//        adminBoardLikesRepository.deleteByAdminBoardEntityIdAndMemberEntityId(id, memberEntity.getId());
-//    }
+
+
+    @Transactional
+    public AdminBoardLikesDTO findByBoardLikes(String memberNickName, Long boardId) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
+        Optional<AdminBoardLikesEntity> optionalAdminBoardLikes = adminBoardLikesRepository.findByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
+        if (optionalAdminBoardLikes.isPresent()) {
+            return null;
+        } else {
+            AdminBoardLikesEntity adminBoardLikesEntity = optionalAdminBoardLikes.get();
+            return AdminBoardLikesDTO.toDTO(adminBoardLikesEntity);
+        }
+    }
+
+
+    public void deleteBoardLikes(String memberNickName, Long boardId) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
+        adminBoardLikesRepository.findByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
+    }
 }
+
