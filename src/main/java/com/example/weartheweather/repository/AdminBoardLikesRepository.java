@@ -13,14 +13,10 @@ import java.util.Optional;
 public interface AdminBoardLikesRepository extends JpaRepository<AdminBoardLikesEntity, Long> {
 
 
-
-//    @Query(value = "select count(b) FROM AdminBoardLikesEntity b where b.adminBoardEntity.id =:id")
-//    int countBoardLikes(Long id);
-
-
-
-    Optional<AdminBoardLikesEntity> findByAdminBoardEntityAndMemberEntity(AdminBoardEntity adminBoardEntity, MemberEntity memberEntity);
-
+    Optional<AdminBoardLikesEntity> findByAdminBoardEntityAndMemberEntity(Optional<AdminBoardEntity> adminBoardEntity, Optional<MemberEntity> memberEntity);
     @Query(value = "select count(b) FROM AdminBoardLikesEntity b where b.adminBoardEntity =:adminBoardEntity")
     int countBoardLikes(AdminBoardEntity adminBoardEntity);
+
+
+    void deleteByAdminBoardEntityAndMemberEntity(Optional<AdminBoardEntity> adminBoardEntity, Optional<MemberEntity> memberEntity);
 }

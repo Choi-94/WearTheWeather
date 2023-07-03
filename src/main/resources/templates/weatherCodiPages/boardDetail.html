@@ -34,8 +34,14 @@
             <p th:text="${board.etcDetail}"></p>
             <p th:text="${board.etcPrice}"></p>
         </div>
-        <div id="likeButton" class="btn btn-outline-secondary">
-            <i id="likeIcon" class="bi bi-heart"></i> 좋아요
+        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
+            <div th:if="${boardLikes == null}">
+                <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
+            </div>
+            <div th:unless="${boardLikes == null}">
+                <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
+            </div>
+
         </div>
         <div>
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
@@ -52,26 +58,20 @@
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
     const toggleLike = () => {
         const icon = document.getElementById("likeIcon");
-        const button = document.getElementById("likeButton");
         const id = document.querySelector("#id").value;
-        console.log(id)
 
         axios({
             method: "get",
-            url: "/detail/" + id,
+            url: "/adminBoard/findByBoardLikes/" + id,
         }).then(res => {
             icon.classList.remove("bi-heart");
-            icon.classList.add("bi-heart-fill");
-            button.innerHTML = '<i id="likeIcon" class="bi bi-heart-fill"></i> 좋아요';
+            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
-            icon.classList.add("bi-heart");
-            button.innerHTML = '<i id="likeIcon" class="bi bi-heart"></i> 좋아요';
+            icon.innerHTML =  '<i class="bi bi-heart"></i>';
         });
     }
 
-    // 좋아요 버튼에 클릭 이벤트를 등록합니다.
-    document.getElementById("likeButton").addEventListener("click", toggleLike);
 </script>
 
 </script>

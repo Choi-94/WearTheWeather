@@ -82,24 +82,23 @@ public class AdminBoardService {
 
 
 
-    @Transactional
     public AdminBoardLikesDTO findByBoardLikes(String memberNickName, Long boardId) {
-        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
-        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
         Optional<AdminBoardLikesEntity> optionalAdminBoardLikes = adminBoardLikesRepository.findByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
         if (optionalAdminBoardLikes.isPresent()) {
-            return null;
-        } else {
             AdminBoardLikesEntity adminBoardLikesEntity = optionalAdminBoardLikes.get();
             return AdminBoardLikesDTO.toDTO(adminBoardLikesEntity);
+        } else {
+            return null;
         }
     }
 
-
+    @Transactional
     public void deleteBoardLikes(String memberNickName, Long boardId) {
-        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
-        AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
-        adminBoardLikesRepository.findByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
+        adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
 }
 
