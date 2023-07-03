@@ -2,24 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
     <form action="/market/save" method="post" enctype="multipart/form-data">
-        <input type="file" name="productImage" class="form-control" multiple><br>
-        <input type="text" name="productSize" class="form-control" placeholder="사이즈"><br>
+        <input type="file" name="productImage" class="form-control" multiple onblur="fileCheck()"><br>
+        <h6 id="productFileCheck"></h6>
+        <input type="text" name="productSize" class="form-control" placeholder="상품 판매페이지에 적혀있는 사이즈 또는 제품 라벨 사이즈를 입력해주세요"
+        onblur="sizeCheck()"><br>
+        <h6 id="productSizeCheck"></h6>
         <button type="button" onclick="getCurrentPos()">내 위치</button>
         <input type="button" onclick="searchLocation()" value="주소찾기"><br>
         <input type="text" id="sample6_postcode" placeholder="우편번호" style="display: none">
-        <input type="text" id="transactionArea" name="transactionArea" class="form-control" placeholder="주소"><br>
+        <input type="text" id="transactionArea" name="transactionArea" class="form-control" placeholder="주소" onblur="transactionAreaCheck()" ><br>
+        <h6 id="productAreaCheck"></h6>
         <input type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
         <input type="text" id="sample6_extraAddress" placeholder="참고항목" style="display: none">
-        <input type="text" name="productPrice" class="form-control" placeholder="상품가격"><br>
-        <input type="text" name="productTitle" class="form-control" placeholder="글제목"><br>
+        <input type="text" name="productPrice" class="form-control" placeholder="상품가격" onblur="priceCheck()"><br>
+        <h6 id="productPriceCheck"></h6><br>
+        <input type="text" name="productTitle" id="productTitle" class="form-control" placeholder="글제목" onblur="titleCheck()"><br>
+        <h6 id="productTitleCheck"></h6><br>
         <textarea name="productContents" cols="10" rows="10" class="form-control"
-                  placeholder="구입연도, 브랜드, 사용감, 하자 유무 등 구매자에게 필요한 정보를 꼭 포함해주세요 (10자이상) "></textarea><br>
+                  placeholder="구입연도, 브랜드, 사용감, 하자 유무 등 구매자에게 필요한 정보를 꼭 포함해주세요 (10자이상) " onblur="contentsCheck()"></textarea><br>
+        <h6 id="productContentsCheck"></h6>
         <textarea name="productHashtag" cols="1" rows="1" class="form-control"
                   placeholder="연관태그를 입력해주세요 (최대 5개)"></textarea><br>
         <label><input type="radio" name="productSeason" value="Spring">봄</label>
@@ -42,6 +50,103 @@
 </body>
 <div th:replace="component/footer :: footer"></div>
 <script>
+    const contentsCheck = () => {
+        const contentscheck = document.querySelector('textarea[name="productContents"]').value;
+        const exp = /^[가-힣a-zA-Z0-9\s]{10,}$/;
+        if (contentscheck.match(exp)) {
+            document.getElementById("productContentsCheck").innerText = "글내용이 작성되었습니다";
+            document.getElementById("productContentsCheck").style.color = "green";
+        } else if (contentscheck.length == 0) {
+            document.getElementById("productContentsCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productContentsCheck").style.color = "red";
+            document.getElementById("productContentsCheck").focus();
+        } else {
+            document.getElementById("productContentsCheck").innerText = "(필수)글내용을 10자 이상 작성해주세요";
+            document.getElementById("productContentsCheck").style.color = "red";
+            document.getElementById("productContentsCheck").focus();
+        }
+    }
+    const fileCheck = () => {
+        const filecheck = document.querySelector('input[name="productImage"]').value;
+        const exp = /\.(png|jpg)$/i;
+        if (filecheck.match(exp)) {
+            document.getElementById("productFileCheck").innerText = "사진이 첨부되었습니다";
+            document.getElementById("productFileCheck").style.color = "green";
+        } else if (sizecheck.length == 0) {
+            document.getElementById("productFileCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productFileCheck").style.color = "red";
+            document.getElementById("productFileCheck").focus();
+        } else {
+            document.getElementById("productFileCheck").innerText = "jpg, png 이미지 파일을 첨부해주세요";
+            document.getElementById("productFileCheck").style.color = "red";
+            document.getElementById("productFileCheck").focus();
+        }
+    }
+    const sizeCheck = () => {
+        const sizecheck = document.querySelector('input[name="productSize"]').value;
+        const exp = /^[가-힣a-zA-Z0-9\s]{4,8}$/;
+        if (sizecheck.match(exp)) {
+            document.getElementById("productSizeCheck").innerText = "사이즈 입력되었습니다.";
+            document.getElementById("productSizeCheck").style.color = "green";
+        } else if (sizecheck.length == 0) {
+            document.getElementById("productSizeCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productSizeCheck").style.color = "red";
+            document.getElementById("productSizeCheck").focus();
+        } else {
+            document.getElementById("productSizeCheck").innerText = "4~8자리의 사이즈 정보를 입력해주세요";
+            document.getElementById("productSizeCheck").style.color = "red";
+            document.getElementById("productSizeCheck").focus();
+        }
+    }
+    const transactionAreaCheck = () => {
+        const areacheck = document.querySelector('input[name="transactionArea"]').value;
+        const exp = /^[가-힣a-zA-Z0-9\s]{10,30}$/;
+        if (areacheck.match(exp)) {
+            document.getElementById("productAreaCheck").innerText = "주소 입력되었습니다.";
+            document.getElementById("productAreaCheck").style.color = "green";
+        } else if (areacheck.length == 0) {
+            document.getElementById("productAreaCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productAreaCheck").style.color = "red";
+            document.getElementById("productAreaCheck").focus();
+        } else {
+            document.getElementById("productAreaCheck").innerText = "10~30자리의 주소를 입력해주세요";
+            document.getElementById("productAreaCheck").style.color = "red";
+            document.getElementById("productAreaCheck").focus();
+        }
+    }
+    const priceCheck = () => {
+        const pricecheck = document.querySelector('input[name="productPrice"]').value;
+        const exp = /^[0-9]{4,12}$/;
+        if (pricecheck.match(exp)) {
+            document.getElementById("productPriceCheck").innerText = "금액 입력되었습니다.";
+            document.getElementById("productPriceCheck").style.color = "green";
+        } else if (pricecheck.length == 0) {
+            document.getElementById("productPriceCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productPriceCheck").style.color = "red";
+            document.getElementById("productPriceCheck").focus();
+        } else {
+            document.getElementById("productPriceCheck").innerText = "4~12자리 숫자만 입력해주세요";
+            document.getElementById("productPriceCheck").style.color = "red";
+            document.getElementById("productPriceCheck").focus();
+        }
+    }
+    const titleCheck = () => {
+        const titlecheck = document.querySelector('input[name="productTitle"]').value;
+        const exp = /^[가-힣a-zA-Z0-9\s]{8,16}$/;
+        if (titlecheck.match(exp)) {
+            document.getElementById("productTitleCheck").innerText = "사용가능한 글제목입니다";
+            document.getElementById("productTitleCheck").style.color = "green";
+        } else if (titlecheck.length == 0) {
+            document.getElementById("productTitleCheck").innerText = "기입 필수 항목입니다";
+            document.getElementById("productTitleCheck").style.color = "red";
+            document.getElementById("productTitleCheck").focus();
+        } else {
+            document.getElementById("productTitleCheck").innerText = "8~20자리 글제목을 입력해주세요";
+            document.getElementById("productTitleCheck").style.color = "red";
+            document.getElementById("productTitleCheck").focus();
+        }
+    }
+
     // gps로 위치불러오기
     function getCurrentPos(){
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -118,6 +223,10 @@
                 document.getElementById("sample6_detailAddress").focus();
             }
         }).open();
+
     }
+
+
+
 </script>
 </html>
