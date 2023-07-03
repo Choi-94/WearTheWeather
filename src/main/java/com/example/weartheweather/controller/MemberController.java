@@ -68,4 +68,8 @@ public class MemberController {
         session.invalidate();
         return "index";
     }
+//    @GetMapping("/mypage")
+//    public String mypageForm(){
+//
+//    }
 }
