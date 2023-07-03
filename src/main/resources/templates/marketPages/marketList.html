@@ -7,9 +7,8 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-<div th:replace="component/nav :: nav"></div>
+<div th:replace="component/navMarket :: navMarket"></div>
 
-<button type="button" onclick="productSave()">상품등록</button><br>
 
 <div id="section">
     <div  id="product-list">
@@ -19,13 +18,13 @@
                     <tr>
                 </th:block>
                 <td>
-                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName, '[', '').replace(']', '')}|}" width="200" height="200" alt="" th:onclick="productDetail([[${product.id}]])">
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="productDetail([[${product.id}]])">
                     <table>
                         <tr>
                             <td th:text="${product.productTitle}"></td>
                         </tr>
                         <tr>
-                            <td th:text="${product.productPrice+'won'}"></td>
+                            <td th:text="${product.getFormattedPrice()}"></td>
                         </tr>
                     </table>
                 </td>
@@ -42,9 +41,7 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    const productSave = () =>{
-        window.location.href = "/market/save";
-    }
+
     const productDetail = (id) =>{
         window.location.href = "/market/" + id;
     }

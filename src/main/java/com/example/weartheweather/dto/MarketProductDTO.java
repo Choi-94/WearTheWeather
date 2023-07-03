@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class MarketProductDTO {
     private String productSize;
     private String productTitle;
     private String transactionArea;
-    private int productPrice;;
+    private int productPrice;
+
     private String productContents;
     private String productSeason;
     private String productWeather;
@@ -47,21 +49,27 @@ public class MarketProductDTO {
         marketProductDTO.setProductWeather(marketProductEntity.getProductWeather());
         marketProductDTO.setProductTemp(marketProductEntity.getProductTemp());
         marketProductDTO.setCreatedAt(UtilClass.dateFormat(marketProductEntity.getCreatedAt()));
-        if(marketProductEntity.getFileAttached() == 1) {
+        if (marketProductEntity.getFileAttached() == 1) {
             marketProductDTO.setFileAttached(1);
             List<String> originalFileNameList = new ArrayList<>();
             List<String> storedFileNameList = new ArrayList<>();
 
-            for(MarketProductFileEntity marketProductFileEntity : marketProductEntity.getMarketProductFileEntityList()){
+            for (MarketProductFileEntity marketProductFileEntity : marketProductEntity.getMarketProductFileEntityList()) {
                 originalFileNameList.add(marketProductFileEntity.getOriginalFileName());
                 storedFileNameList.add(marketProductFileEntity.getStoredFileName());
             }
             marketProductDTO.setOriginalFileName(originalFileNameList);
             marketProductDTO.setStoredFileName(storedFileNameList);
-        } else{
+        } else {
             marketProductDTO.setFileAttached(0);
         }
         return marketProductDTO;
 
     }
-}
+
+        public String getFormattedPrice() {
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            return decimalFormat.format(this.productPrice) + "원";
+        }
+
+    }
