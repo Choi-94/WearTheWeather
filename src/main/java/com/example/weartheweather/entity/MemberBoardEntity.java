@@ -19,6 +19,8 @@ public class MemberBoardEntity extends BaseEntity  {
     private Long id;
     @Column(length = 10)
     private String season;
+    @Column(length = 20)
+    private String boardWriter;
     @Column(length = 50)
     private String boardTitle;
     @Column(length = 500)
@@ -29,7 +31,7 @@ public class MemberBoardEntity extends BaseEntity  {
     private int boardHits;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer_nickname")
+    @JoinColumn(name = "writer_id")
     private MemberEntity memberEntity;
 
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -45,6 +47,7 @@ public class MemberBoardEntity extends BaseEntity  {
         MemberBoardEntity memberBoardEntity = new MemberBoardEntity();
         memberBoardEntity.setMemberEntity(memberEntity);
         memberBoardEntity.setSeason(memberBoardDTO.getSeason());
+        memberBoardEntity.setBoardWriter(memberEntity.getMemberNickName());
         memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());
         memberBoardEntity.setBoardContents(memberBoardDTO.getBoardContents());
         memberBoardEntity.setBoardLikes(0);

@@ -17,6 +17,8 @@ import java.util.List;
 @ToString
 public class MemberBoardDTO {
     private Long id;
+    private Long memberId;
+
     private String season;
     private String boardWriter;
     private String boardTitle;
@@ -32,6 +34,7 @@ public class MemberBoardDTO {
     public static MemberBoardDTO toDTO(MemberBoardEntity memberBoardEntity) {
         MemberBoardDTO memberBoardDTO = new MemberBoardDTO();
         memberBoardDTO.setId(memberBoardEntity.getId());
+        memberBoardDTO.setMemberId(memberBoardEntity.getMemberEntity().getId());
         memberBoardDTO.setSeason(memberBoardEntity.getSeason());
         memberBoardDTO.setBoardWriter(memberBoardEntity.getMemberEntity().getMemberNickName());
         memberBoardDTO.setBoardTitle(memberBoardEntity.getBoardTitle());
