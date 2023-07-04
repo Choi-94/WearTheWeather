@@ -1,5 +1,6 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.MemberBoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,4 +40,16 @@ public class MemberBoardEntity {
     private List<MemberBoardLikesEntity> likesEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    public static MemberBoardEntity toSaveEntity(MemberBoardDTO memberBoardDTO, MemberEntity memberEntity) {
+        MemberBoardEntity memberBoardEntity = new MemberBoardEntity();
+        memberBoardEntity.setMemberEntity(memberEntity);
+        memberBoardEntity.setSeason(memberBoardDTO.getSeason());
+        memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());
+        memberBoardEntity.setBoardContents(memberBoardDTO.getBoardContents());
+        memberBoardEntity.setBoardLikes(0);
+        memberBoardEntity.setBoardHits(0);
+        return memberBoardEntity;
+    }
+
 }
