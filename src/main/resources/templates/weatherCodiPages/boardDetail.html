@@ -10,6 +10,7 @@
 <body>
 <div class="container">
     <div th:replace="component/header :: header"></div>
+    <div th:replace="component/nav :: nav"></div>
     <div class="text-center">
         <img th:src="@{|/upload/${board.storedFileName}}"
              alt="" style="max-width: 100%; height: auto">
@@ -52,6 +53,7 @@
 
     </div>
 </div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const update = (id) => {

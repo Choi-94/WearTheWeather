@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+    <form action="/memberBoard/save" method="post" enctype="multipart/form-data">
+        <input type="file" name="boardFile" multiple>
+        <label>
+            <input type="radio" name="season" value="Spring">봄
+        </label>
+        <label>
+            <input type="radio" name="season" value="Summer">여름
+        </label>
+        <label>
+            <input type="radio" name="season" value="Fall">가을
+        </label>
+        <label>
+            <input type="radio" name="season" value="Winter">겨울
+        </label><br>
+        제목: <input type="text" name="boardTitle"> <br>
+        내용: <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+        <input type="submit" value="작성" class="btn btn-primary">
+    </form>
+</div>
+
+<div th:replace="component/footer :: footer"></div>
+</body>
+</html>

@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-
+<div th:replace="component/nav :: nav"></div>
 <div id="section">
     <div class="text-center">
         <img th:src="@{|/upload/${board.storedFileName}}"
@@ -75,6 +75,6 @@
         <input type="submit" value="작성">
     </form>
 </div>
-
+<div th:replace="component/footer :: footer"></div>
 </body>
 </html>

@@ -19,6 +19,8 @@ public class MemberBoardDTO {
     private int boardLikes;
     private int boardHits;
     private List<MultipartFile> boardFile;
+    private String originalFileName;
+    private String storedFileName;
     private String createdAt;
 
 }

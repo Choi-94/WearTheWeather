@@ -18,7 +18,7 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-
+<div th:replace="component/nav :: nav"></div>
 <div id="section">
     <a href="/adminBoard/save">저장하기</a>
 
@@ -112,6 +112,7 @@
 
 
 </div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const detail = (id) => {
