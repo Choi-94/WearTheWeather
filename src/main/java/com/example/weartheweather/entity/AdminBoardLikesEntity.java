@@ -10,7 +10,7 @@ import java.lang.reflect.Member;
 @Setter
 @Getter
 @Table(name = "admin_likes_table")
-public class AdminBoardLikesEntity {
+public class AdminBoardLikesEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

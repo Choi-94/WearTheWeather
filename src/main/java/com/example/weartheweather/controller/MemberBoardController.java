@@ -1,6 +1,9 @@
 package com.example.weartheweather.controller;
 
+import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
+import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,8 +40,23 @@ public class MemberBoardController {
     }
 
     @GetMapping("/detail/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model, HttpSession session) {
+        memberBoardService.updateHits(id);
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
+        String boardLikes = null;
+        if (memberBoardLikesDTO == null) {
+            boardLikes = null;
+        } else {
+            boardLikes = "bi-heart-fill";
+        }
+        int countBoardLikes = memberBoardService.countBoardLikes(id);
+        MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
+        model.addAttribute("boardLikes", boardLikes);
+        model.addAttribute("board", memberBoardDTO);
+        model.addAttribute("countBoardLikes", countBoardLikes);
         return "/codiContestPages/boardDetail";
     }
+
 
 }

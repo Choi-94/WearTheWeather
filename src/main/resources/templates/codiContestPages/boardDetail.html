@@ -3,22 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
     <a href="/memberBoard/save">저장하기</a>
-<h2>디테일이에융</h2>
+
+    <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
+        <div th:if="${boardLikes == null}">
+            <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
+        </div>
+        <div th:unless="${boardLikes == null}">
+            <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
+        </div>
+    </div>
+    <div id="countLikes">
+        <div>
+            좋아요수: <input type="text" th:value="${countBoardLikes}">
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
+    </div>
 
 </div>
 
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    const detail = (id) => {
-        location.href = "/memberBoard/detail/" + id;
+    const update = (id) => {
+        location.href = "/memberBoard/update/" + id;
     }
+
+    // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
+    const toggleLike = () => {
+        const icon = document.getElementById("likeIcon");
+        const id = document.querySelector("#id").value;
+
+        axios({
+            method: "get",
+            url: "/memberBoard/findByBoardLikes/" + id,
+        }).then(res => {
+            icon.classList.remove("bi-heart");
+            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            location.href = "/memberBoard/detail/" + id;
+        }).catch(err => {
+            icon.classList.remove("bi-heart-fill");
+            icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            location.href = "/memberBoard/detail/" + id;
+        });
+    }
+
 
 </script>
 </html>
