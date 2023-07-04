@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+    <a href="/memberBoard/save">저장하기</a>
+<h2>디테일이에융</h2>
+
+</div>
+
+<div th:replace="component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+    const detail = (id) => {
+        location.href = "/memberBoard/detail/" + id;
+    }
+
+</script>
+</html>

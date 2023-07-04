@@ -4,13 +4,12 @@ import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/memberBoard")
@@ -31,8 +30,15 @@ public class MemberBoardController {
     }
 
     @GetMapping("/list")
-    public String findAll() {
+    public String findAll(Model model) {
+        List<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll();
+        model.addAttribute("boardList", memberBoardDTOList);
         return "/codiContestPages/boardList";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String findById(@PathVariable Long id, Model model) {
+        return "/codiContestPages/boardDetail";
     }
 
 }

@@ -3,14 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
     <a href="/memberBoard/save">저장하기</a>
+    <div  id="memberBoard-list">
+        <table>
+            <th:block th:each="board, iterationStatus: ${boardList}">
+                <th:block th:if="${iterationStatus.index % 5 == 0}">
+                    <tr>
+                </th:block>
+                <td>
+                    <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${board.id}]])">
+                    <table>
+                        <tr>
+                            <td th:text="${board.boardWriter}"></td>
+                        </tr>
+                        <tr>
+                            <td i class="bi bi-eye"  th:text="${board.boardHits}"></td></tdi> <br>
+                            <td i class="bi bi-heart-fill" th:text="${board.boardLikes}"></td></i>
+                        </tr>
+                    </table>
+                </td>
+                <th:block th:if="${(iterationStatus.index + 1) % 5 == 0 or iterationStatus.last}">
+                    </tr>
+                </th:block>
+            </th:block>
+        </table>
+
+
+
+    </div>
+
 </div>
 
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script th:inline="javascript">
+    const detail = (id) => {
+        location.href = "/memberBoard/detail/" + id;
+    }
+
+</script>
 </html>

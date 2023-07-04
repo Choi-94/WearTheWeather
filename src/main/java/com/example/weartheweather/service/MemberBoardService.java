@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -37,5 +39,15 @@ public class MemberBoardService {
                     MemberBoardFileEntity.toSaveBoardFileEntity(savedEntity, originalFileName,storedFileName);
             memberBoardFileRepository.save(memberBoardFileEntity);
         }
+    }
+
+    @Transactional
+    public List<MemberBoardDTO> findAll() {
+        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findAll();
+        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+        memberBoardEntityList.forEach(memberBoardEntity -> {
+            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
+        });
+        return memberBoardDTOList;
     }
 }
