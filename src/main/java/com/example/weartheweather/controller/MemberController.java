@@ -85,4 +85,11 @@ public class MemberController {
             return "/myInfoPages/myInfoUpdate";
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody MemberDTO memberDTO){
+        System.out.println("memberDTO수정 = " + memberDTO);
+        memberService.update(memberDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

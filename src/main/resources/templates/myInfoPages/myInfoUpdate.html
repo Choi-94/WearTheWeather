@@ -1,32 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <th:block th:replace="component/config :: config"></th:block>
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <form>
-  <input type="hidden" th:value="${member.id}">
-  <input type="text" th:value="${member.memberEmail}">
-  <input type="hidden" th:value="${member.platform}" id="platform">
-  <input type="text" th:value="${member.platform}">
-  <input type="password" id="PasswordInput" style="display: block" placeholder="비밀번호수정">
+    <input type="hidden" name="memberPoints" th:value="${member.memberPoints}">
+    <input type="hidden" name="memberWeatherPay" th:value="${member.memberWeatherPay}">
+    <input type="hidden" name="id" th:value="${member.id}">
+    <input type="text" name="memberEmail" class="form-control" th:value="${member.memberEmail}" readonly>
+    <input type="hidden" name="platform" th:value="${member.platform}" id="platform">
+    <input type="password" name="memberPassword" class="form-control" th:value="${member.memberPassword}"id="PasswordInput" style="display: block" placeholder="비밀번호수정">
+    <div>
+        <input type="hidden" class="form-control" id="currentNickName" th:value="${member.memberNickName}">
+        <input type="text" class="form-control" name="memberNickName" th:value="${member.memberNickName}"
+               id="memberNickName" onblur="nickname()">
+        <h6 id="membernicknameconfirmtext"></h6><br>
+    </div>
+    <div>
+        <label>성별:</label>
+        <label><input type="radio" name="memberGender" th:value="male">남성</label>
+        <label><input type="radio" name="memberGender" th:value="female">여성</label>
+    </div>
+    <input type="button" onclick="memberUpdate()" value="수정하기">
 </form>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script>
-  const res = document.getElementById("platform").value;
-  console.log(res);
-  $(function (){
-    if(res.length!=0){
-      document.getElementById("PasswordInput").style.display="none";
-    }else{
-      document.getElementById("PasswordInput").style.display="";
+    const res = document.getElementById("platform").value;
+    console.log(res);
+    $(function () {
+        if (res.length != 0) {
+            document.getElementById("PasswordInput").style.display = "none";
+        } else {
+            document.getElementById("PasswordInput").style.display = "";
+        }
+    })
+
+    // 닉네임 중복
+
+    const nickname = () => {
+        const currentNickName = document.getElementById("currentNickName").value;
+        const memberNickName = document.getElementById("memberNickName").value;
+        const memberNickNameCheck = document.getElementById("membernicknameconfirmtext");
+        const exp = /^(?!.*(?:씨발|꺼져|병신|새꺄|자살)).*$/;
+        $.ajax({
+            type: "post",
+            url: "/member/nickcheck",
+            data: {
+                "memberNickName": memberNickName
+            },
+            success: function (res) {
+                if (memberNickName.length != 0) {
+                    if (memberNickName.match(exp)) {
+                        if(currentNickName==memberNickName){
+                            memberNickNameCheck.innerText = "현재 계정과 같은 닉네임입니다"
+                            memberNickNameCheck.style.color = "green";
+                        }
+                        else if (res == 0) {
+                            console.log(res);
+                            memberNickNameCheck.innerText = "사용 가능한 닉네임입니다"
+                            memberNickNameCheck.style.color = "green";
+                        }else{
+                            console.log(res);
+                            memberNickNameCheck.innerText = "중복된 닉네임입니다"
+                            memberNickNameCheck.style.color = "red";
+                            document.getElementById("memberNickName").focus();
+                        }
+
+                    } else {
+                        memberNickNameCheck.innerText = "비속어가 포함된 단어는 사용하실 수 없습니다"
+                        memberNickNameCheck.style.color = "red";
+                        document.getElementById("memberNickName").focus();
+                    }
+                } else {
+                    memberNickNameCheck.innerText = "필수 입력 사항입니다"
+                    memberNickNameCheck.style.color = "red";
+                    document.getElementById("memberNickName").focus();
+                }
+            },
+            error: function () {
+                alert("서버 요청 실패");
+            }
+        });
     }
-  })
+
 
 </script>
+<script th:inline="javascript">
+    // 수정처리 axios
+    memberUpdate = () => {
+        const kakao = document.querySelector('input[name="platform"]').value;
+        const pay = document.querySelector('input[name="memberWeatherPay"]').value;
+        const points = document.querySelector('input[name="memberPoints"]').value;
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const id = document.querySelector('input[name="id"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const nickname = document.querySelector('input[name="memberNickName"]').value;
+        const gen = document.querySelector('input[name="memberGender"]').value;
+
+        axios({
+            method: "put",
+            url: "/member/" + id,
+            data: {
+                id: id,
+                memberEmail: email,
+                memberPassword: password,
+                memberNickName: nickname,
+                memberWeatherPay: pay,
+                memberPoints: points,
+                memberGender: gen,
+                platform: kakao
+            }
+        }).then(res => {
+            location.href = "/member/" + id;
+        }).catch(err => {
+            alert("회원정보 수정 실패!");
+        })
+    }
+</script>
+
+
 </html>
