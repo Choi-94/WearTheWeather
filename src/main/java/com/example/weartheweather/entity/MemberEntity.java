@@ -35,7 +35,7 @@ public class MemberEntity {
     @Column
     private String platform;
 
-    @Column
+    @Column(columnDefinition = "Long default 0")
     private Long memberWeatherPay;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -52,6 +52,19 @@ public class MemberEntity {
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
 
         MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberNickName(memberDTO.getMemberNickName());
+        memberEntity.setMemberGender(memberDTO.getMemberGender());
+        memberEntity.setPlatform(memberDTO.getPlatform());
+        return memberEntity;
+    }
+
+    public static MemberEntity toUpdateEntity(MemberDTO memberDTO){
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberPoints(memberDTO.getMemberPoints());
+        memberEntity.setMemberWeatherPay(memberDTO.getMemberWeatherPay());
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberNickName(memberDTO.getMemberNickName());
