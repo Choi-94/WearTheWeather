@@ -19,6 +19,9 @@ public class AlarmEntity {
     @Column(length = 50)
     private String message;
 
+    @Column(length = 50)
+    private String type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private MemberEntity writerMemberEntity;

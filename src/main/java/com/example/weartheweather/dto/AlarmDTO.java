@@ -9,6 +9,7 @@ import lombok.ToString;
 @ToString
 public class AlarmDTO {
     private Long id;
+    private String type;
     private Long writerId;
     private Long loginId;
     private String message;

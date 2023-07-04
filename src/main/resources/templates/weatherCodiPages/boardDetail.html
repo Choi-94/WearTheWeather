@@ -17,7 +17,6 @@
     <div>
         <input type="hidden" id="id" th:value="${board.id}">
         조회수: <input type="text" th:value="${board.boardHits}">
-        좋아요수: <input type="text" th:value="${countBoardLikes}">
         <h4>착용제품</h4>
         <div>
             <p th:text="${board.top}"></p>
@@ -41,7 +40,11 @@
             <div th:unless="${boardLikes == null}">
                 <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
             </div>
-
+        </div>
+        <div id="countLikes">
+            <div>
+                좋아요수: <input type="text" th:value="${countBoardLikes}">
+            </div>
         </div>
         <div>
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
@@ -66,11 +69,14 @@
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            location.href = "/adminBoard/detail/" + id;
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            location.href = "/adminBoard/detail/" + id;
         });
     }
+
 
 </script>
 
