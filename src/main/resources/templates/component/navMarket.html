@@ -14,13 +14,13 @@
         </ul>
         <ul>
             <li class="board-name" id="board-area">
-                <a href="/market/save">
+                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/market/save'}">
                     <i class="bi bi-coin" style="">판매하기</i>
                 </a>
-                <a href="/">
+                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/'}">
                     <i class="bi bi-clipboard-check">거래내역</i>
                 </a>
-                <a href="/">
+                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/'}">
                     <i class="bi bi-chat-dots">웨더톡</i>
                 </a>
             </li>

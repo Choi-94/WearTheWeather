@@ -10,7 +10,7 @@
 .box {
     width: 100%;
     height: 120px;
-    background-color: #0099FF;
+    background-color: #558BCF;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -67,4 +67,44 @@
     background-color: gainsboro;
     margin-top: -420px;
     margin-left: 530px;
+}
+
+
+#detailButton button {
+    background-color: #558BCF;
+    color: white;
+    width: 180px; height: 80px; border-radius: 10px;
+}
+.grayBox2 {
+    margin-top: -450px;
+    width: 100%;
+    height: 3px;
+    background-color: gainsboro;
+}
+
+.grayBox_vertical {
+    position: absolute;
+    top:796px;
+    left: 50%;
+    width: 3px;
+    height: 300px;
+    background-color: gainsboro;
+    display: inline-block;
+}
+
+
+.detail_3_left {
+    position: absolute;
+    top:796px;
+    left: 52%;
+    display: inline-block;
+    white-space: pre-line;
+}
+
+.grayBox3 {
+    position: absolute;
+    top:1093px;
+    width: 68%;
+    height: 3px;
+    background-color: gainsboro;
 }

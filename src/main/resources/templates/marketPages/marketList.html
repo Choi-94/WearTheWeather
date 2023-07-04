@@ -18,13 +18,17 @@
                     <tr>
                 </th:block>
                 <td>
-                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="productDetail([[${product.id}]])">
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="258" height="258" alt="" th:onclick="productDetail([[${product.id}]])">
                     <table>
                         <tr>
-                            <td th:text="${product.productTitle}"></td>
+                            <td th:text="${product.productTitle}" style=" margin-left: 2px; font-size: 20px"></td>
                         </tr>
                         <tr>
-                            <td th:text="${product.getFormattedPrice()}"></td>
+                            <td>
+                                <span th:text="${product.getFormattedPrice()}" style="display: inline-block;  loat: left; font-size: 20px;"></span>
+                                <span><i class="bi bi-geo-alt" style="display: inline-block; margin-left: 32px; font-size: 20px;"></i></span>
+                                <span th:text="${product.transactionArea.substring(0, 6)}" style="display: inline-block;  float: right; font-size: 20px"></span>
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -45,5 +49,6 @@
     const productDetail = (id) =>{
         window.location.href = "/market/" + id;
     }
+
 </script>
 </html>
