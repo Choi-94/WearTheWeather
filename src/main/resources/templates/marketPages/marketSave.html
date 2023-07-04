@@ -9,6 +9,7 @@
 <div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
     <form action="/market/save" method="post" enctype="multipart/form-data">
+        <input type="text" id="NickName" style="display: none">
         <input type="file" name="productImage" class="form-control" multiple onblur="fileCheck()"><br>
         <h6 id="productFileCheck"></h6>
         <input type="text" name="productSize" class="form-control" placeholder="상품 판매페이지에 적혀있는 사이즈 또는 제품 라벨 사이즈를 입력해주세요"
