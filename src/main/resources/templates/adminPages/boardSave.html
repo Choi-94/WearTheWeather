@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-
+<div th:replace="component/nav :: nav"></div>
 <div id="section">
     <form action="/adminBoard/save" method="post" enctype="multipart/form-data">
         태그: <input type="text" name="hashTags"> <br>
@@ -67,6 +67,6 @@
         <input type="submit" value="작성">
     </form>
 </div>
-
+<div th:replace="component/footer :: footer"></div>
 </body>
 </html>

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "member_likes_table")
-public class MemberBoardLikesEntity {
+public class MemberBoardLikesEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,5 +24,10 @@ public class MemberBoardLikesEntity {
     @JoinColumn(name = "board_id")
     private MemberBoardEntity memberBoardEntity;
 
-
+    public static MemberBoardLikesEntity toSaveEntity(MemberEntity memberEntity, MemberBoardEntity memberBoardEntity) {
+        MemberBoardLikesEntity memberBoardLikesEntity = new MemberBoardLikesEntity();
+        memberBoardLikesEntity.setMemberEntity(memberEntity);
+        memberBoardLikesEntity.setMemberBoardEntity(memberBoardEntity);
+        return memberBoardLikesEntity;
+    }
 }

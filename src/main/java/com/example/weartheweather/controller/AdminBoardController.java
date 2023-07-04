@@ -83,7 +83,7 @@ public class AdminBoardController {
             adminBoardService.deleteBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-
     }
+
 
 }

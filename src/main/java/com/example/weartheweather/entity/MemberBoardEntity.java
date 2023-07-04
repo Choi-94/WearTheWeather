@@ -1,5 +1,6 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.MemberBoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +13,14 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "member_board_table")
-public class MemberBoardEntity {
+public class MemberBoardEntity extends BaseEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 10)
     private String season;
+    @Column(length = 20)
+    private String boardWriter;
     @Column(length = 50)
     private String boardTitle;
     @Column(length = 500)
@@ -39,4 +42,17 @@ public class MemberBoardEntity {
     private List<MemberBoardLikesEntity> likesEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    public static MemberBoardEntity toSaveEntity(MemberBoardDTO memberBoardDTO, MemberEntity memberEntity) {
+        MemberBoardEntity memberBoardEntity = new MemberBoardEntity();
+        memberBoardEntity.setMemberEntity(memberEntity);
+        memberBoardEntity.setSeason(memberBoardDTO.getSeason());
+        memberBoardEntity.setBoardWriter(memberEntity.getMemberNickName());
+        memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());
+        memberBoardEntity.setBoardContents(memberBoardDTO.getBoardContents());
+        memberBoardEntity.setBoardLikes(0);
+        memberBoardEntity.setBoardHits(0);
+        return memberBoardEntity;
+    }
+
 }
