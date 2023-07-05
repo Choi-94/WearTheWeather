@@ -38,14 +38,15 @@
 <script>
     const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
 
-    function displayWeather(temperature, weather) {
+    function displayWeather(temperature, weather, name) {
         const resultElement = document.getElementById("weatherResult");
-        resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather}`;
+        resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather} 접속위치:${name}`;
+
 
         const weatherIconElement = document.createElement("img");
         weatherIconElement.classList.add("weather-icon");
-        weatherIconElement.style.width = "100px"; // 가로 크기 설정
-        weatherIconElement.style.height = "100px"; // 세로 크기 설정
+        weatherIconElement.style.width = "60px"; // 가로 크기 설정
+        weatherIconElement.style.height = "60px"; // 세로 크기 설정
         const iconFileName = getIconFileName(weather);
         weatherIconElement.src = `/img/${iconFileName}`;
 
@@ -78,8 +79,9 @@
                     .then(data => {
                         const temperature = data.main.temp; // 온도
                         const weather = data.weather[0].main; // 날씨 조건
+                        const name = data.name; // 날씨 조건
 
-                        displayWeather(temperature, weather);
+                        displayWeather(temperature, weather, name);
                     })
                     .catch(error => {
                         alert("날씨 정보를 가져오는 중에 오류가 발생했습니다.");

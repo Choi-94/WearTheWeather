@@ -35,7 +35,7 @@ public class MemberEntity {
     @Column
     private String platform;
 
-    @Column(columnDefinition = "Long default 0")
+    @Column(columnDefinition = "bigint default 0")
     private Long memberWeatherPay;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -49,6 +49,9 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MemberBoardEntity> memberBoardEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MarketProductEntity> marketProductEntityList  = new ArrayList<>();
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
 
         MemberEntity memberEntity = new MemberEntity();

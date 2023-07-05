@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class MarketController {
         return "marketPages/marketSave";
     }
     @PostMapping("/save")
-    public String save(@ModelAttribute MarketProductDTO marketProductDTO) throws IOException {
-        marketProductService.save(marketProductDTO);
+    public String save(@ModelAttribute MarketProductDTO marketProductDTO, HttpSession session) throws IOException {
+        String memberNickName =  (String)session.getAttribute("memberNickName");
+        marketProductService.save(marketProductDTO, memberNickName);
         return "redirect:/market/list";
     }
 
