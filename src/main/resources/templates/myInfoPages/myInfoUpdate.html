@@ -24,8 +24,8 @@
     </div>
     <div>
         <label>성별:</label>
-        <label><input type="radio" name="memberGender" th:value="male">남성</label>
-        <label><input type="radio" name="memberGender" th:value="female">여성</label>
+        <label><input type="radio" name="memberGender" value="male" th:checked="${member.memberGender == 'male'}">남성</label>
+        <label><input type="radio" name="memberGender" value="female" th:checked="${member.memberGender == 'female'}">여성</label>
     </div>
     <input type="button" onclick="memberUpdate()" value="수정하기">
 </form>
@@ -102,7 +102,7 @@
         const id = document.querySelector('input[name="id"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
         const nickname = document.querySelector('input[name="memberNickName"]').value;
-        const gen = document.querySelector('input[name="memberGender"]').value;
+        const gen = document.querySelector('input[name="memberGender"]:checked').value;
 
         axios({
             method: "put",
@@ -118,7 +118,8 @@
                 platform: kakao
             }
         }).then(res => {
-            location.href = "/member/" + id;
+            alert("회원정보 수정 완료")
+            location.href = "/member/mypage";
         }).catch(err => {
             alert("회원정보 수정 실패!");
         })

@@ -64,7 +64,7 @@ public class MemberController {
         }else{
             session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
             session.setAttribute("memberEmail", memberDTO1.getMemberEmail());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(memberDTO1,HttpStatus.OK);
         }
     }
     @GetMapping("/logout")

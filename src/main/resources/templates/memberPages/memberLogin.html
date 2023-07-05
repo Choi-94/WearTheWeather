@@ -72,7 +72,8 @@
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
-        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        // const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        const adminEmail = "gkdud@naver.com";
         console.log("이메일",email);
         console.log("비밀번호", password);
         axios({
@@ -84,8 +85,14 @@
             }
         }).then(res => {
             console.log("res", res);
+            if(res.data.memberEmail==adminEmail){
 
-            location.href = "/";
+                location.href = "/admin/index";
+
+            }else{
+                location.href ="/";
+                console.log(res.data.memberEmail)
+            }
             // location.href = redirectURI;
 
 
