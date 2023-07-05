@@ -82,4 +82,17 @@ public class MemberBoardService {
         MemberBoardEntity memberBoardEntity = memberBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return MemberBoardDTO.toDTO(memberBoardEntity);
     }
+
+    public void addBoardLikes(String memberNickName, Long id) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        MemberBoardEntity memberBoardEntity = memberBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        memberBoardLikesRepository.save(MemberBoardLikesEntity.toSaveEntity(memberEntity, memberBoardEntity));
+    }
+
+    @Transactional
+    public void deleteBoardLikes(String memberNickName, Long id) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(id);
+        memberBoardLikesRepository.deleteByMemberBoardEntityAndMemberEntity(memberBoardEntity, memberEntity);
+    }
 }

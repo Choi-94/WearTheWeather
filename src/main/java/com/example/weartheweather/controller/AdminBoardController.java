@@ -43,10 +43,8 @@ public class AdminBoardController {
         adminBoardService.updateHits(id);
         String memberNickName = (String)session.getAttribute("memberNickName");
         AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
-        String boardLikes = null;
-        if (adminBoardLikesDTO == null) {
-            boardLikes = null;
-        } else {
+        String boardLikes = "";
+        if (adminBoardLikesDTO != null) {
             boardLikes = "bi-heart-fill";
         }
         int countBoardLikes = adminBoardService.countBoardLikes(id);
