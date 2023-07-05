@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
 <div class="container">
-    <div th:replace="component/header :: header"></div>
-    <div th:replace="component/nav :: nav"></div>
     <div class="text-center">
         <img th:src="@{|/upload/${board.storedFileName}}"
              alt="" style="max-width: 100%; height: auto">
@@ -35,10 +35,10 @@
             <p th:text="${board.etcPrice}"></p>
         </div>
         <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
-            <div th:if="${boardLikes == null}">
+            <div th:if="${boardLikes.isEmpty()}">
                 <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
             </div>
-            <div th:unless="${boardLikes == null}">
+            <div th:unless="${boardLikes.isEmpty()}">
                 <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
             </div>
         </div>

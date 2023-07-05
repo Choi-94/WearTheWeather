@@ -14,4 +14,6 @@ public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLik
     int countBoardLikes(MemberBoardEntity memberBoardEntity);
 
     Optional<MemberBoardLikesEntity> findByMemberBoardEntityAndMemberEntity(Optional<MemberBoardEntity> memberBoardEntity, Optional<MemberEntity> memberEntity);
+
+    void deleteByMemberBoardEntityAndMemberEntity(Optional<MemberBoardEntity> memberBoardEntity, Optional<MemberEntity> memberEntity);
 }

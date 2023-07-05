@@ -6,6 +6,8 @@ import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +46,8 @@ public class MemberBoardController {
         memberBoardService.updateHits(id);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
-        String boardLikes = null;
-        if (memberBoardLikesDTO == null) {
-            boardLikes = null;
-        } else {
+        String boardLikes = "";
+        if (memberBoardLikesDTO != null) {
             boardLikes = "bi-heart-fill";
         }
         int countBoardLikes = memberBoardService.countBoardLikes(id);
@@ -58,5 +58,18 @@ public class MemberBoardController {
         return "/codiContestPages/boardDetail";
     }
 
+    @GetMapping("/findByBoardLikes/{id}")
+    public ResponseEntity<String> findByBoardLikes(@PathVariable Long id, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        System.out.println("memberNickName = " + memberNickName);
+            MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
+        if (memberBoardLikesDTO == null) {
+            memberBoardService.addBoardLikes(memberNickName, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            memberBoardService.deleteBoardLikes(memberNickName, id);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 
 }

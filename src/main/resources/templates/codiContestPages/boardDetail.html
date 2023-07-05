@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -12,11 +13,11 @@
 <div id="section">
     <a href="/memberBoard/save">저장하기</a>
 
-    <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
-        <div th:if="${boardLikes == null}">
+    <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
+        <div th:if="${boardLikes.isEmpty()}">
             <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
         </div>
-        <div th:unless="${boardLikes == null}">
+        <div th:unless="${boardLikes.isEmpty()}">
             <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
         </div>
     </div>
@@ -39,7 +40,7 @@
     }
 
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
-    const toggleLike = () => {
+    const toggleLike2 = () => {
         const icon = document.getElementById("likeIcon");
         const id = document.querySelector("#id").value;
 
