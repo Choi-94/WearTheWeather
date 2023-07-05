@@ -19,6 +19,9 @@ import java.util.Optional;
 @ToString
 public class MarketProductDTO {
     private Long id;
+    private Long memberId;
+
+    private String productWriter;
     private String productSize;
     private String productTitle;
     private String transactionArea;
@@ -41,6 +44,7 @@ public class MarketProductDTO {
     public static MarketProductDTO toDTO(MarketProductEntity marketProductEntity) {
         MarketProductDTO marketProductDTO = new MarketProductDTO();
         marketProductDTO.setId(marketProductEntity.getId());
+        marketProductDTO.setProductWriter(marketProductEntity.getProductWriter());
         marketProductDTO.setProductSize(marketProductEntity.getProductSize());
         marketProductDTO.setTransactionArea(marketProductEntity.getTransactionArea());
         marketProductDTO.setProductPrice(marketProductEntity.getProductPrice());

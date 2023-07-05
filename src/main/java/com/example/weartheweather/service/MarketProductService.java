@@ -4,8 +4,10 @@ import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.entity.AdminBoardFileEntity;
 import com.example.weartheweather.entity.MarketProductEntity;
 import com.example.weartheweather.entity.MarketProductFileEntity;
+import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.MarketProductFileRepository;
 import com.example.weartheweather.repository.MarketProductRepository;
+import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +25,19 @@ import java.util.Optional;
 public class MarketProductService {
     private final MarketProductRepository marketProductRepository;
     private final MarketProductFileRepository marketProductFileRepository;
+    private final MemberRepository memberRepository;
 
-    public Long save(MarketProductDTO marketProductDTO) throws IOException {
+    public Long save(MarketProductDTO marketProductDTO, String memberNickName) throws IOException {
         if (marketProductDTO.getProductImage() == null || marketProductDTO.getProductImage().get(0).isEmpty()) {
-            // 파일 없음
-            MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntity(marketProductDTO);
+            // 파일없음
+            MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+            MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntity(marketProductDTO, memberEntity);
             return marketProductRepository.save(marketProductEntity).getId();
         } else {
             // 파일 있음
             // 1. Board 테이블에 데이터를 먼저 저장
-            MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntityWithFile(marketProductDTO);
+            MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+            MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntityWithFile(marketProductDTO, memberEntity);
             MarketProductEntity savedEntity = marketProductRepository.save(marketProductEntity);
             // 2. 파일이름 꺼내고, 저장용 이름 만들고 파일 로컬에 저장
             for (MultipartFile productImage : marketProductDTO.getProductImage()) {

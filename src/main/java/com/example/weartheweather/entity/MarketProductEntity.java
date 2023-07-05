@@ -23,6 +23,9 @@ public class MarketProductEntity extends BaseEntity {
     private int fileAttached;
 
     @Column(nullable = false, length = 30)
+    private String productWriter;  // 글작성자
+
+    @Column(nullable = false, length = 30)
     private String productSize;  // 상품 크기
 
     @Column(nullable = false, length = 30)
@@ -65,8 +68,9 @@ public class MarketProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AlarmEntity> alarmEntityList = new ArrayList<>();
 
-    public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO) {
+    public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setProductWriter(memberEntity.getMemberNickName());
         marketProductEntity.setProductSize(marketProductDTO.getProductSize());
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
         marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
@@ -80,8 +84,10 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setFileAttached(0);
         return  marketProductEntity;
     }
-    public static MarketProductEntity toSaveEntityWithFile(MarketProductDTO marketProductDTO) {
+    public static MarketProductEntity toSaveEntityWithFile(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setMemberEntity(memberEntity);
+        marketProductEntity.setProductWriter(marketProductDTO.getProductWriter());
         marketProductEntity.setProductSize(marketProductDTO.getProductSize());
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
         marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
