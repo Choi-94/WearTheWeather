@@ -12,7 +12,7 @@
     <!--    날씨에 따른 이미지 들어갈 공간-->
 </div>
 <div id="section">
-    <form action="/member/memberlogin" method="post">
+    <form action="/member/memberLogin" method="post">
         <input type="hidden" name="redirectURI" th:value="${redirectURI}">
         <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
         <input type="text" name="memberPassword" placeholder="비밀번호"  class="form-control"> <br>
@@ -72,7 +72,7 @@
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
-        // const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
         const adminEmail = "gkdud@naver.com";
         console.log("이메일",email);
         console.log("비밀번호", password);
@@ -90,7 +90,7 @@
                 location.href = "/admin/index";
 
             }else{
-                location.href ="/";
+                location.href = redirectURI;
                 console.log(res.data.memberEmail)
             }
             // location.href = redirectURI;

@@ -6,29 +6,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    #section{
+        position: relative;
+        left: 300px;
+        display: flex;
+    }
+</style>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<form>
-    <input type="hidden" name="memberPoints" th:value="${member.memberPoints}">
-    <input type="hidden" name="memberWeatherPay" th:value="${member.memberWeatherPay}">
-    <input type="hidden" name="id" th:value="${member.id}">
-    <input type="text" name="memberEmail" class="form-control" th:value="${member.memberEmail}" readonly>
-    <input type="hidden" name="platform" th:value="${member.platform}" id="platform">
-    <input type="password" name="memberPassword" class="form-control" th:value="${member.memberPassword}"id="PasswordInput" style="display: block" placeholder="비밀번호수정">
-    <div>
-        <input type="hidden" class="form-control" id="currentNickName" th:value="${member.memberNickName}">
-        <input type="text" class="form-control" name="memberNickName" th:value="${member.memberNickName}"
-               id="memberNickName" onblur="nickname()">
-        <h6 id="membernicknameconfirmtext"></h6><br>
-    </div>
-    <div>
-        <label>성별:</label>
-        <label><input type="radio" name="memberGender" value="male" th:checked="${member.memberGender == 'male'}">남성</label>
-        <label><input type="radio" name="memberGender" value="female" th:checked="${member.memberGender == 'female'}">여성</label>
-    </div>
-    <input type="button" onclick="memberUpdate()" value="수정하기">
-</form>
+<div th:replace="component/infonav :: infonav"></div>
+<div class="container" id="section">
+    <form>
+        <input type="hidden" name="memberPoints" th:value="${member.memberPoints}">
+        <input type="hidden" name="memberWeatherPay" th:value="${member.memberWeatherPay}">
+        <input type="hidden" name="id" th:value="${member.id}">
+        <input type="text" name="memberEmail" class="form-control" th:value="${member.memberEmail}" readonly>
+        <input type="hidden" name="platform" th:value="${member.platform}" id="platform">
+        <input type="password" name="memberPassword" class="form-control" th:value="${member.memberPassword}"
+               id="PasswordInput" style="display: block" placeholder="비밀번호수정">
+        <div>
+            <input type="hidden" class="form-control" id="currentNickName" th:value="${member.memberNickName}">
+            <input type="text" class="form-control" name="memberNickName" th:value="${member.memberNickName}"
+                   id="memberNickName" onblur="nickname()">
+            <h6 id="membernicknameconfirmtext"></h6><br>
+        </div>
+        <div>
+            <label>성별:</label>
+            <label><input type="radio" name="memberGender" value="male" th:checked="${member.memberGender == 'male'}">남성</label>
+            <label><input type="radio" name="memberGender" value="female"
+                          th:checked="${member.memberGender == 'female'}">여성</label>
+        </div>
+        <input type="button" onclick="memberUpdate()" value="수정하기">
+    </form>
+</div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
@@ -58,15 +70,14 @@
             success: function (res) {
                 if (memberNickName.length != 0) {
                     if (memberNickName.match(exp)) {
-                        if(currentNickName==memberNickName){
+                        if (currentNickName == memberNickName) {
                             memberNickNameCheck.innerText = "현재 계정과 같은 닉네임입니다"
                             memberNickNameCheck.style.color = "green";
-                        }
-                        else if (res == 0) {
+                        } else if (res == 0) {
                             console.log(res);
                             memberNickNameCheck.innerText = "사용 가능한 닉네임입니다"
                             memberNickNameCheck.style.color = "green";
-                        }else{
+                        } else {
                             console.log(res);
                             memberNickNameCheck.innerText = "중복된 닉네임입니다"
                             memberNickNameCheck.style.color = "red";

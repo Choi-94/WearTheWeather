@@ -37,7 +37,15 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
-
+    public boolean login(MemberDTO memberDTO) {
+        Optional<MemberEntity> memberEntity =
+                memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
+        if (memberEntity.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public MemberDTO loginAxios(MemberDTO memberDTO) {
 //        MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
 //                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));

@@ -5,9 +5,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    #section{
+        position: relative;
+        left: 500px;
+        display: flex;
+    }
+</style>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div th:replace="component/adminnav :: nav"></div>
 <div id="section">
     <form action="/adminBoard/save" method="post" enctype="multipart/form-data">
         태그: <input type="text" name="hashTags"> <br>

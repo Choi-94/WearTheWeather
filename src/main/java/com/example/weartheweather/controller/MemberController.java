@@ -21,14 +21,36 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
     @GetMapping("/memberLogin")
-    public String loginForm(){
-        return "/memberPages/memberLogin";
+    public String loginForm(@RequestParam(value = "redirectURI", defaultValue = "/") String redirectURI,
+                            Model model) {
+        System.out.println("MemberController.loginForm");
+        System.out.println("redirectURI = " + redirectURI);
+        model.addAttribute("redirectURI", redirectURI);
+        return "memberPages/memberLogin";
     }
 
     @GetMapping("/memberSave")
     public String saveForm(){
         return "/memberPages/memberSave";
     }
+    @PostMapping("/login")
+    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
+                              @RequestParam("redirectURI") String redirectURI) {
+        System.out.println("MemberController.memberLogin");
+        System.out.println("URI" + redirectURI);
+        boolean loginResult = memberService.login(memberDTO);
+        if (loginResult) {
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+//            return "memberPages/memberMain";
+            // 로그인 성공하면 사용자가 직전에 요청한 주소로 redirect
+            // 인터셉터에 걸리지 않고 처음부터 로그인하는 사용자였다면
+            // redirect:/member/mypage 로 요청되며, memberMain 화면으로 전환됨.
+            return "redirect:" + redirectURI;
+        } else {
+            return "memberPages/memberLogin";
+        }
+    }
+
 
 
     @PostMapping("/memberSave")
