@@ -1,7 +1,6 @@
 package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.MarketProductDTO;
-import com.example.weartheweather.entity.AdminBoardFileEntity;
 import com.example.weartheweather.entity.MarketProductEntity;
 import com.example.weartheweather.entity.MarketProductFileEntity;
 import com.example.weartheweather.entity.MemberEntity;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -71,4 +69,13 @@ public class MarketProductService {
         return MarketProductDTO.toDTO(marketProductEntity);
     }
 
+    @Transactional
+    public List<MarketProductDTO> findByProductWriter(String productWriter) {
+        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findByProductWriter(productWriter);
+        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();
+        marketProductEntityList.forEach(marketProductEntity -> {
+            marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity));
+        });
+        return marketProductDTOList;
+    }
 }

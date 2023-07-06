@@ -29,6 +29,7 @@ public class MarketController {
     @PostMapping("/save")
     public String save(@ModelAttribute MarketProductDTO marketProductDTO, HttpSession session) throws IOException {
         String memberNickName =  (String)session.getAttribute("memberNickName");
+        System.out.println("memberNickName = " + memberNickName);
         marketProductService.save(marketProductDTO, memberNickName);
         return "redirect:/market/list";
     }
@@ -44,6 +45,8 @@ public class MarketController {
     public String findById(@PathVariable Long id, Model model) {
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
         model.addAttribute("ProductDTO", marketProductDTO);
+        List<MarketProductDTO> marketProductDTOList = marketProductService.findByProductWriter(marketProductDTO.getProductWriter());
+        model.addAttribute("marketProductList", marketProductDTOList);
         return "marketPages/marketDetail";
     }
 
