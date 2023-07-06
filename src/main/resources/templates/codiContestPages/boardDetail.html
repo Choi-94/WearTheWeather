@@ -12,13 +12,32 @@
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
     <a href="/memberBoard/save">저장하기</a>
+    <div class="text-center">
+        <img th:src="@{|/upload/${board.storedFileName}}"
+             alt="" style="max-width: 100%; height: auto">
+    </div>
+    <div>
+        <input type="hidden" id="id" th:value="${board.id}">
+
+        <div>
+            <h3 th:text="${board.boardTitle}"></h3>
+        </div>
+        <div>
+            <h6 th:text="${board.boardWriter + ' | ' + board.boardHits + ' | ' + board.createdAt}"></h6>
+        </div>
+        <div></div>
+        <div th:each="fileName: ${board.storedFileName}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </div>
+        <div th:text="${board.boardContents}"></div>
+
 
     <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
         <div th:if="${boardLikes.isEmpty()}">
-            <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
+            <i id="likeIcon2"  class="bi bi-heart"></i> 좋아요
         </div>
         <div th:unless="${boardLikes.isEmpty()}">
-            <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
+            <i id="likeIcon2"  class="bi bi-heart-fill"></i> 좋아요
         </div>
     </div>
     <div id="countLikes">
@@ -41,7 +60,7 @@
 
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
     const toggleLike2 = () => {
-        const icon = document.getElementById("likeIcon");
+        const icon = document.getElementById("likeIcon2");
         const id = document.querySelector("#id").value;
 
         axios({

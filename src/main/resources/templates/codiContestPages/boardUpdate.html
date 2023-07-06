@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+    <form action="/memberBoard/save" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${board.id}">
+        <input type="hidden" name="boardHits" th:value="${board.boardHits}">
+        <input type="hidden" name="boardLikes" th:value="${board.boardLikes}">
+        <div th:each="fileName: ${board.storedFileName}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </div>
+        <input type="file" name="boardFile" multiple> <br>
+        <label>
+            <input type="radio" name="season" value="Spring" th:checked="${board.season == 'Spring'}">봄
+        </label>
+        <label>
+            <input type="radio" name="season" value="Summer" th:checked="${board.season == 'Summer'}">여름
+        </label>
+        <label>
+            <input type="radio" name="season" value="Fall" th:checked="${board.season == 'Fall'}">가을
+        </label>
+        <label>
+            <input type="radio" name="season" value="Winter" th:checked="${board.season == 'Winter'}">겨울
+        </label><br>
+        제목: <input type="text" name="boardTitle" th:value="${board.boardTitle}"> <br>
+        내용: <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요" th:value="${board.boardContents}"></textarea>
+        <input type="submit" value="작성" class="btn btn-primary">
+    </form>
+</div>
+
+<div th:replace="component/footer :: footer"></div>
+</body>
+</html>
