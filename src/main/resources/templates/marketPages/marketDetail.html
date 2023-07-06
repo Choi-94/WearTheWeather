@@ -83,7 +83,7 @@
         <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p><br>
         <p style="line-height: 0.95; margin-top: -35px;">판매상품</p>
         <div class="detailsButtonList">
-        <button onclick="productDetailList()">목록</button>
+            <button th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'">목록</button>
         </div>
         <table style="margin-top: -70px">
             <th:block th:each="product, iterationStatus: ${marketProductList}">
@@ -113,7 +113,7 @@
         window.location.href = "/market/" + id;
     }
 
-    const productDetailList = () =>{
+    const productDetailList = (id) =>{
         window.location.href = "/market/list/" + id;
     }
 

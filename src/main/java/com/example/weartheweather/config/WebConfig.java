@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler(resourcePath).addResourceLocations(savePath);
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor()) // 인터셉터로 등록할 클래스
@@ -24,4 +25,5 @@ public class WebConfig implements WebMvcConfigurer {
                         "/js/**", "/css/**", "/images/**", "/image/**","/admin/**","/adminBoard/save","/member/logout","/static/**","/upload/**","/market/{id}","/auth/**",
                         "/*.ico", "/favicon/**"); // 인터셉터 검증을 하지 않을 주소
     }
+
 }

@@ -52,6 +52,9 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MarketProductEntity> marketProductEntityList  = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MarketLikesEntity> marketLikesEntityList  = new ArrayList<>();
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
 
         MemberEntity memberEntity = new MemberEntity();

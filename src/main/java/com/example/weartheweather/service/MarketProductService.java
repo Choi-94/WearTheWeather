@@ -1,9 +1,10 @@
 package com.example.weartheweather.service;
 
+import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
-import com.example.weartheweather.entity.MarketProductEntity;
-import com.example.weartheweather.entity.MarketProductFileEntity;
-import com.example.weartheweather.entity.MemberEntity;
+import com.example.weartheweather.dto.MemberBoardLikesDTO;
+import com.example.weartheweather.entity.*;
+import com.example.weartheweather.repository.MarketLikesRepository;
 import com.example.weartheweather.repository.MarketProductFileRepository;
 import com.example.weartheweather.repository.MarketProductRepository;
 import com.example.weartheweather.repository.MemberRepository;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class MarketProductService {
     private final MarketProductRepository marketProductRepository;
     private final MarketProductFileRepository marketProductFileRepository;
     private final MemberRepository memberRepository;
+    private final MarketLikesRepository marketLikesRepository;
 
     public Long save(MarketProductDTO marketProductDTO, String memberNickName) throws IOException {
         if (marketProductDTO.getProductImage() == null || marketProductDTO.getProductImage().get(0).isEmpty()) {
@@ -78,4 +81,35 @@ public class MarketProductService {
         });
         return marketProductDTOList;
     }
+
+    public MarketLikesDTO findByMarketLikes(String memberNickName, Long id) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(id);
+        Optional<MarketLikesEntity> optionalMarketLikes = marketLikesRepository.findByMarketProductEntityAndMemberEntity(marketProductEntity, memberEntity);
+        if (optionalMarketLikes.isPresent()) {
+            MarketLikesEntity marketLikesEntity = optionalMarketLikes.get();
+            return MarketLikesDTO.toDTO(marketLikesEntity);
+        } else {
+            return null;
+        }
+    }
+
+    @Transactional
+    public int countMarketLikes(Long id) {
+        MarketProductEntity marketProductEntity = marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return marketLikesRepository.countMarketLikes(marketProductEntity);
+    }
+    public void addMarketLikes(String memberNickName, Long id) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        MarketProductEntity marketProductEntity =  marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        marketLikesRepository.save(MarketLikesEntity.toSaveEntity(memberEntity, marketProductEntity));
+    }
+
+    @Transactional
+    public void deleteMarketLikes(String memberNickName, Long id) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(id);
+        marketLikesRepository.deleteByMarketProductEntityAndMemberEntity(marketProductEntity, memberEntity);
+    }
+
 }

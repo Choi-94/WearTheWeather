@@ -14,15 +14,22 @@
             <tr>
                 <th>판매상품</th>
                 <th>글제목</th>
-                <th>date</th>
-                <th>hits</th>
+                <th>상품가격</th>
+                <th>상품사이즈</th>
+                <th>계절</th>
+                <th>온도</th>
+                <th>기후</th>
             </tr>
             <tr th:each="product: ${marketProductList}">
-                <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="100" height="100" alt="" th:onclick="productDetail([[${product.id}]])">
-                <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
-                <td th:text="${board.boardWriter}"></td>
-                <td th:text="${board.createdAt}"></td>
-                <td th:text="${board.boardHits}"></td>
+                <td>
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="150" height="150" alt="" th:onclick="productDetail([[${product.id}]])">
+                </td>
+                <td th:text="${product.productTitle}"></td>
+                <td th:text="${product.productPrice}"></td>
+                <td th:text="${product.productSize}"></td>
+                <td th:text="${product.productSeason}"></td>
+                <td th:text="${product.productTemp}"></td>
+                <td th:text="${product.productWeather}"></td>
             </tr>
         </table>
     </div>
