@@ -85,7 +85,7 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }else{
             session.setAttribute("memberNickName", memberDTO1.getMemberNickName());
-            session.setAttribute("memberEmail", memberDTO1.getMemberEmail());
+            session.setAttribute("loginEmail", memberDTO1.getMemberEmail());
             return new ResponseEntity<>(memberDTO1,HttpStatus.OK);
         }
     }

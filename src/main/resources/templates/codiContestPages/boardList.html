@@ -10,6 +10,7 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
+    <a href="/memberBoard/save">저장하기</a>
     <div  id="memberBoard-list">
         <table>
             <th:block th:each="board, iterationStatus: ${boardList}">
