@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <link rel="stylesheet" href="/static/css/boardList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div id="section">
+    <div class="container" id="board-list">
+        <table class="table table-striped table-hover text-center">
+            <tr>
+                <th>판매상품</th>
+                <th>글제목</th>
+                <th>date</th>
+                <th>hits</th>
+            </tr>
+            <tr th:each="product: ${marketProductList}">
+                <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="100" height="100" alt="" th:onclick="productDetail([[${product.id}]])">
+                <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+                <td th:text="${board.boardWriter}"></td>
+                <td th:text="${board.createdAt}"></td>
+                <td th:text="${board.boardHits}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:replace="component/footer :: footer"></div>
+
+</body>
+<script th:inline="javascript">
+
+    const productDetail = (id) =>{
+        window.location.href = "/market/" + id;
+    }
+
+</script>
+</html>

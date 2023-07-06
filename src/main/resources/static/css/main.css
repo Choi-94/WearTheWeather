@@ -108,3 +108,16 @@
     height: 3px;
     background-color: gainsboro;
 }
+.detailsButtonList button {
+    background-color: #558BCF;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    margin-top: -85px;
+    margin-left: 70px;
+    width: 60px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
