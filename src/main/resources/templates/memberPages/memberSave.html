@@ -10,7 +10,7 @@
 <form method="post" action="/member/memberSave">
     <!-- 이메일 입력 -->
     <div class="form-group last mb-4 email_input">
-        <label for="memail" id="mailTxt">사용하실 이메일을 입력해주세요</label>
+        <label for="memail" id="mailTxt">사용하실 이메일을 입력해주세요(회원가입 후 이메일 수정을 불가합니다)</label>
         <input type="text" class="form-control" name="memberEmail" id="memail" onblur="email()" style="width: auto">
         <h6 id="member_emailcheck"></h6><br>
     </div>
@@ -78,7 +78,7 @@
                     "font-weight": "bold",
                     "font-size": "10px"
                 });
-                //console.log("중복아이디");
+                $("#submitBtn").prop("disabled", true); // 가입하기 버튼 비활성화
             } else {
                 emconfirmchk = true;
                 $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>");
@@ -87,9 +87,12 @@
                     "font-weight": "bold",
                     "font-size": "10px"
                 });
+                $("#submitBtn").prop("disabled", false); // 가입하기 버튼 활성화
             }
         });
     }
+
+
 
     //비밀번호 정규식 메서드
     const passwordcheck = () => {
@@ -116,10 +119,12 @@
         const passwordconfirm = document.querySelector('input[name="memberPasswordConfirm"]').value;
 
         if (passwordcheck == passwordconfirm) {
+            Passconfirmchk = true;
             document.getElementById("memberPasswordConfirm").style.border = '1px solid green';
             document.getElementById("memberpasswordconfirmtext").innerText = "일치합니다"
             document.getElementById("memberpasswordconfirmtext").style.color = "green";
         } else {
+            Passconfirmchk = false;
             document.getElementById("memberPasswordConfirm").style.border = '1px solid red';
             document.getElementById("memberpasswordconfirmtext").innerText = "비밀번호와 맞지 않습니다 다시 확인 부탁드립니다"
             document.getElementById("memberpasswordconfirmtext").style.color = "red";
@@ -182,31 +187,48 @@
                 if(memberNickName.length!=0){
                     if (memberNickName.match(exp)) {
                         if (res == 0) {
-                            console.log(res);
+                            Nickconfirmchk = true;
                             memberNickNameCheck.innerText = "사용 가능한 닉네임입니다"
                             memberNickNameCheck.style.color = "green";
                         } else {
-                            console.log(res);
+                            Nickconfirmchk = false;
                             memberNickNameCheck.innerText = "중복된 닉네임입니다"
                             memberNickNameCheck.style.color = "red";
-                            document.getElementById("memberNickName").focus();
+                            Nickconfirmchk = false;
                         }
                     } else {
                         memberNickNameCheck.innerText = "비속어가 포함된 단어는 사용하실 수 없습니다"
                         memberNickNameCheck.style.color = "red";
-                        document.getElementById("memberNickName").focus();
+                        Nickconfirmchk = false;
                     }
                 }else{
+                    Nickconfirmchk = false;
                     memberNickNameCheck.innerText = "필수 입력 사항입니다"
                     memberNickNameCheck.style.color = "red";
                     document.getElementById("memberNickName").focus();
                 }
             },
             error: function () {
+                Nickconfirmchk = false;
                 alert("서버 요청 실패");
             }
         });
     }
+
+    // 폼 제출(submit) 이벤트 처리
+    $("form").on("submit", function (event) {
+        if (!emconfirmchk) {
+            event.preventDefault(); // submit 이벤트를 막음
+            // 인증번호가 틀렸을 때 사용자에게 알림을 줄 수 있습니다.
+            alert("인증번호가 잘못되었습니다. 다시 확인해주세요.");
+        }else if(!Passconfirmchk){
+            event.preventDefault();
+            alert("비밀번호를 다시 확인해주세요.");
+        } else if(!Nickconfirmchk){
+            event.preventDefault();
+            alert("닉네임을 다시 확인해주세요.");
+        }
+    });
 </script>
 
 </body>
