@@ -134,11 +134,11 @@ public class KakaoController {
 
             memberService.save(memberDTO);
             session.setAttribute("memberNickName",memberNickName);
-            session.setAttribute("memberEmail",memberEmail);
+            session.setAttribute("loginEmail",memberEmail);
             return "index";
         }else{
             session.setAttribute("memberNickName",memberNickName);
-            session.setAttribute("memberEmail",memberEmail);
+            session.setAttribute("loginEmail",memberEmail);
             return "index";
         }
 
