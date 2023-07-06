@@ -72,4 +72,11 @@ public class MemberBoardController {
         }
     }
 
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
+        model.addAttribute("board", memberBoardDTO);
+        return "/codiContestPages/boardUpdate";
+    }
+
 }
