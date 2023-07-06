@@ -1,8 +1,12 @@
 package com.example.weartheweather.controller;
 
+import com.example.weartheweather.dto.AdminBoardLikesDTO;
+import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.service.MarketProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +52,25 @@ public class MarketController {
     @GetMapping("/list/{id}")
     public String findByDetailList(@PathVariable Long id, Model model) {
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
+        System.out.println("id = " + id + ", model = " + model);
         model.addAttribute("ProductDTO", marketProductDTO);
         List<MarketProductDTO> marketProductDTOList = marketProductService.findByProductWriter(marketProductDTO.getProductWriter());
         model.addAttribute("marketProductList", marketProductDTOList);
-        return "marketPages/markeSellerList";
+        return "marketPages/marketSellerList";
+    }
+
+    @GetMapping("/findByMarketLikes/{id}")
+    public ResponseEntity<String> findByMarketLikes(@PathVariable Long id, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
+        System.out.println("adminBoardLikesDTO = " + marketLikesDTO);
+        if (marketLikesDTO == null) {
+            marketProductService.addMarketLikes(memberNickName, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            marketProductService.deleteMarketLikes(memberNickName, id);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
 
