@@ -70,6 +70,7 @@ public class MarketProductEntity extends BaseEntity {
 
     public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setMemberEntity(memberEntity);
         marketProductEntity.setProductWriter(memberEntity.getMemberNickName());
         marketProductEntity.setProductSize(marketProductDTO.getProductSize());
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
@@ -87,7 +88,7 @@ public class MarketProductEntity extends BaseEntity {
     public static MarketProductEntity toSaveEntityWithFile(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
         marketProductEntity.setMemberEntity(memberEntity);
-        marketProductEntity.setProductWriter(marketProductDTO.getProductWriter());
+        marketProductEntity.setProductWriter(memberEntity.getMemberNickName());
         marketProductEntity.setProductSize(marketProductDTO.getProductSize());
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
         marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
