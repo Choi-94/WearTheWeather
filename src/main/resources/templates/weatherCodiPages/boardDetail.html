@@ -63,7 +63,7 @@
 
         axios({
             method: "get",
-            url: "/adminBoard/findByBoardLikes/" + id,
+            url: "/adminBoard/findByBoardLikes/" + id
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
