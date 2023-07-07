@@ -95,4 +95,9 @@ public class MemberBoardService {
         Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(id);
         memberBoardLikesRepository.deleteByMemberBoardEntityAndMemberEntity(memberBoardEntity, memberEntity);
     }
+
+    public void update(MemberBoardDTO memberBoardDTO) {
+        MemberBoardEntity memberBoardEntity = MemberBoardEntity.toUpdateEntity(memberBoardDTO);
+        memberBoardRepository.save(memberBoardEntity);
+    }
 }
