@@ -32,7 +32,7 @@ public class MarketProductDTO {
     private String productWeather;
     private String productTemp;
     private String productHashtag;
-    private int productDibs;
+    private int marketLikes;
     private int productHits;
     private String createdAt;
 
@@ -54,6 +54,8 @@ public class MarketProductDTO {
         marketProductDTO.setProductSeason(marketProductEntity.getProductSeason());
         marketProductDTO.setProductWeather(marketProductEntity.getProductWeather());
         marketProductDTO.setProductTemp(marketProductEntity.getProductTemp());
+        marketProductDTO.setMarketLikes(marketProductEntity.getMarketLikes());
+        marketProductDTO.setProductHits(marketProductEntity.getProductHits());
         marketProductDTO.setCreatedAt(UtilClass.dateFormat(marketProductEntity.getCreatedAt()));
         if (marketProductEntity.getFileAttached() == 1) {
             marketProductDTO.setFileAttached(1);

@@ -112,4 +112,8 @@ public class MarketProductService {
         marketLikesRepository.deleteByMarketProductEntityAndMemberEntity(marketProductEntity, memberEntity);
     }
 
+    @Transactional
+    public void updateHits(Long id) {
+        marketProductRepository.updateHits(id);
+    }
 }
