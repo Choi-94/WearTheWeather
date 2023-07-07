@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:top="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <link rel="stylesheet" href="/static/css/boardList.css">
@@ -10,6 +10,7 @@
 <div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
     <div style="display: flex; align-items: flex-start;">
+        <input type="hidden" id="id" th:value="${ProductDTO.id}">
         <img id="currentImage" th:src="@{|/upload/${ProductDTO.storedFileName[0]}|}" width="500" height="500" alt="" style="margin-top: 2%;">
         <div style="margin-top: 20px; margin-left: 28px; font-size: 35px;">
             <p th:text="${ProductDTO.productTitle}"></p>
@@ -26,7 +27,7 @@
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
         <div style="margin-top: -490px; margin-left: 530px; font-size: 35px;">
             <i class="bi bi-heart-fill" style="display: inline-block; font-size: 25px;"></i>
-            <p th:text="${ProductDTO.productDibs}" style="font-size: 25px; display: inline-block;"></p>
+            <p th:text="${countMarketLikes}" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-eye" style="display: inline-block; font-size: 25px;"></i>
             <p th:text="${ProductDTO.productHits}" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-clock" style="display: inline-block; font-size: 25px;"></i>
@@ -57,9 +58,16 @@
         </div>
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
-        <div id="detailButton" style="margin-top: -575px; margin-left: 528px; font-size: 25px;">
-            <button onclick="Dibs()">좋아요</button>
-            <button onclick="Dibs()">채팅하기</button>
+        <div id="detailButton" style="margin-top: -575px; margin-left: 528px; font-size: 25px; display: flex; align-items: center;">
+            <div id="likeButton" class="detailLikeButton" onclick="toggleLike3()" style="margin-right: 10px; align-items: center;">
+                <div th:if="${marketLikes == null}" style="margin-left: 30px;">
+                    <i id="likeIcon3" class="bi bi-heart"></i> 좋아요
+                </div>
+                <div th:unless="${marketLikes == null}" style="margin-left: 30px;">
+                    <i id="likeIcon3" class="bi bi-heart-fill"></i> 좋아요
+                </div>
+            </div>
+            <button onclick="Dibs()" style="margin-right: 10px;">채팅하기</button>
             <button onclick="Dibs()">구매하기</button>
         </div>
     </div>
@@ -83,7 +91,7 @@
         <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p><br>
         <p style="line-height: 0.95; margin-top: -35px;">판매상품</p>
         <div class="detailsButtonList">
-            <button th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'">목록</button>
+            <button th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'" style=""><p style="margin-left: 8px;">목록</p></button>
         </div>
         <table style="margin-top: -70px">
             <th:block th:each="product, iterationStatus: ${marketProductList}">
@@ -116,6 +124,25 @@
     const productDetailList = (id) =>{
         window.location.href = "/market/list/" + id;
     }
+
+    const toggleLike3 = () => {
+        const icon = document.getElementById("likeIcon3");
+        const id = document.querySelector("#id").value;
+
+        axios({
+            method: "get",
+            url: "/market/findByMarketLikes/" + id,
+        }).then(res => {
+            icon.classList.remove("bi-heart");
+            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            location.href = "/market/" + id;
+        }).catch(err => {
+            icon.classList.remove("bi-heart-fill");
+            icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            location.href = "/market/" + id;
+        });
+    }
+
 
 </script>
 </html>

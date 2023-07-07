@@ -1,5 +1,6 @@
 package com.example.weartheweather.controller;
 
+import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
@@ -41,10 +42,21 @@ public class MarketController {
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, HttpSession session,Model model) {
+        marketProductService.updateHits(id);
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
-        model.addAttribute("ProductDTO", marketProductDTO);
         List<MarketProductDTO> marketProductDTOList = marketProductService.findByProductWriter(marketProductDTO.getProductWriter());
+        String marketLikes = null;
+        if (marketLikesDTO != null) {
+            marketLikes = "bi-heart-fill";
+        }
+        int countMarketLikes = marketProductService.countMarketLikes(id);
+        model.addAttribute("marketLikes", marketLikes);
+        model.addAttribute("market", marketProductDTO);
+        model.addAttribute("countMarketLikes", countMarketLikes);
+        model.addAttribute("ProductDTO", marketProductDTO);
         model.addAttribute("marketProductList", marketProductDTOList);
         return "marketPages/marketDetail";
     }
@@ -72,6 +84,23 @@ public class MarketController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+//    @GetMapping("/detail/{id}")
+//    public String findById(@PathVariable Long id, HttpSession session, Model model) {
+//        marketProductService.updateHits(id);
+//        String memberNickName = (String)session.getAttribute("memberNickName");
+//        MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
+//        String marketLikes = null;
+//        if (marketLikesDTO != null) {
+//            marketLikes = "bi-heart-fill";
+//        }
+//        int countMarketLikes = marketProductService.countMarketLikes(id);
+//        MarketProductDTO marketProductDTO = marketProductService.findById(id);
+//        model.addAttribute("marketLikes", marketLikes);
+//        model.addAttribute("market", marketProductDTO);
+//        model.addAttribute("countMarketLikes", countMarketLikes);
+//        System.out.println("countMarketLikes = " + countMarketLikes);
+//        return "marketPages/marketDetail";
+//    }
 
 
 }

@@ -56,7 +56,7 @@ public class MarketProductEntity extends BaseEntity {
     private int productHits; // 게시글 조회수
 
     @Column
-    private int productDibs; // 게시글 찜
+    private int marketLikes; // 게시글 찜
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -84,7 +84,8 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
         marketProductEntity.setProductTemp(marketProductDTO.getProductTemp());
         marketProductEntity.setProductHashtag(marketProductDTO.getProductHashtag());
-        marketProductEntity.setProductDibs(0);
+        marketProductEntity.setMarketLikes(0);
+        marketProductEntity.setProductHits(0);
         marketProductEntity.setFileAttached(0);
         return  marketProductEntity;
     }
@@ -101,7 +102,8 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
         marketProductEntity.setProductTemp(marketProductDTO.getProductTemp());
         marketProductEntity.setProductHashtag(marketProductDTO.getProductHashtag());
-        marketProductEntity.setProductDibs(0);
+        marketProductEntity.setMarketLikes(0);
+        marketProductEntity.setProductHits(0);
         marketProductEntity.setFileAttached(1);
         return  marketProductEntity;
     }

@@ -75,6 +75,8 @@
     color: white;
     width: 180px; height: 80px; border-radius: 10px;
 }
+
+
 .grayBox2 {
     margin-top: -450px;
     width: 100%;
@@ -120,4 +122,14 @@
     font-size: 15px;
     border-radius: 10px;
     text-align: center;
+}
+
+.detailLikeButton {
+    display: flex;
+    align-items: flex-start;
+    background-color: #558BCF;
+    color: white;
+    width: 180px; height: 80px; border-radius: 10px;
+    text-align: center;
+    border: 2px solid black;
 }
