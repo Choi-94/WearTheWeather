@@ -20,13 +20,21 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         // 세션에 저장된 로그인 정보 확인
         if (session.getAttribute("loginEmail") == null) {
-            // 로그인하지 않았다면 로그인페이지로 보내면서
+            // 로그인하지 않았다면 로그인 페이지로 보내면서
             // 요청한 주소값도 같이 보냄
             response.sendRedirect("/member/memberLogin?redirectURI=" + requestURI);
             return false;
         } else {
-            // 로그인 상태라면 요청한 페이지로 보냄(거르지 않음)
-            return true;
+            // 로그인 상태일 경우 관리자 아이디와 비밀번호 확인
+            String loginEmail = (String) session.getAttribute("loginEmail");
+            if (loginEmail.equals("gkdudquf@naver.com")) {
+                // 로그인한 사용자가 관리자인 경우 요청한 페이지로 이동
+                return true;
+            } else {
+                // 일반 사용자로 인식되어 접근 차단
+                response.sendRedirect("/access-denied");
+                return false;
+            }
         }
     }
 }

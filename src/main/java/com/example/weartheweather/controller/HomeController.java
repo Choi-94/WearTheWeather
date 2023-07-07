@@ -9,5 +9,9 @@ public class HomeController {
     public String index(){
         return "index";
     }
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "accessDenied";
+    }
 
 }
