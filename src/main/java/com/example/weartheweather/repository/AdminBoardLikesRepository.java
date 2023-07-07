@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AdminBoardLikesRepository extends JpaRepository<AdminBoardLikesEntity, Long> {
@@ -19,4 +20,7 @@ public interface AdminBoardLikesRepository extends JpaRepository<AdminBoardLikes
 
 
     void deleteByAdminBoardEntityAndMemberEntity(Optional<AdminBoardEntity> adminBoardEntity, Optional<MemberEntity> memberEntity);
+
+
+    List<AdminBoardLikesEntity> findByMemberEntity(MemberEntity memberEntity);
 }

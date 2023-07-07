@@ -100,5 +100,22 @@ public class AdminBoardService {
         Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
         adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
+    @Transactional
+    public List<AdminBoardDTO> findByBoardLikesNick(String memberNickName) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
+        List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
+        adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
+            adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
+        });
+        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
+
+        adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
+            Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
+            adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
+        });
+
+        return adminBoardDTOList;
+    }
 }
 

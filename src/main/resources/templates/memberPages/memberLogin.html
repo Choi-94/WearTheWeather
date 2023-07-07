@@ -3,70 +3,45 @@
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
+<style>
+    #weatherResult{
+        position: relative;
+        display: flex;
+        left: 450px;
+    }
+</style>
 <body>
+<
 <div th:replace="component/header :: header"></div>
-<div>
-    <!--    날씨에 따른 이미지 들어갈 공간-->
-</div>
-<div id="section">
-    <form action="/member/memberLogin" method="post">
-        <input type="hidden" name="redirectURI" th:value="${redirectURI}">
-        <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
-        <input type="text" name="memberPassword" placeholder="비밀번호"  class="form-control"> <br>
-        <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 맞지 않습니다</p>
-        <input type="button" value="로그인" onclick="login()">
+<div class="container" id="section">
+    <div id="weatherResult">
+
+
+    </div>
+    <div>
+        <form action="/member/memberLogin" method="post">
+            <input type="hidden" name="redirectURI" th:value="${redirectURI}">
+            <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
+            <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control"> <br>
+            <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 맞지 않습니다</p>
+            <input type="button" value="로그인" onclick="login()">
+        </form>
+    </div>
+    <div>
+        <button onclick="saveForm()">회원가입</button>
+    </div>
+    <form>
+        <!--이메일 비밀번호 입력 받고 로그인 버튼-->
     </form>
-</div>
-<div>
-    <button onclick="saveForm()">회원가입</button>
-</div>
-<form>
-    <!--이메일 비밀번호 입력 받고 로그인 버튼-->
-</form>
-<a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type='code')}">
-    <img src="/image/kakao_login_medium_wide.png"/>
-</a>
-<!--<a href="https://kauth.kakao.com/oauth/authorize?client_id=cbfb51c5fe3c24569106a577d987998b&redirect_uri=http://localhost8045/auth/kakao/callback&response_type=code"> <img src="/image/kakao_login_medium_wide.png"/></a>-->
-<!--<a href="javascript:kakaoLogin()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQOJtNpYFKTS1T5QdhIDFFgLzQO93BuFjFw&usqp=CAU" style="height: 80px; width: auto"/></a>-->
-<div id="naver_id_login">
-
+    <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type='code')}">
+        <img src="/image/kakao_login_medium_wide.png"/>
+    </a>
 </div>
 
-
-<!--카카오 로그인에 대한 자바스크립트 -->
-<!--<script src="http://developers.kakao.com/sdk/js/kakao.js"></script>-->
-<!--<script>-->
-<!--    window.Kakao.init("f31bae96db856c23cb9c32e52a39f735");-->
-<!--    function kakaoLogin(){-->
-<!--        window.Kakao.Auth.login({-->
-<!--            scope:'account_email,gender',-->
-<!--            success: function (authObj){-->
-<!--                console.log(authObj);-->
-<!--                window.Kakao.API.request({-->
-<!--                    url:'/v2/user/me',-->
-<!--                    success: res => {-->
-
-<!--                        const kakao_account = res.kakao_account;-->
-<!--                        console.log(kakao_account);-->
-<!--                    }-->
-<!--                });-->
-<!--            }-->
-<!--        })-->
-<!--    }-->
-<!--</script>-->
-<!--네이버 로그인에 대한 자바스크립트 -->
-<script type="text/javascript">
-    var naver_id_login = new naver_id_login("mbFMi3FYzsY1IdZryEWO", "http://localhost8045/memberPages/memberLogin.html");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("white", 20,80  );
-    naver_id_login.setDomain("YOUR_SERVICE_URL");
-    naver_id_login.setState(state);
-    naver_id_login.setPopup();
-    naver_id_login.init_naver_id_login();
-</script>
 
 <script>
     const login = () => {
@@ -74,7 +49,7 @@
         const password = document.querySelector('input[name="memberPassword"]').value;
         const redirectURI = document.querySelector('input[name="redirectURI"]').value;
         const adminEmail = "gkdud@naver.com";
-        console.log("이메일",email);
+        console.log("이메일", email);
         console.log("비밀번호", password);
         axios({
             method: "post",
@@ -85,11 +60,11 @@
             }
         }).then(res => {
             console.log("res", res);
-            if(res.data.memberEmail==adminEmail){
+            if (res.data.memberEmail == adminEmail) {
 
                 location.href = "/admin/index";
 
-            }else{
+            } else {
                 location.href = redirectURI;
                 console.log(res.data.memberEmail)
             }
@@ -108,5 +83,91 @@
         location.href = "/member/memberSave";
     }
 </script>
+<script>
+    $(function () {
+        // Check if we can access the Geolocation API
+        if (navigator.geolocation) {
+            // Regularly get location information
+            var id = navigator.geolocation.watchPosition(
+                function (pos) {
+                    $('#latitude').html(pos.coords.latitude); // 위도
+                    $('#longitude').html(pos.coords.longitude); // 경도
+                });
+
+            // Stop monitoring with button click
+            $('#btnStop').click(function () {
+                navigator.geolocation.clearWatch(id);
+            });
+        } else {
+            alert("이 브라우저에서는 Geolocation을 지원하지 않습니다.")
+        }
+
+    });
+</script>
+<script>
+    const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
+
+    function displayWeather(temperature, weather, name) {
+        const resultElement = document.getElementById("weatherResult");
+
+
+        const weatherIconElement = document.createElement("img");
+        weatherIconElement.classList.add("weather-icon");
+        weatherIconElement.style.width = "400px"; // 가로 크기 설정
+        weatherIconElement.style.height = "400px"; // 세로 크기 설정
+        const iconFileName = getIconFileName(weather);
+        weatherIconElement.src = `/img/${iconFileName}`;
+
+        resultElement.appendChild(weatherIconElement);
+    }
+
+    function getIconFileName(weather) {
+        const weatherIcons = {
+            "Clear": "w_w-맑음.png",
+            "Clouds": "w_w-흐림.png",
+            "Rain": "w_w-비.png",
+            "Snow": "w_w-눈.png"
+        };
+
+        const weatherKey = Object.keys(weatherIcons).find(key => weather.includes(key));
+
+        return weatherIcons[weatherKey];
+    }
+
+    function getWeather() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+                )
+                    .then(response => response.json())
+                    .then(data => {
+                        const temperature = data.main.temp; // 온도
+                        const weather = data.weather[0].main; // 날씨 조건
+                        const name = data.name; // 날씨 조건
+
+                        displayWeather(temperature, weather, name);
+                    })
+                    .catch(error => {
+                        alert("날씨 정보를 가져오는 중에 오류가 발생했습니다.");
+                    });
+            }, () => {
+                alert("위치 정보를 찾을 수 없습니다. 날씨 정보를 제공할 수 없습니다.");
+            });
+        } else {
+            alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
+        }
+    }
+
+    // 정해진 간격으로 실시간으로 날씨 정보 업데이트
+    setInterval(getWeather, 60000); // 1분마다 업데이트
+
+    // 페이지 로드 시 초기 날씨 정보 출력
+    window.onload = getWeather;
+</script>
+
 </body>
 </html>

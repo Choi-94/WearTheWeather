@@ -42,7 +42,7 @@
             <p th:text="${board.etcDetail}"></p>
             <p th:text="${board.etcPrice}"></p>
         </div>
-        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
+        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()" >
             <div th:if="${boardLikes.isEmpty()}">
                 <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
             </div>

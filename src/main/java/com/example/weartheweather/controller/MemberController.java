@@ -96,7 +96,7 @@ public class MemberController {
     }
     @GetMapping("/mypage")
     public String mypageForm(HttpSession session, Model model){
-        String value = (String) session.getAttribute("memberEmail");
+        String value = (String) session.getAttribute("loginEmail");
         System.out.println("value = " + value);
         MemberDTO memberDTO = memberService.findByEmail(value);
         System.out.println("마이페이지 memberDTO = " + memberDTO);
