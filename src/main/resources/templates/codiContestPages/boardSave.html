@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script type="text/javascript" src="/smartEditor/js/HuskyEZCreator.js" charset="UTF-8"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -9,11 +11,12 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-    <form action="/memberBoard/save" method="post" enctype="multipart/form-data">
+    <form action="/memberBoard/save" method="post" enctype="multipart/form-data" onblur="fileCheck()">
         <input type="file" name="boardFile" multiple> <br>
         <label>
             <input type="radio" name="season" value="Spring">봄
         </label>
+
         <label>
             <input type="radio" name="season" value="Summer">여름
         </label>
@@ -23,12 +26,43 @@
         <label>
             <input type="radio" name="season" value="Winter">겨울
         </label><br>
-        제목: <input type="text" name="boardTitle"> <br>
-        내용: <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+        제목: <input type="text" name="boardTitle" onblur="titleCheck()"> <br>
+        <div id="smartEditor">
+            내용: <textarea name="boardContents" id="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요"
+                          style="width: 500px"></textarea>
+        </div>
         <input type="submit" value="작성" class="btn btn-primary">
     </form>
 </div>
 
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script th:inline="javascript">
+    let oEditors = [];
+    smartEditor = function () {
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "boardContents",
+            sSkinURI: "/smartEditor/SmartEditor2Skin.html",
+            fCreator: "createSEditor2"
+        })
+    }
+
+    $(document).ready(function () {
+        smartEditor()
+    })
+
+    submitPost= function () {
+        oEditors.getById["boardContents"].exec("UPDATE_CONTENTS_FIELD",[])
+        let content = document.getElementById("boardContents").value;
+
+        if (content == '') {
+            alert("내용을 입력해주세요.")
+            oEditors.getById["boardContents"].exec("FOCUS");
+            return
+        } else  {
+            console.log(content);
+        }
+    }
+</script>
 </html>
