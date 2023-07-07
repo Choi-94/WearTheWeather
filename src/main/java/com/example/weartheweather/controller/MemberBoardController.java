@@ -79,4 +79,9 @@ public class MemberBoardController {
         return "/codiContestPages/boardUpdate";
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO) {
+        memberBoardService.update(memberBoardDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
