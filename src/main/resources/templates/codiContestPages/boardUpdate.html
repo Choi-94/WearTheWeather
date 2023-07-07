@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -30,11 +31,14 @@
             <input type="radio" name="season" value="Winter" th:checked="${board.season == 'Winter'}">겨울
         </label><br>
         제목: <input type="text" name="boardTitle" th:value="${board.boardTitle}"> <br>
-        내용: <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요" th:value="${board.boardContents}"></textarea>
-        <input type="submit" value="작성" class="btn btn-primary">
+            내용: <textarea name="boardContents" cols="30" rows="10" th:value="${board.boardContents}"></textarea>
+            <input type="submit" value="작성" class="btn btn-primary">
     </form>
 </div>
 
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+
+</script>
 </html>

@@ -25,33 +25,31 @@
         <div>
             <h6 th:text="${board.boardWriter + ' | ' + board.boardHits + ' | ' + board.createdAt}"></h6>
         </div>
-        <div></div>
         <div th:each="fileName: ${board.storedFileName}">
             <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
         </div>
         <div th:text="${board.boardContents}"></div>
 
-
-    <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
-        <div th:if="${boardLikes.isEmpty()}">
-            <i id="likeIcon2"  class="bi bi-heart"></i> 좋아요
+        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
+            <div th:if="${boardLikes.isEmpty()}">
+                <i id="likeIcon2" class="bi bi-heart"></i> 좋아요
+            </div>
+            <div th:unless="${boardLikes.isEmpty()}">
+                <i id="likeIcon2" class="bi bi-heart-fill"></i> 좋아요
+            </div>
         </div>
-        <div th:unless="${boardLikes.isEmpty()}">
-            <i id="likeIcon2"  class="bi bi-heart-fill"></i> 좋아요
+        <div id="countLikes">
+            <div>
+                좋아요수: <input type="text" th:value="${countBoardLikes}">
+            </div>
         </div>
-    </div>
-    <div id="countLikes">
         <div>
-            좋아요수: <input type="text" th:value="${countBoardLikes}">
+            <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
         </div>
-    </div>
-    <div>
-        <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
-    </div>
 
+    </div>
 </div>
-
-<div th:replace="component/footer :: footer"></div>
+    <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const update = (id) => {
@@ -68,11 +66,11 @@
             url: "/memberBoard/findByBoardLikes/" + id,
         }).then(res => {
             icon.classList.remove("bi-heart");
-            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             location.href = "/memberBoard/detail/" + id;
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
-            icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            icon.innerHTML = '<i class="bi bi-heart"></i>';
             location.href = "/memberBoard/detail/" + id;
         });
     }
