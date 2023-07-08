@@ -1,12 +1,11 @@
 package com.example.weartheweather.dto;
 
+
 import com.example.weartheweather.entity.MemberBoardEntity;
 import com.example.weartheweather.entity.MemberBoardFileEntity;
-import com.example.weartheweather.entity.MemberEntity;
+
 import com.example.weartheweather.util.UtilClass;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -15,6 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberBoardDTO {
     private Long id;
     private Long memberId;
@@ -54,5 +56,6 @@ public class MemberBoardDTO {
         memberBoardDTO.setStoredFileName(storedFileNameList);
         return memberBoardDTO;
     }
+
 
 }

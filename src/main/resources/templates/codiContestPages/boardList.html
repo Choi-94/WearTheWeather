@@ -21,14 +21,11 @@
                     <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${board.id}]])">
                     <table>
                         <tr>
-                            <td>
-                                <h4 th:text="${board.boardTitle}"></h4>
-                            </td>
+                            <td th:text="${board.boardWriter}"></td>
                         </tr>
                         <tr>
-                            <td th:text="${board.boardWriter}"></td>
                             <td i class="bi bi-eye"  th:text="${board.boardHits}"></td> <br>
-                            <td i class="bi bi-heart-fill" th:text="${board.boardLikes}"></td></i>
+                            <td i class="bi bi-heart-fill" th:text="${board.boardLikes}"></td>
                         </tr>
                     </table>
                 </td>
