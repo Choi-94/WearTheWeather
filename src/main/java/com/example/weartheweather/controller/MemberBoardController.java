@@ -61,8 +61,7 @@ public class MemberBoardController {
     @GetMapping("/findByBoardLikes/{id}")
     public ResponseEntity<String> findByBoardLikes(@PathVariable Long id, HttpSession session) {
         String memberNickName = (String)session.getAttribute("memberNickName");
-        System.out.println("memberNickName = " + memberNickName);
-            MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
+        MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         if (memberBoardLikesDTO == null) {
             memberBoardService.addBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -80,8 +79,9 @@ public class MemberBoardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO) {
-        memberBoardService.update(memberBoardDTO);
+    public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        memberBoardService.update(memberBoardDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

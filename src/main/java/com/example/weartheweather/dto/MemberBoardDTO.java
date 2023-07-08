@@ -36,7 +36,7 @@ public class MemberBoardDTO {
         memberBoardDTO.setId(memberBoardEntity.getId());
         memberBoardDTO.setMemberId(memberBoardEntity.getMemberEntity().getId());
         memberBoardDTO.setSeason(memberBoardEntity.getSeason());
-        memberBoardDTO.setBoardWriter(memberBoardEntity.getMemberEntity().getMemberNickName());
+        memberBoardDTO.setBoardWriter(memberBoardEntity.getBoardWriter());
         memberBoardDTO.setBoardTitle(memberBoardEntity.getBoardTitle());
         memberBoardDTO.setBoardContents(memberBoardEntity.getBoardContents());
         memberBoardDTO.setBoardLikes(memberBoardEntity.getBoardLikes());

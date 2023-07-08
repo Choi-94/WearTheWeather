@@ -96,8 +96,9 @@ public class MemberBoardService {
         memberBoardLikesRepository.deleteByMemberBoardEntityAndMemberEntity(memberBoardEntity, memberEntity);
     }
 
-    public void update(MemberBoardDTO memberBoardDTO) {
-        MemberBoardEntity memberBoardEntity = MemberBoardEntity.toUpdateEntity(memberBoardDTO);
+    public void update(MemberBoardDTO memberBoardDTO, String memberNickName) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        MemberBoardEntity memberBoardEntity = MemberBoardEntity.toUpdateEntity(memberBoardDTO, memberEntity);
         memberBoardRepository.save(memberBoardEntity);
     }
 }
