@@ -130,4 +130,9 @@ public class MemberBoardService {
                 .build());
         return boardDTOS;
     }
+
+    @Transactional
+    public void viewCountUp(Long id) {
+        memberBoardRepository.updateHits(id);
+    }
 }
