@@ -48,7 +48,7 @@
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
         const redirectURI = document.querySelector('input[name="redirectURI"]').value;
-        const adminEmail = "gkdud@naver.com";
+        const adminEmail = "gkdudquf@naver.com";
         console.log("이메일", email);
         console.log("비밀번호", password);
         axios({
@@ -61,22 +61,22 @@
         }).then(res => {
             console.log("res", res);
             if (res.data.memberEmail == adminEmail) {
-
+                // 관리자 로그인인 경우
                 location.href = "/admin/index";
-
-            } else {
+            } else if (redirectURI) {
+                // 리다이렉트 주소가 있는 경우
                 location.href = redirectURI;
-                console.log(res.data.memberEmail)
+            } else {
+                // 리다이렉트 주소가 없는 경우 기본 페이지로 이동
+                location.href = "/member/mypage";
             }
-            // location.href = redirectURI;
-
-
         }).catch(err => {
             console.log("err", err);
             document.getElementById("login-result").style.display = "block";
         });
     }
 </script>
+
 <!--회원가입 버튼을 눌렀을 때 onclick 적용 -->
 <script>
     const saveForm = () => {

@@ -12,10 +12,12 @@
 <div th:replace="component/nav :: nav"></div>
 <h1>실시간 날씨 정보</h1>
 <h5>(1분마다 자동 업데이트)</h5>
+<a href="/test">실험용</a>
 <div id="weatherResult"></div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
+
     $(function() {
         // Check if we can access the Geolocation API
         if (navigator.geolocation) {
@@ -39,10 +41,11 @@
 <script>
     const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
 
+
     function displayWeather(temperature, weather, name) {
+        console.log("디스플레이 콘솔"+temperature,weather,name)
         const resultElement = document.getElementById("weatherResult");
         resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather} 접속위치:${name}`;
-
 
         const weatherIconElement = document.createElement("img");
         weatherIconElement.classList.add("weather-icon");
@@ -83,6 +86,7 @@
                         const name = data.name; // 날씨 조건
 
                         displayWeather(temperature, weather, name);
+
                     })
                     .catch(error => {
                         alert("날씨 정보를 가져오는 중에 오류가 발생했습니다.");

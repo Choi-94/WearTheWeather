@@ -35,17 +35,17 @@ public class MemberController {
     }
     @PostMapping("/login")
     public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
-                              @RequestParam("redirectURI") String redirectURI) {
+                              @RequestParam(value = "redirectURI", required = false) String redirectURI) {
         System.out.println("MemberController.memberLogin");
         System.out.println("URI" + redirectURI);
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-//            return "memberPages/memberMain";
-            // 로그인 성공하면 사용자가 직전에 요청한 주소로 redirect
-            // 인터셉터에 걸리지 않고 처음부터 로그인하는 사용자였다면
-            // redirect:/member/mypage 로 요청되며, memberMain 화면으로 전환됨.
-            return "redirect:" + redirectURI;
+            if (redirectURI != null && !redirectURI.isEmpty()) {
+                return "redirect:" + redirectURI;
+            } else {
+                return "redirect:/member/mypage";
+            }
         } else {
             return "memberPages/memberLogin";
         }
