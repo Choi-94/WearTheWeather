@@ -55,9 +55,10 @@ public class MemberBoardEntity extends BaseEntity  {
         return memberBoardEntity;
     }
 
-    public static MemberBoardEntity toUpdateEntity(MemberBoardDTO memberBoardDTO) {
+    public static MemberBoardEntity toUpdateEntity(MemberBoardDTO memberBoardDTO, MemberEntity memberEntity) {
         MemberBoardEntity memberBoardEntity = new MemberBoardEntity();
         memberBoardEntity.setId(memberBoardDTO.getId());
+        memberBoardEntity.setMemberEntity(memberEntity);
         memberBoardEntity.setSeason(memberBoardDTO.getSeason());
         memberBoardEntity.setBoardWriter(memberBoardDTO.getBoardWriter());
         memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());

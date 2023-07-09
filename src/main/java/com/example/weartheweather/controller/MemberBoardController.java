@@ -1,18 +1,24 @@
 package com.example.weartheweather.controller;
 
-import com.example.weartheweather.dto.AdminBoardDTO;
-import com.example.weartheweather.dto.AdminBoardLikesDTO;
+
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import java.io.IOException;
 import java.util.List;
 
@@ -42,8 +48,9 @@ public class MemberBoardController {
     }
 
     @GetMapping("/detail/{id}")
-    public String findById(@PathVariable Long id, Model model, HttpSession session) {
-        memberBoardService.updateHits(id);
+    public String findById(@PathVariable Long id, Model model, HttpSession session,
+                           HttpServletRequest req, HttpServletResponse res) {
+//        memberBoardService.updateHits(id);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -55,14 +62,41 @@ public class MemberBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", memberBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
+
+        /* 조회수 로직 */
+        Cookie oldCookie = null;
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("boardView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                memberBoardService.viewCountUp(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie);
+            }
+        } else {
+            memberBoardService.viewCountUp(id);
+            Cookie newCookie = new Cookie("boardView","[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
         return "/codiContestPages/boardDetail";
     }
 
     @GetMapping("/findByBoardLikes/{id}")
     public ResponseEntity<String> findByBoardLikes(@PathVariable Long id, HttpSession session) {
         String memberNickName = (String)session.getAttribute("memberNickName");
-        System.out.println("memberNickName = " + memberNickName);
-            MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
+        MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         if (memberBoardLikesDTO == null) {
             memberBoardService.addBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -80,8 +114,34 @@ public class MemberBoardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO) {
-        memberBoardService.update(memberBoardDTO);
+    public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        memberBoardService.update(memberBoardDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @GetMapping("/list")
+//    public String paging(@PageableDefault(page = 1) Pageable pageable,
+//                         @RequestParam(value = "type", required = false, defaultValue = "") String type,
+//                         @RequestParam(value = "q", required = false, defaultValue = "") String q,
+//                         Model model) {
+//        System.out.println("page = " + pageable.getPageNumber());
+//        Page<MemberBoardDTO> boardDTOS = memberBoardService.paging(pageable, type, q);
+//        if (boardDTOS.getTotalElements() == 0) {
+//            model.addAttribute("boardList", null);
+//        } else {
+//            model.addAttribute("boardList", boardDTOS);
+//        }
+//
+//        int blockLimit = 3;
+//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+//        int endPage = ((startPage + blockLimit - 1) < boardDTOS.getTotalPages()) ? startPage + blockLimit - 1 : boardDTOS.getTotalPages();
+//
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("type", type);
+//        model.addAttribute("q", q);
+//
+//        return "/codiContestPages/boardList";
+//    }
 }
