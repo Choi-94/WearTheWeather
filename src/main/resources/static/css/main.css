@@ -146,3 +146,16 @@
     border-radius: 10px;
     text-align: center;
 }
+
+.payButton {
+    background-color: #558BCF;
+    color: white;
+    position: absolute;
+    left: 70px;
+    top: 110px;
+    width: 400px;
+    height: 60px;
+    font-size: 35px;
+    border-radius: 10px;
+    text-align: center;
+}

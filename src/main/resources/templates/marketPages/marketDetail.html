@@ -59,14 +59,14 @@
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
         <div id="detailButton" style="margin-top: -575px; margin-left: 528px; font-size: 25px; display: flex; align-items: center;">
-            <div id="likeButton" class="detailLikeButton" onclick="toggleLike3()" style="margin-right: 10px; align-items: center;">
+            <button id="likeButton" class="detailLikeButton" onclick="toggleLike3()" style="margin-right: 10px; align-items: center;">
                 <div th:if="${marketLikes == null}" style="margin-left: 30px;">
                     <i id="likeIcon3" class="bi bi-heart"></i> 좋아요
                 </div>
                 <div th:unless="${marketLikes == null}" style="margin-left: 30px;">
                     <i id="likeIcon3" class="bi bi-heart-fill"></i> 좋아요
                 </div>
-            </div>
+            </button>
             <button onclick="Dibs()" style="margin-right: 10px;">채팅하기</button>
             <button th:attr="onclick='productDetailPayment(\'' + ${ProductDTO.id} + '\')'">구매하기</button>
         </div>
