@@ -99,6 +99,8 @@ public class MemberBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+
 //    @GetMapping("/list")
 //    public String paging(@PageableDefault(page = 1) Pageable pageable,
 //                         @RequestParam(value = "type", required = false, defaultValue = "") String type,
