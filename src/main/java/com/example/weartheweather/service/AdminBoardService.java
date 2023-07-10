@@ -11,6 +11,9 @@ import com.example.weartheweather.repository.AdminBoardLikesRepository;
 import com.example.weartheweather.repository.AdminBoardRepository;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -104,51 +107,26 @@ public class AdminBoardService {
         adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
     @Transactional
-    public List<AdminBoardDTO> findByBoardLikesNick(String memberNickName) {
+    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, int page, int size) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
         List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
         adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
             adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
         });
-        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
 
+        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
         adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
             Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
             adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
         });
 
-        return adminBoardDTOList;
-    }
-    @Transactional
-    public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
-        /* 조회수 로직 */
-        Cookie oldCookie = null;
+        int start = page * size;
+        int end = Math.min(start + size, adminBoardDTOList.size());
+        List<AdminBoardDTO> pagedAdminBoardDTOList = adminBoardDTOList.subList(start, end);
 
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("adminBoardView")) {
-                    oldCookie = cookie;
-                }
-            }
-        }
-
-        if (oldCookie != null) {
-            if (!oldCookie.getValue().contains("[[" + id.toString() + "]]")) {
-                adminBoardRepository.updateHits(id);
-                oldCookie.setValue(oldCookie.getValue() + "_[[" + id + "]]");
-                oldCookie.setPath("/");
-                oldCookie.setMaxAge(60 * 60 * 24);
-                res.addCookie(oldCookie);
-            }
-        } else {
-            adminBoardRepository.updateHits(id);
-            Cookie newCookie = new Cookie("adminBoardView","[[" + id + "]]");
-            newCookie.setPath("/");
-            newCookie.setMaxAge(60 * 60 * 24);
-            res.addCookie(newCookie);
-        }
+        return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
     }
+
 }
 

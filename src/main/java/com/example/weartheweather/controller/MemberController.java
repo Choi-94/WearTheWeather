@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -23,8 +20,6 @@ public class MemberController {
     @GetMapping("/memberLogin")
     public String loginForm(@RequestParam(value = "redirectURI", defaultValue = "/") String redirectURI,
                             Model model) {
-        System.out.println("MemberController.loginForm");
-        System.out.println("redirectURI = " + redirectURI);
         model.addAttribute("redirectURI", redirectURI);
         return "memberPages/memberLogin";
     }
@@ -33,23 +28,19 @@ public class MemberController {
     public String saveForm(){
         return "/memberPages/memberSave";
     }
-    @PostMapping("/login")
-    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
-                              @RequestParam(value = "redirectURI", required = false) String redirectURI) {
-        System.out.println("MemberController.memberLogin");
-        System.out.println("URI" + redirectURI);
-        boolean loginResult = memberService.login(memberDTO);
-        if (loginResult) {
-            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-            if (redirectURI != null && !redirectURI.isEmpty()) {
-                return "redirect:" + redirectURI;
-            } else {
-                return "redirect:/member/mypage";
-            }
-        } else {
-            return "memberPages/memberLogin";
-        }
-    }
+//    @PostMapping("/login")
+//    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
+//                              @RequestParam(value = "redirectURI") String redirectURI) {
+//        System.out.println("MemberController.memberLogin");
+//        System.out.println("URI" + redirectURI);
+//        boolean loginResult = memberService.login(memberDTO);
+//        if (loginResult) {
+//            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+//            return "redirect:" + redirectURI;
+//        } else {
+//            return "memberPages/memberLogin";
+//        }
+//    }
 
 
 
@@ -77,9 +68,7 @@ public class MemberController {
     }
     @PostMapping("/login/axios")
     public ResponseEntity login(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
-
         MemberDTO memberDTO1 = memberService.loginAxios(memberDTO);
-
         System.out.println("닉네임 세션값 확인"+memberDTO1.getMemberNickName());
         if(memberDTO1==null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
