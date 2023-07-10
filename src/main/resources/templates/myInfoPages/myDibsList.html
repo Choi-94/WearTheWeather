@@ -36,27 +36,30 @@
         <tr>
             <th>Id</th>
             <th>이미지</th>
-            <th>글제목</th>
+            <th>제품이름</th>
+            <th>상품판매지역</th>
             <th>작성시간</th>
             <th>조회수</th>
-            <th>좋아요</th>
+            <th>찜한수</th>
             <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
         </tr>
         </thead>
         <tbody>
-        <tr th:each="memberBoard: ${MemberBoardList}" varStatus="loop">
-            <td th:text="${memberBoard.id}"></td>
+        <tr th:each="MarketProduct: ${MarketProduct}" varStatus="loop">
+            <td th:text="${MarketProduct.id}"></td>
             <td>
-                <img th:src="@{|/upload/${#strings.replace(memberBoard.storedFileName[0], '[', '').replace(']', '')}|}"
+                <img th:src="@{|/upload/${#strings.replace(MarketProduct.storedFileName[0], '[', '').replace(']', '')}|}"
                      style="max-width: 100px;">
             </td>
-            <td th:text="${memberBoard.boardWriter}">
+            <td th:text="${MarketProduct.productTitle}">
             </td>
-            <td th:text="${memberBoard.createdAt}">
+            <td th:text="${MarketProduct.transactionArea}">
             </td>
-            <td th:text="${memberBoard.boardHits}">
+            <td th:text="${MarketProduct.createdAt}">
             </td>
-            <td th:text="${memberBoard.boardLikes}">
+            <td th:text="${MarketProduct.productHits}">
+            </td>
+            <td th:text="${MarketProduct.marketLikes}">
             </td>
             <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
         </tr>
