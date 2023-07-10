@@ -82,20 +82,7 @@ public class AdminBoardController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
-    @GetMapping("/myLikeList")
-    public String myLikeListForm(Model model, HttpSession session){
-        String memberNickName = (String)session.getAttribute("memberNickName");
-        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.findByBoardLikesNick(memberNickName);
 
-        if(adminBoardDTOList.size()>0){
-            model.addAttribute("adminBoardLikeList",adminBoardDTOList);
-        }else{
-            model.addAttribute("adminBoardLikeList","");
-        }
-
-        return "/adminPages/myLikeList";
-
-    }
 
 
 }
