@@ -46,6 +46,7 @@ public class MemberBoardController {
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model, HttpSession session,
                            HttpServletRequest req, HttpServletResponse res) {
+        memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -57,7 +58,6 @@ public class MemberBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", memberBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
-        memberBoardService.CookieBoardView(id, req, res);
 
         return "/codiContestPages/boardDetail";
     }

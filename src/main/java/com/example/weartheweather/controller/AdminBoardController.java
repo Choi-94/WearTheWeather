@@ -46,6 +46,7 @@ public class AdminBoardController {
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, HttpSession session, Model model,
                            HttpServletRequest req, HttpServletResponse res) {
+        adminBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -57,7 +58,6 @@ public class AdminBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", adminBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
-        adminBoardService.CookieBoardView(id, req, res);
 
         return "/weatherCodiPages/boardDetail";
     }
