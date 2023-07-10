@@ -6,6 +6,7 @@
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
@@ -18,7 +19,7 @@
     </div>
     <div>
         <input type="hidden" id="id" th:value="${board.id}">
-
+        <input type="hidden" id="writerId" th:value="${board.writerId}">
         <div>
             <h3 th:text="${board.boardTitle}"></h3>
         </div>
@@ -43,15 +44,116 @@
                 좋아요수: <input type="text" th:value="${countBoardLikes}">
             </div>
         </div>
-        <div>
+        <div th:if="${session.loginEmail eq board.boardWriter}">
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
         </div>
+        <div th:unless="${session.loginEmail eq board.boardWriter}">
+
+        </div>
+
+        <div class="container" id="comment-write">
+            <input type="hidden" id="comment-writer" th:value="${session.memberNickName}">
+            <input type="text" id="comment-contents" placeholder="내용">
+            <button onclick="comment_write()">댓글작성</button>
+        </div>
+        <div class="container" id="comment-list">
+            <div th:if="${commentList == null}">
+                <p>작성된 댓글이 없습니다.</p>
+            </div>
+            <div th:unless="${commentList == null}">
+                <table class="table">
+                    <tr>
+                        <th>id</th>
+                        <th>writer</th>
+                        <th>contents</th>
+                        <th>date</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="comment: ${commentList}">
+                        <td th:text="${comment.id}"></td>
+                        <td th:text="${comment.commentWriter}"></td>
+                        <td th:text="${comment.commentContents}"></td>
+                        <td th:text="${comment.createdAt}"></td>
+                        <td th:if="${session.memberNickName eq comment.commentWriter}">
+                            <i class="bi bi-x" th:onclick="comment_delete([[${comment.id}]])"></i>
+                        </td>
+                        <td th:unless="${session.memberNickName eq comment.commentWriter}">
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
 
     </div>
 </div>
     <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
+
+    const comment_list = (commentList) => {
+        console.log("댓글 목록 함수", commentList);
+        const resultArea = document.querySelector("#comment-list");
+        let output = "        <table class=\"table\">\n" +
+            "            <tr>\n" +
+            "                <th>id</th>\n" +
+            "                <th>writer</th>\n" +
+            "                <th>contents</th>\n" +
+            "                <th>date</th>\n" +
+            "            </tr>";
+        for (let i in commentList) {
+            output += "<tr>\n" +
+                "                <td>" + commentList[i].id + "</td>\n" +
+                "                <td>" + commentList[i].commentWriter + "</td>\n" +
+                "                <td>" + commentList[i].commentContents + "</td>\n" +
+                "                <td>" + commentList[i].createdAt + "</td>\n" +
+                "            </tr>";
+        }
+        output += "</table>";
+        resultArea.innerHTML = output;
+    }
+
+    const comment_write = () => {
+        const writer = document.querySelector("#comment-writer").value;
+        const contents = document.querySelector("#comment-contents").value;
+        const boardId = [[${board.id}]];
+        axios({
+            method: "post",
+            url: "/comment/save",
+            data: {
+                commentWriter: writer,
+                commentContents: contents,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res", res);
+            console.log("댓글 목록", res.data);
+            document.querySelector("#comment-contents").value = "";
+            // comment_list(res.data);
+            location.href = "/memberBoard/detail/" + boardId;
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
+
+    const comment_delete = (commentId) => {
+        const id = commentId;
+        const boardId = [[${board.id}]];
+        axios({
+            method: "delete",
+            url: "/comment/delete",
+            data: {
+                id: id,
+                boardId: boardId
+            }
+        }).then(res => {
+            location.href = "/memberBoard/detail/" + boardId;
+        }).catch(err => {
+            alert("삭제 실패했습니다.")
+        });
+    }
     const update = (id) => {
         location.href = "/memberBoard/update/" + id;
     }
@@ -60,7 +162,7 @@
     const toggleLike2 = () => {
         const icon = document.getElementById("likeIcon2");
         const id = document.querySelector("#id").value;
-
+        const writerId = document.querySelector("#writerId").value;
         axios({
             method: "get",
             url: "/memberBoard/findByBoardLikes/" + id,
@@ -68,6 +170,7 @@
             icon.classList.remove("bi-heart");
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             location.href = "/memberBoard/detail/" + id;
+            location.href = "/memberBoard/SendAlarm/" + id + "/" + writerId;
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';

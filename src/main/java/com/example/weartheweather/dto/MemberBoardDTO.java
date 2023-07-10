@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberBoardDTO {
     private Long id;
-    private Long memberId;
+    private Long writerId;
 
     private String season;
     private String boardWriter;
@@ -36,7 +36,7 @@ public class MemberBoardDTO {
     public static MemberBoardDTO toDTO(MemberBoardEntity memberBoardEntity) {
         MemberBoardDTO memberBoardDTO = new MemberBoardDTO();
         memberBoardDTO.setId(memberBoardEntity.getId());
-        memberBoardDTO.setMemberId(memberBoardEntity.getMemberEntity().getId());
+        memberBoardDTO.setWriterId(memberBoardEntity.getMemberEntity().getId());
         memberBoardDTO.setSeason(memberBoardEntity.getSeason());
         memberBoardDTO.setBoardWriter(memberBoardEntity.getBoardWriter());
         memberBoardDTO.setBoardTitle(memberBoardEntity.getBoardTitle());
