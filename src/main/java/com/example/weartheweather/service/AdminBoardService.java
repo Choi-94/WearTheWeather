@@ -11,6 +11,9 @@ import com.example.weartheweather.repository.AdminBoardLikesRepository;
 import com.example.weartheweather.repository.AdminBoardRepository;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -101,21 +104,26 @@ public class AdminBoardService {
         adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
     @Transactional
-    public List<AdminBoardDTO> findByBoardLikesNick(String memberNickName) {
+    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, int page, int size) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
         List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
         adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
             adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
         });
-        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
 
+        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
         adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
             Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
             adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
         });
 
-        return adminBoardDTOList;
+        int start = page * size;
+        int end = Math.min(start + size, adminBoardDTOList.size());
+        List<AdminBoardDTO> pagedAdminBoardDTOList = adminBoardDTOList.subList(start, end);
+
+        return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
     }
+
 }
 
