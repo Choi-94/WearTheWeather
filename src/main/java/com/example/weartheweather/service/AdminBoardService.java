@@ -127,6 +127,36 @@ public class AdminBoardService {
 
         return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
     }
+    @Transactional
+    public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
+        /* 조회수 로직 */
+        Cookie oldCookie = null;
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("adminBoardView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[[" + id.toString() + "]]")) {
+                adminBoardRepository.updateHits(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[[" + id + "]]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie);
+            }
+        } else {
+            adminBoardRepository.updateHits(id);
+            Cookie newCookie = new Cookie("adminBoardView","[[" + id + "]]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
+    }
 
 }
 
