@@ -47,8 +47,6 @@
 <!--            </li>-->
 
 <!--            <li th:class="${boardList.first} ? 'disabled'" class="page-item">-->
-<!--                &lt;!&ndash;boardList.first: isFirst()-->
-<!--                    boardList.number: getNumber()&ndash;&gt;-->
 <!--                <a class="page-link"-->
 <!--                   th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number}, type=${type}, q=${q})}">-->
 <!--                    &lt;!&ndash; 사용자 3페이지, number 2 /board?page=2 &ndash;&gt;-->
@@ -56,18 +54,12 @@
 <!--                </a>-->
 <!--            </li>-->
 
-<!--            &lt;!&ndash; startPage ~ endPage 까지 숫자를 만들어주는 역할-->
-<!--                for(int page=startPage; page<=endPage; page++) &ndash;&gt;-->
 <!--            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"-->
 <!--                th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">-->
 <!--                <a class="page-link" th:text="${page}"-->
 <!--                   th:href="@{/board(page=${page}, type=${type}, q=${q})}"></a>-->
 <!--            </li>-->
-
-<!--            &lt;!&ndash; 다음 페이지 요청-->
-<!--                현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.-->
-<!--                getNumber() 값은 2임.-->
-<!--                따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. &ndash;&gt;-->
+<!--            -->
 <!--            <li th:class="${boardList.last} ? 'disabled'">-->
 <!--                <a class="page-link"-->
 <!--                   th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2}, type=${type}, q=${q})}">-->

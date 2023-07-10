@@ -3,6 +3,7 @@ package com.example.weartheweather.controller;
 import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.service.AdminBoardService;
+import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.List;
 @RequestMapping("/adminBoard")
 public class AdminBoardController {
     private final AdminBoardService adminBoardService;
+    private final MemberBoardService memberBoardService;
+
     @GetMapping("/save")
     public String saveForm() {
         return "/adminPages/boardSave";
@@ -39,8 +44,9 @@ public class AdminBoardController {
     }
 
     @GetMapping("/detail/{id}")
-    public String findById(@PathVariable Long id, HttpSession session, Model model) {
-        adminBoardService.updateHits(id);
+    public String findById(@PathVariable Long id, HttpSession session, Model model,
+                           HttpServletRequest req, HttpServletResponse res) {
+        adminBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -52,6 +58,7 @@ public class AdminBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", adminBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
+
         return "/weatherCodiPages/boardDetail";
     }
 

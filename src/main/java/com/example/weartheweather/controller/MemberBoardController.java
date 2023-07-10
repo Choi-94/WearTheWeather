@@ -12,13 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,7 +46,7 @@ public class MemberBoardController {
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model, HttpSession session,
                            HttpServletRequest req, HttpServletResponse res) {
-//        memberBoardService.updateHits(id);
+        memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -63,35 +59,9 @@ public class MemberBoardController {
         model.addAttribute("board", memberBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
 
-        /* 조회수 로직 */
-        Cookie oldCookie = null;
-
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("boardView")) {
-                    oldCookie = cookie;
-                }
-            }
-        }
-
-        if (oldCookie != null) {
-            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
-                memberBoardService.viewCountUp(id);
-                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
-                oldCookie.setPath("/");
-                oldCookie.setMaxAge(60 * 60 * 24);
-                res.addCookie(oldCookie);
-            }
-        } else {
-            memberBoardService.viewCountUp(id);
-            Cookie newCookie = new Cookie("boardView","[" + id + "]");
-            newCookie.setPath("/");
-            newCookie.setMaxAge(60 * 60 * 24);
-            res.addCookie(newCookie);
-        }
         return "/codiContestPages/boardDetail";
     }
+
 
     @GetMapping("/findByBoardLikes/{id}")
     public ResponseEntity<String> findByBoardLikes(@PathVariable Long id, HttpSession session) {
