@@ -41,4 +41,9 @@ public class CommentService {
         CommentEntity commentEntity = CommentEntity.toSaveEntity(memberEntity ,memberBoardEntity, commentDTO);
         commentRepository.save(commentEntity);
     }
+
+    @Transactional
+    public void delete(Long id, Long boardId) {
+        commentRepository.deleteByIdAndMemberBoardEntityId(id, boardId);
+    }
 }

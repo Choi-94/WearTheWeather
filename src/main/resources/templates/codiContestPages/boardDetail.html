@@ -6,6 +6,7 @@
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
@@ -51,7 +52,7 @@
         </div>
 
         <div class="container" id="comment-write">
-            <input type="text" id="comment-writer" th:value="${session.memberNickName}">
+            <input type="hidden" id="comment-writer" th:value="${session.memberNickName}">
             <input type="text" id="comment-contents" placeholder="내용">
             <button onclick="comment_write()">댓글작성</button>
         </div>
@@ -66,12 +67,16 @@
                         <th>writer</th>
                         <th>contents</th>
                         <th>date</th>
+                        <th></th>
                     </tr>
                     <tr th:each="comment: ${commentList}">
                         <td th:text="${comment.id}"></td>
                         <td th:text="${comment.commentWriter}"></td>
                         <td th:text="${comment.commentContents}"></td>
                         <td th:text="${comment.createdAt}"></td>
+                        <td th:if="${session.memberNickName eq comment.commentWriter}">
+                            <i class="bi bi-x" th:onclick="comment_delete([[${comment.id}]])"></i>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -123,9 +128,26 @@
             console.log("res", res);
             console.log("댓글 목록", res.data);
             document.querySelector("#comment-contents").value = "";
-            comment_list(res.data);
+            location.href = "/memberBoard/detail/" + boardId;
         }).catch(err => {
             console.log("err", err);
+        });
+    }
+
+    const comment_delete = (commentId) => {
+        const id = commentId;
+        const boardId = [[${board.id}]];
+        axios({
+            method: "delete",
+            url: "/comment/delete",
+            data: {
+                id: id,
+                boardId: boardId
+            }
+        }).then(res => {
+            location.href = "/memberBoard/detail/" + boardId;
+        }).catch(err => {
+            alert("삭제 실패했습니다.")
         });
     }
     const update = (id) => {
