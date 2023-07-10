@@ -68,7 +68,7 @@
                 </div>
             </div>
             <button onclick="Dibs()" style="margin-right: 10px;">채팅하기</button>
-            <button onclick="Dibs()">구매하기</button>
+            <button th:attr="onclick='productDetailPayment(\'' + ${ProductDTO.id} + '\')'">구매하기</button>
         </div>
     </div>
     <div class="grayBox2"></div>
@@ -123,6 +123,14 @@
 
     const productDetailList = (id) =>{
         window.location.href = "/market/list/" + id;
+    }
+
+    const productDetailPayment = (id) => {
+        const popupWidth = 650;
+        const popupHeight = window.innerHeight;
+        const leftPosition = (window.innerWidth - popupWidth) / 2;
+        const popupWindow = window.open("/market/payment/" + id, "popupWindow", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition);
+        popupWindow.focus();
     }
 
     const toggleLike3 = () => {
