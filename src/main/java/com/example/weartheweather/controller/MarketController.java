@@ -1,7 +1,5 @@
 package com.example.weartheweather.controller;
 
-import com.example.weartheweather.dto.AdminBoardDTO;
-import com.example.weartheweather.dto.AdminBoardLikesDTO;
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.service.MarketProductService;

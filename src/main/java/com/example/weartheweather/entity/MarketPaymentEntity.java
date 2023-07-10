@@ -6,30 +6,28 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-
-@Table(name = "payment_table")
-public class MarketPaymentEntity {
+@Setter
+@Getter
+@Table(name = "market_payment_table")
+public class MarketPaymentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String transactionType;  // 거래 유형
 
-    @Column(nullable = false)
-    private String address;  // 주소
-
-    @Column(nullable = false)
-    private String deliveryRequest;  // 배송 요청사항
-
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    //멤버테이블과 조인(멤버 엔티티에 @OneToMany로 연결해주세요~)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "market_id")
     private MarketProductEntity marketProductEntity;
 
-
-
+    public static MarketPaymentEntity toSaveEntity(MemberEntity memberEntity, MarketProductEntity marketProductEntity) {
+        MarketPaymentEntity marketPaymentEntity = new MarketPaymentEntity();
+        marketPaymentEntity.setMemberEntity(memberEntity);
+        marketPaymentEntity.setMarketProductEntity(marketProductEntity);
+        return marketPaymentEntity;
+    }
 }

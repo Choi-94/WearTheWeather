@@ -2,7 +2,6 @@ package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
-import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.entity.*;
 import com.example.weartheweather.repository.MarketLikesRepository;
 import com.example.weartheweather.repository.MarketProductFileRepository;
@@ -103,6 +102,7 @@ public class MarketProductService {
         MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
         MarketProductEntity marketProductEntity =  marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         marketLikesRepository.save(MarketLikesEntity.toSaveEntity(memberEntity, marketProductEntity));
+
     }
 
     @Transactional

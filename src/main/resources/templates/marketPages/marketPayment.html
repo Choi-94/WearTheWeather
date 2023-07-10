@@ -14,8 +14,8 @@
 <body>
 <div id="section">
 <div style="display: flex; align-items: flex-start;">
+  <input type="hidden" id="memberWeatherPay" th:value="${memberWeatherPay}">
   <h1 style="position: absolute; top: 30px; left: 15px;">결제하기</h1>
-  <input type="hidden" id="id" th:value="${ProductDTO.id}">
   <img id="currentImage" th:src="@{|/upload/${ProductDTO.storedFileName[0]}|}" width="150" height="150" alt="" style="position: absolute; top: 100px; left: 15px">
   <div style="position: absolute; top:90px; left: 200px; font-size: 35px;">
     <p th:text="${ProductDTO.getFormattedPrice()}"></p>
@@ -44,13 +44,29 @@
     <input type="text" id="transactionArea" name="transactionArea" class="form-control" placeholder="배송받을 주소를 입력해주세요" onblur="transactionAreaCheck()" style="width: 450px" ><br>
     <h6 id="productAreaCheck"></h6>
     <input type="text" id="sample6_detailAddress" placeholder="상세주소" style="display: none">
-    <input type="text" id="sample6_extraAddress"  class="form-control" placeholder="배송 요청사항을 입력해주세요" style=" width: 450px; margin-top: -30px">
+    <input type="text" id="sample6_extraAddress"  class="form-control" placeholder="상세주소를 입력해주세요" style=" width: 450px; margin-top: -30px">
   </div>
   <div class="grayBox2" style="position: absolute;  top: 1000px; width: 650px; "></div>
   <h1 style="position: absolute;  top: 600px; left: 15px">웨더포인트</h1>
   <input type="text" id="weatherPoint"  class="form-control"  style=" width: 450px; position: absolute; top: 650px; left: 15px;">
   <button id="marketPayment" class="pointButton" type="button" style="position: absolute; top:652px; left: 480px">포인트충전</button>
-  <p style="position: absolute;  top: 690px; left: 15px">사용 가능한 웨더 포인트 : </p>
+  <p th:text="'사용 가능한 웨더 포인트 :'+${memberWeatherPay}" style="position: absolute;  top: 690px; left: 15px"></p>
+  <div class="grayBox2" style="position: absolute;  top: 1230px; width: 650px; "></div>
+  <h1 style="position: absolute;  top: 820px; left: 15px">결제금액</h1>
+  <div style="border: 2px solid gainsboro; position: absolute; top: 900px; left: 20px; width: 600px; height: 440px; border-radius: 10px; ">
+    <p style="position: absolute;  top: 50px; left: 20px; font-size: 30px;">상품금액 :</p>
+    <p th:text="${ProductDTO.getFormattedPrice()}" style="position: absolute;  top: 50px; right: 30px; font-size: 30px;"></p>
+    <p style="position: absolute;  top: 100px; left: 20px; font-size: 30px;">배송비 :</p>
+    <p style="position: absolute;  top: 100px; right: 30px; font-size: 30px;">배송비무료</p>
+    <p style="position: absolute;  top: 150px; left: 20px; font-size: 30px;">안전결제 수수료 :</p>
+    <p th:text="${ProductDTO.getTransactionFee()}" style="position: absolute;  top: 150px; right: 30px; font-size: 30px;"></p>
+    <div style="position: absolute; top:220px; left: 15px; width: 550px; height: 2px; background-color: gainsboro;"><div>
+      <p style="position: absolute;  top: 30px;  font-size: 30px;">총 결제금액 :</p>
+      <p th:text="${ProductDTO.getTotalAmount()}" style="position: absolute;  top: 30px; right: 0px; font-size: 30px; color: #558BCF"></p>
+      <button onclick="pay()" class="payButton">결제하기</button>
+  </div>
+
+
 
 
 </div>
@@ -68,16 +84,18 @@
 
   //버튼 클릭하면 실행
   function payment(data) {
+    const email = document.querySelector("#email").value;
+    const nickName = document.querySelector("#nickName").value;
+    const amount = document.querySelector("#weatherPoint").value;
     IMP.init('imp36666477');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
     IMP.request_pay({// param
       pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
       pay_method: "card", //지불 방법
       merchant_uid: "iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-      name: "테스트", //결제창에 노출될 상품명
-      amount: 500, //금액
-      buyer_email : "testiamport@naver.com",
-      buyer_name : "홍길동",
-      buyer_tel : "01012341234"
+      name: "웨더페이 포인트충전", //결제창에 노출될 상품명
+      amount: parseInt(amount), // amount 변수 사용
+      buyer_email : email,
+      buyer_name : nickName,
     }, function (rsp) { // callback
       if (rsp.success) {
         alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
