@@ -1,8 +1,10 @@
 package com.example.weartheweather.controller;
 
 
+import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
+import com.example.weartheweather.service.CommentService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberBoardController {
     private final MemberBoardService memberBoardService;
+    private final CommentService commentService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -55,6 +58,12 @@ public class MemberBoardController {
         }
         int countBoardLikes = memberBoardService.countBoardLikes(id);
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        if (commentDTOList.size() > 0) {
+            model.addAttribute("commentList", commentDTOList);
+        } else {
+            model.addAttribute("commentList", null);
+        }
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", memberBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
