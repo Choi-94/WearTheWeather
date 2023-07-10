@@ -133,3 +133,16 @@
     text-align: center;
     border: 2px solid black;
 }
+
+.pointButton {
+    background-color: #558BCF;
+    color: white;
+    position: absolute;
+    top: 1135px;
+    left: 925px;
+    width: 90px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 10px;
+    text-align: center;
+}

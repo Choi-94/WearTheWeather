@@ -84,23 +84,5 @@ public class MarketController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
-//    @GetMapping("/detail/{id}")
-//    public String findById(@PathVariable Long id, HttpSession session, Model model) {
-//        marketProductService.updateHits(id);
-//        String memberNickName = (String)session.getAttribute("memberNickName");
-//        MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
-//        String marketLikes = null;
-//        if (marketLikesDTO != null) {
-//            marketLikes = "bi-heart-fill";
-//        }
-//        int countMarketLikes = marketProductService.countMarketLikes(id);
-//        MarketProductDTO marketProductDTO = marketProductService.findById(id);
-//        model.addAttribute("marketLikes", marketLikes);
-//        model.addAttribute("market", marketProductDTO);
-//        model.addAttribute("countMarketLikes", countMarketLikes);
-//        System.out.println("countMarketLikes = " + countMarketLikes);
-//        return "marketPages/marketDetail";
-//    }
-
 
 }
