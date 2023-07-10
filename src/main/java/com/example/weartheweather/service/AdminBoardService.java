@@ -13,6 +13,9 @@ import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -116,6 +119,36 @@ public class AdminBoardService {
         });
 
         return adminBoardDTOList;
+    }
+    @Transactional
+    public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
+        /* 조회수 로직 */
+        Cookie oldCookie = null;
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("adminBoardView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[[" + id.toString() + "]]")) {
+                adminBoardRepository.updateHits(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[[" + id + "]]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie);
+            }
+        } else {
+            adminBoardRepository.updateHits(id);
+            Cookie newCookie = new Cookie("adminBoardView","[[" + id + "]]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
     }
 }
 
