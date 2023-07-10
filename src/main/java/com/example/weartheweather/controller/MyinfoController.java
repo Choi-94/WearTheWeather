@@ -1,6 +1,7 @@
 package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class MyinfoController {
 
     @GetMapping("/myBoardList")
     public String myBoardListForm(Model model, HttpSession session){
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        List<MemberBoardDTO> memberBoardDTOList = adminBoardService.findByMemberBoard(memberNickName);
+        model.addAttribute("MemberBoardList",memberBoardDTOList);
         return "/myInfoPages/myBoardList";
     }
 
@@ -37,6 +41,15 @@ public class MyinfoController {
         model.addAttribute("totalPages", adminBoardDTOPage.getTotalPages());
 
         return "/adminPages/myLikeList";
+    }
+    @GetMapping("/myDibsList")
+    public String myDibsListForm(Model model, HttpSession session){
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        List<MarketProductDTO> marketProductDTOList = adminBoardService.findByMarketProduct(memberNickName);
+
+        model.addAttribute("MarketProduct", marketProductDTOList);
+        return "/myInfoPages/myDibsList";
+
     }
 
 

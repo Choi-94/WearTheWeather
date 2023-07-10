@@ -1,15 +1,8 @@
 package com.example.weartheweather.service;
 
-import com.example.weartheweather.dto.AdminBoardDTO;
-import com.example.weartheweather.dto.AdminBoardLikesDTO;
-import com.example.weartheweather.entity.AdminBoardEntity;
-import com.example.weartheweather.entity.AdminBoardFileEntity;
-import com.example.weartheweather.entity.AdminBoardLikesEntity;
-import com.example.weartheweather.entity.MemberEntity;
-import com.example.weartheweather.repository.AdminBoardFileRepository;
-import com.example.weartheweather.repository.AdminBoardLikesRepository;
-import com.example.weartheweather.repository.AdminBoardRepository;
-import com.example.weartheweather.repository.MemberRepository;
+import com.example.weartheweather.dto.*;
+import com.example.weartheweather.entity.*;
+import com.example.weartheweather.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,6 +27,9 @@ public class AdminBoardService {
     private final AdminBoardFileRepository adminBoardFileRepository;
     private final MemberRepository memberRepository;
     private final AdminBoardLikesRepository adminBoardLikesRepository;
+    private final MemberBoardRepository memberBoardRepository;
+    private final MarketProductRepository marketProductRepository;
+    private final MarketLikesRepository marketLikesRepository;
     public Long save(AdminBoardDTO adminBoardDTO) throws IOException {
         AdminBoardEntity adminBoardEntity = AdminBoardEntity.toSaveEntity(adminBoardDTO);
         AdminBoardEntity savedEntity = adminBoardRepository.save(adminBoardEntity);
@@ -106,27 +102,10 @@ public class AdminBoardService {
         Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
         adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
-    @Transactional
-    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, int page, int size) {
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
-        List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
-        List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
-        adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
-            adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
-        });
 
-        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
-        adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
-            Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
-            adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
-        });
 
-        int start = page * size;
-        int end = Math.min(start + size, adminBoardDTOList.size());
-        List<AdminBoardDTO> pagedAdminBoardDTOList = adminBoardDTOList.subList(start, end);
 
-        return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
-    }
+
     @Transactional
     public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
         /* 조회수 로직 */
@@ -157,6 +136,58 @@ public class AdminBoardService {
             res.addCookie(newCookie);
         }
     }
+    @Transactional
+    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, int page, int size) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
+        List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
+        adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
+            adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
+        });
 
+        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
+        adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
+            Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
+            adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
+        });
+
+        int start = page * size;
+        int end = Math.min(start + size, adminBoardDTOList.size());
+        List<AdminBoardDTO> pagedAdminBoardDTOList = adminBoardDTOList.subList(start, end);
+
+        return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
+    }
+    @Transactional
+    public List<MemberBoardDTO> findByMemberBoard(String memberNickName) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findByMemberEntity(memberEntity.get());
+        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+        memberBoardEntityList.forEach(memberBoardEntity -> {
+            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
+        });
+        return memberBoardDTOList;
+    }
+    @Transactional
+    public List<MarketProductDTO> findByMarketProduct(String memberNickName) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        List<MarketLikesEntity> marketLikesEntityList = marketLikesRepository.findByMemberEntity(memberEntity.get());
+        List<MarketLikesDTO> marketLikesDTOList = new ArrayList<>();
+        marketLikesEntityList.forEach(marketLikesEntity -> {
+        marketLikesDTOList.add(MarketLikesDTO.toDTO(marketLikesEntity));
+        });
+        List<MarketProductDTO> marketProductDTOList =new ArrayList<>();
+        marketLikesDTOList.forEach(marketLikesDTO -> {
+            Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(marketLikesDTO.getBoardId());
+            marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity.get()));
+        });
+            return marketProductDTOList;
+    }
+//        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findByMemberEntity(memberEntity.get());
+//        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();
+//        marketProductEntityList.forEach(marketProductEntity -> {
+//            marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity));
+//        });
+//        return marketProductDTOList;
+//    }
 }
 

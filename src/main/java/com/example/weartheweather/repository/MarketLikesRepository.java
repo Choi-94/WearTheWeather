@@ -4,6 +4,7 @@ import com.example.weartheweather.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MarketLikesRepository extends JpaRepository<MarketLikesEntity, Long> {
@@ -13,4 +14,6 @@ public interface MarketLikesRepository extends JpaRepository<MarketLikesEntity, 
     int countMarketLikes(MarketProductEntity marketProductEntity);
 
     void deleteByMarketProductEntityAndMemberEntity(Optional<MarketProductEntity> marketProductEntity, Optional<MemberEntity> memberEntity);
+
+    List<MarketLikesEntity> findByMemberEntity(MemberEntity memberEntity);
 }

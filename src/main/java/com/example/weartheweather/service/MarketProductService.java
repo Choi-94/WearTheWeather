@@ -99,10 +99,12 @@ public class MarketProductService {
         MarketProductEntity marketProductEntity = marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return marketLikesRepository.countMarketLikes(marketProductEntity);
     }
+    @Transactional
     public void addMarketLikes(String memberNickName, Long id) {
         MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
         MarketProductEntity marketProductEntity =  marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         marketLikesRepository.save(MarketLikesEntity.toSaveEntity(memberEntity, marketProductEntity));
+        marketProductRepository.addMarketLikes(id);
     }
 
     @Transactional
@@ -110,6 +112,7 @@ public class MarketProductService {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(id);
         marketLikesRepository.deleteByMarketProductEntityAndMemberEntity(marketProductEntity, memberEntity);
+        marketProductRepository.deleteMarketLikes(id);
     }
 
     @Transactional
