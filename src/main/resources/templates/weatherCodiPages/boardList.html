@@ -19,6 +19,9 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<input type="text" th:value="${temperature}">
+<input type="text" th:value="${weather}">
+<input type="text" th:value="${name}">
 <div id="section">
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check2" viewBox="0 0 16 16">
