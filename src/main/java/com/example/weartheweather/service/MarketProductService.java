@@ -121,15 +121,5 @@ public class MarketProductService {
         marketProductRepository.updateHits(id);
     }
 
-    public MemberDTO updatePay(String memberNickName, Long memberWeatherPay) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
-        MemberDTO memberDTO = MemberDTO.toUpdatePay(optionalMemberEntity.get(),memberWeatherPay);
-        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
-        MemberEntity memberEntity1 = memberRepository.save(memberEntity);
-        MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity1);
-        return memberDTO1;
 
-
-
-    }
 }
