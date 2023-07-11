@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:max-width="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
@@ -37,9 +37,9 @@
             <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
         </tr>
         <tr>
-            <td th:text="${likeList.id}"></td>
+            <td th:text="${likeList.id }"></td>
             <td>
-                <img th:src="@{|/upload/${likeList.storedFileName}}">
+                <img th:src="@{|/upload/${likeList.storedFileName}}" style="max-width: 100px;">
             </td>
             <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
         </tr>

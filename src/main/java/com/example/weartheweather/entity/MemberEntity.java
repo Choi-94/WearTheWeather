@@ -27,7 +27,7 @@ public class MemberEntity {
     private String memberNickName;
 
     @Column(columnDefinition = "int default 0")
-    private int memberPoints;
+    private int memberPoints = 0;
 
     @Column(nullable = false)
     private String memberGender;
