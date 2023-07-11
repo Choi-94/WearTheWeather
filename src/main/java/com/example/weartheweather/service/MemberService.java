@@ -92,5 +92,10 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
+    public MemberDTO findByMemberNickName(String memberNickName) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
+        MemberDTO memberDTO = MemberDTO.tofindAll(optionalMemberEntity.get());
+        return memberDTO;
+    }
 }
 

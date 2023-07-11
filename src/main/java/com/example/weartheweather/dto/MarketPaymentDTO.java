@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
+
 @Getter
 @Setter
 @ToString
@@ -14,16 +16,11 @@ public class MarketPaymentDTO {
 
     private Long id;
     private Long memberId;
-    private Long boardId;
-
     private String createdAt;
+    private String productWriter;
+    private int productPrice;
+    private String productSize;
+    private String productTitle;
+    private String deliveryLocation;
 
-    public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
-        MarketPaymentDTO marketLikesDTO = new MarketPaymentDTO();
-        marketLikesDTO.setId(marketLikesDTO.getId());
-        marketLikesDTO.setMemberId(marketPaymentEntity.getMemberEntity().getId());
-        marketLikesDTO.setBoardId(marketPaymentEntity.getMarketProductEntity().getId());
-        marketLikesDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
-        return marketLikesDTO;
-    }
 }

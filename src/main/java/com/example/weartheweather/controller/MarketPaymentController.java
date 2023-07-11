@@ -1,8 +1,8 @@
 package com.example.weartheweather.controller;
-
-import com.example.weartheweather.dto.AdminBoardDTO;
+import com.example.weartheweather.dto.MarketPaymentDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.dto.MemberDTO;
+import com.example.weartheweather.service.MarketPaymentService;
 import com.example.weartheweather.service.MarketProductService;
 import com.example.weartheweather.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 @RequiredArgsConstructor
 @RequestMapping("/market")
 @Controller
 public class MarketPaymentController {
+    private final MarketPaymentService marketPaymentService;
     private final MarketProductService marketProductService;
     private final MemberService memberService;
 
@@ -26,8 +28,8 @@ public class MarketPaymentController {
     public String findById(@PathVariable Long id, HttpSession session,  Model model) {
         String memberNickName = (String)session.getAttribute("memberNickName");
         String memberEmail = (String)session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.findByMemberNickName(memberNickName);
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
-        MemberDTO memberDTO = memberService.findById(id);
         model.addAttribute("MemberDTO", memberDTO);
         model.addAttribute("ProductDTO", marketProductDTO);
         model.addAttribute("memberNickName", memberNickName);
@@ -38,8 +40,17 @@ public class MarketPaymentController {
     @PostMapping ("/addWeatherPay")
     public ResponseEntity update(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         String memberNickName = (String)session.getAttribute("memberNickName");
-        MemberDTO memberDTO1 = marketProductService.updatePay(memberNickName,memberDTO.getMemberWeatherPay());
+        MemberDTO memberDTO1 = marketPaymentService.updatePay(memberNickName,memberDTO.getMemberWeatherPay());
         return new ResponseEntity<>(memberDTO1.getMemberWeatherPay(),HttpStatus.OK);
 
+    }
+
+    @PostMapping("/addTransaction")
+    public ResponseEntity save(@RequestBody MarketPaymentDTO marketPaymentDTO,HttpSession session) throws IOException {
+        System.out.println("marketPaymentDTO = " + marketPaymentDTO);
+        String memberNickName = (String)session.getAttribute("memberNickName");
+
+        marketPaymentService.save(marketPaymentDTO,memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
