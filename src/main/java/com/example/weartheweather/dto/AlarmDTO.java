@@ -9,10 +9,11 @@ import lombok.ToString;
 @ToString
 public class AlarmDTO {
     private Long id;
+    private String message;
     private String type;
+    private int isRead;
     private Long writerId;
     private Long loginId;
-    private String message;
     private Long boardId;
     private Long productId;
     private String createdAt;

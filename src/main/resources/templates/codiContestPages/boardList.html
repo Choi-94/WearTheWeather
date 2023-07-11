@@ -37,45 +37,6 @@
         </table>
     </div>
 
-<!--    <div class="container">-->
-<!--        <ul class="pagination justify-content-center">-->
-<!--            <li class="page-item">-->
-<!--                &lt;!&ndash;첫페이지 요청 링크 /board?page=1 &ndash;&gt;-->
-<!--                <a class="page-link" th:href="@{/board(page=1, type=${type}, q=${q})}">-->
-<!--                    <span>First</span>-->
-<!--                </a>-->
-<!--            </li>-->
-
-<!--            <li th:class="${boardList.first} ? 'disabled'" class="page-item">-->
-<!--                <a class="page-link"-->
-<!--                   th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number}, type=${type}, q=${q})}">-->
-<!--                    &lt;!&ndash; 사용자 3페이지, number 2 /board?page=2 &ndash;&gt;-->
-<!--                    <span><</span> &lt;!&ndash; < &ndash;&gt;-->
-<!--                </a>-->
-<!--            </li>-->
-
-<!--            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"-->
-<!--                th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">-->
-<!--                <a class="page-link" th:text="${page}"-->
-<!--                   th:href="@{/board(page=${page}, type=${type}, q=${q})}"></a>-->
-<!--            </li>-->
-<!--            -->
-<!--            <li th:class="${boardList.last} ? 'disabled'">-->
-<!--                <a class="page-link"-->
-<!--                   th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2}, type=${type}, q=${q})}">-->
-<!--                    &lt;!&ndash; 사용자 3페이지, number 2 /board?page=4 &ndash;&gt;-->
-<!--                    <span>&gt;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" th:href="@{/board(page=${boardList.totalPages}, type=${type}, q=${q})}">-->
-<!--                    <span>Last</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-
 
 </div>
 

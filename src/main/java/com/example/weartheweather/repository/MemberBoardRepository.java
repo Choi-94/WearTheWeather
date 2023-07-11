@@ -18,8 +18,6 @@ public interface MemberBoardRepository extends JpaRepository<MemberBoardEntity,L
     @Query(value = "update MemberBoardEntity b set b.boardHits=b.boardHits+1 where b.id=:id")
     void updateHits(@Param("id") Long id);
 
-    Page<MemberBoardEntity> findByBoardWriterContaining(String q, Pageable pageable);
-    Page<MemberBoardEntity> findByBoardTitleContaining(String q, Pageable pageable);
 
     @Modifying
     @Query(value = "update MemberBoardEntity b set b.boardLikes=b.boardLikes+1 where b.id=:id")
