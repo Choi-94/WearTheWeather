@@ -6,9 +6,12 @@ import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,15 +33,10 @@ public class MyinfoController {
     }
 
     @GetMapping("/myLikeList")
-    public String myLikeListForm(Model model, HttpSession session,
-                                 @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size) {
+    public String myLikeListForm(Model model, HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
-        Page<AdminBoardDTO> adminBoardDTOPage = adminBoardService.findByBoardLikesNick(memberNickName, page, size);
-
-        model.addAttribute("adminBoardLikeList", adminBoardDTOPage.getContent());
-        model.addAttribute("currentPage", adminBoardDTOPage.getNumber()); // 수정된 부분
-        model.addAttribute("totalPages", adminBoardDTOPage.getTotalPages());
+        List<AdminBoardDTO> adminBoardDTOPage = adminBoardService.findByBoardLikesNick(memberNickName);
+        model.addAttribute("adminBoardLikeList", adminBoardDTOPage);
 
         return "/adminPages/myLikeList";
     }

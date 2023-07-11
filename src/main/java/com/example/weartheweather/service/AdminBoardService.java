@@ -4,9 +4,7 @@ import com.example.weartheweather.dto.*;
 import com.example.weartheweather.entity.*;
 import com.example.weartheweather.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -137,25 +135,22 @@ public class AdminBoardService {
         }
     }
     @Transactional
-    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, int page, int size) {
+    public List<AdminBoardDTO> findByBoardLikesNick(String memberNickName) {
+
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
         List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
         adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
             adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
         });
-
+        System.out.println("adminBoardLikesDTOList = " + adminBoardLikesDTOList);
         List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
         adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
             Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
             adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
         });
-
-        int start = page * size;
-        int end = Math.min(start + size, adminBoardDTOList.size());
-        List<AdminBoardDTO> pagedAdminBoardDTOList = adminBoardDTOList.subList(start, end);
-
-        return new PageImpl<>(pagedAdminBoardDTOList, PageRequest.of(page, size), adminBoardDTOList.size());
+        System.out.println("adminBoardDTOList = " + adminBoardDTOList);
+        return adminBoardDTOList;
     }
     @Transactional
     public List<MemberBoardDTO> findByMemberBoard(String memberNickName) {
