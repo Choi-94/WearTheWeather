@@ -82,9 +82,14 @@
                     .then(response => response.json())
                     .then(data => {
                         const temperature = data.main.temp; // 온도
-                        const weather = data.weather[0].main; // 날씨 조건
-                        const name = data.name; // 날씨 조건
+                        let weather;
 
+                        if (data.weather[0].main === "Mist" || data.weather[0].main === "Thunderstorm") {
+                            weather = "Rain";
+                        } else {
+                            weather = data.weather[0].main;
+                        } // 날씨 조건
+                        const name = data.name; // 날씨 조건
                         displayWeather(temperature, weather, name);
 
                     })
