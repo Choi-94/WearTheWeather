@@ -32,5 +32,18 @@ public class MemberDTO {
         return memberDTO;
     }
 
+    public static MemberDTO toUpdatePay(MemberEntity memberEntity, Long memberWeatherPay){
+        MemberDTO memberDTO = new MemberDTO();
+        Long WeatherPay = memberEntity.getMemberWeatherPay();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberGender(memberEntity.getMemberGender());
+        memberDTO.setMemberWeatherPay(WeatherPay+memberWeatherPay);
+        memberDTO.setMemberNickName(memberEntity.getMemberNickName());
+        memberDTO.setMemberPoints(memberEntity.getMemberPoints());
+        memberDTO.setPlatform(memberEntity.getPlatform());
+        return memberDTO;
+    }
 
 }

@@ -91,5 +91,6 @@ public class MemberService {
         MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
         memberRepository.save(memberEntity);
     }
+
 }
 

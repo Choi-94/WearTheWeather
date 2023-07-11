@@ -2,6 +2,7 @@ package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.entity.*;
 import com.example.weartheweather.repository.MarketLikesRepository;
 import com.example.weartheweather.repository.MarketProductFileRepository;
@@ -118,5 +119,17 @@ public class MarketProductService {
     @Transactional
     public void updateHits(Long id) {
         marketProductRepository.updateHits(id);
+    }
+
+    public MemberDTO updatePay(String memberNickName, Long memberWeatherPay) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
+        MemberDTO memberDTO = MemberDTO.toUpdatePay(optionalMemberEntity.get(),memberWeatherPay);
+        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
+        MemberEntity memberEntity1 = memberRepository.save(memberEntity);
+        MemberDTO memberDTO1 = MemberDTO.tofindAll(memberEntity1);
+        return memberDTO1;
+
+
+
     }
 }
