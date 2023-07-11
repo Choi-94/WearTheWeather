@@ -63,11 +63,6 @@ public class MemberBoardService {
         return memberBoardDTOList;
     }
 
-    @Transactional
-    public void updateHits(Long id) {
-        memberBoardRepository.updateHits(id);
-    }
-
     public MemberBoardLikesDTO findByBoardLikes(String memberNickName, Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(id);
@@ -114,26 +109,6 @@ public class MemberBoardService {
         memberBoardRepository.save(memberBoardEntity);
     }
 
-    public Page<MemberBoardDTO> paging(Pageable pageable, String type, String q) {
-        int page = pageable.getPageNumber() - 1;
-        int pageLimit = 5;
-        Page<MemberBoardEntity> boardEntities = null;
-        if (type.equals("title")) {
-            boardEntities = memberBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        } else if (type.equals("writer")) {
-            boardEntities = memberBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        } else {
-            boardEntities = memberBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        }
-        Page<MemberBoardDTO> boardDTOS = boardEntities.map(memberBoardEntity -> MemberBoardDTO.builder()
-                .id(memberBoardEntity.getId())
-                .boardTitle(memberBoardEntity.getBoardTitle())
-                .boardWriter(memberBoardEntity.getBoardWriter())
-                .createdAt(UtilClass.dateFormat(memberBoardEntity.getCreatedAt()))
-                .boardHits(memberBoardEntity.getBoardHits())
-                .build());
-        return boardDTOS;
-    }
     @Transactional
     public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
         /* 조회수 로직 */

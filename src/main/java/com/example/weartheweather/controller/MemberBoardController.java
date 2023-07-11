@@ -99,30 +99,4 @@ public class MemberBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-//    @GetMapping("/list")
-//    public String paging(@PageableDefault(page = 1) Pageable pageable,
-//                         @RequestParam(value = "type", required = false, defaultValue = "") String type,
-//                         @RequestParam(value = "q", required = false, defaultValue = "") String q,
-//                         Model model) {
-//        System.out.println("page = " + pageable.getPageNumber());
-//        Page<MemberBoardDTO> boardDTOS = memberBoardService.paging(pageable, type, q);
-//        if (boardDTOS.getTotalElements() == 0) {
-//            model.addAttribute("boardList", null);
-//        } else {
-//            model.addAttribute("boardList", boardDTOS);
-//        }
-//
-//        int blockLimit = 3;
-//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-//        int endPage = ((startPage + blockLimit - 1) < boardDTOS.getTotalPages()) ? startPage + blockLimit - 1 : boardDTOS.getTotalPages();
-//
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//        model.addAttribute("type", type);
-//        model.addAttribute("q", q);
-//
-//        return "/codiContestPages/boardList";
-//    }
 }
