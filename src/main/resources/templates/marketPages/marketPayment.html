@@ -14,7 +14,10 @@
 <body>
 <div id="section">
 <div style="display: flex; align-items: flex-start;">
-  <input type="hidden" id="memberWeatherPay" th:value="${memberWeatherPay}">
+  <input type="hidden" id="email" th:value="${MemberDTO.getMemberEmail()}">
+  <input type="hidden" id="nickName" th:value="${MemberDTO.getMemberNickName()}">
+  <input type="hidden" id="weatherPay" th:value="${MemberDTO.getMemberWeatherPay()}" name="weatherPay">
+  <input type="hidden" id="productPrice" th:value="${ProductDTO.getProductPrice()}">
   <h1 style="position: absolute; top: 30px; left: 15px;">결제하기</h1>
   <img id="currentImage" th:src="@{|/upload/${ProductDTO.storedFileName[0]}|}" width="150" height="150" alt="" style="position: absolute; top: 100px; left: 15px">
   <div style="position: absolute; top:90px; left: 200px; font-size: 35px;">
@@ -48,9 +51,10 @@
   </div>
   <div class="grayBox2" style="position: absolute;  top: 1000px; width: 650px; "></div>
   <h1 style="position: absolute;  top: 600px; left: 15px">웨더포인트</h1>
-  <input type="text" id="weatherPoint"  class="form-control"  style=" width: 450px; position: absolute; top: 650px; left: 15px;">
-  <button id="marketPayment" class="pointButton" type="button" style="position: absolute; top:652px; left: 480px">포인트충전</button>
-  <p th:text="'사용 가능한 웨더 포인트 :'+${memberWeatherPay}" style="position: absolute;  top: 690px; left: 15px"></p>
+  <input type="text" id="weatherPoint"  name="marketPayment" class="form-control"  style=" width: 450px; position: absolute; top: 650px; left: 15px;">
+  <button id="marketPayment"   class="pointButton" type="button" style="position: absolute; top:652px; left: 480px">포인트충전</button>
+  <p th:text="'사용 가능한 웨더포인트 : '+${MemberDTO.getMemberWeatherPay()}" id="weatherPay2" style="position: absolute;  top: 690px; left: 15px"></p>
+
   <div class="grayBox2" style="position: absolute;  top: 1230px; width: 650px; "></div>
   <h1 style="position: absolute;  top: 820px; left: 15px">결제금액</h1>
   <div style="border: 2px solid gainsboro; position: absolute; top: 900px; left: 20px; width: 600px; height: 440px; border-radius: 10px; ">
@@ -84,21 +88,42 @@
 
   //버튼 클릭하면 실행
   function payment(data) {
+    function generateRandomNumber() {
+      const min = 1000000000; // 최소값 (10자리 숫자 중 가장 작은 값)
+      const max = 9999999999; // 최대값 (10자리 숫자 중 가장 큰 값)
+
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      return randomNumber.toString();
+    }
+
+    const randomMerchantUid = generateRandomNumber();
     const email = document.querySelector("#email").value;
     const nickName = document.querySelector("#nickName").value;
-    const amount = document.querySelector("#weatherPoint").value;
+    const weatherPay = document.querySelector('input[name="marketPayment"]').value;
     IMP.init('imp36666477');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
     IMP.request_pay({// param
       pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
       pay_method: "card", //지불 방법
-      merchant_uid: "iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+      merchant_uid: randomMerchantUid, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
       name: "웨더페이 포인트충전", //결제창에 노출될 상품명
-      amount: parseInt(amount), // amount 변수 사용
+      amount: parseInt(weatherPay), // amount 변수 사용
       buyer_email : email,
       buyer_name : nickName,
     }, function (rsp) { // callback
       if (rsp.success) {
         alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+        $.ajax({
+          type: "post",
+          url: "/market/addWeatherPay",
+          data: {
+            memberWeatherPay: weatherPay
+          },success:function (res) {
+            document.getElementById("weatherPay2").innerHTML = '사용 가능한 웨더포인트 : '+ res;
+            console.log(res);
+          },error:function(res){
+            console.log("111"+res);
+        }
+      });
       } else {
         alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
       }

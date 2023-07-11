@@ -71,6 +71,9 @@ public class MarketProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MarketLikesEntity> likesEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MarketPaymentEntity> marketPaymentEntityList = new ArrayList<>();
+
     public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
         marketProductEntity.setMemberEntity(memberEntity);
