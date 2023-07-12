@@ -40,9 +40,7 @@
             </div>
         </div>
         <div id="countLikes">
-            <div>
-                좋아요수: <input type="text" th:value="${countBoardLikes}">
-            </div>
+            좋아요수: <div th:text="${countBoardLikes}"></div>
         </div>
         <div th:if="${session.loginEmail eq board.boardWriter}">
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
@@ -71,7 +69,7 @@
                     </tr>
                     <tr th:each="comment: ${commentList}">
                         <td th:text="${comment.id}"></td>
-                        <td th:text="${comment.commentWriter}"></td>
+                        <td th:text="${comment.commentWriter}" id="commentWriter"></td>
                         <td th:text="${comment.commentContents}"></td>
                         <td th:text="${comment.createdAt}"></td>
                         <td th:if="${session.memberNickName eq comment.commentWriter}">
@@ -89,12 +87,11 @@
 
     </div>
 </div>
-    <div th:replace="component/footer :: footer"></div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
 
     const comment_list = (commentList) => {
-        console.log("댓글 목록 함수", commentList);
         const resultArea = document.querySelector("#comment-list");
         let output = "        <table class=\"table\">\n" +
             "            <tr>\n" +
@@ -102,15 +99,22 @@
             "                <th>writer</th>\n" +
             "                <th>contents</th>\n" +
             "                <th>date</th>\n" +
+            "                <th></th>\n" +
             "            </tr>";
         for (let i in commentList) {
-            output += "<tr>\n" +
-                "                <td>" + commentList[i].id + "</td>\n" +
-                "                <td>" + commentList[i].commentWriter + "</td>\n" +
-                "                <td>" + commentList[i].commentContents + "</td>\n" +
-                "                <td>" + commentList[i].createdAt + "</td>\n" +
-                "            </tr>";
+            output += `
+            <tr>
+                <td>${commentList[i].id}</td>
+                <td>${commentList[i].commentWriter}</td>
+                <td>${commentList[i].commentContents}</td>
+                <td>${commentList[i].createdAt}</td>
+                <td>
+                    <i class="bi bi-x" th:onclick="comment_delete(${commentList[i].id})"></i>
+                </td>
+            </tr>`;
         }
+
+
         output += "</table>";
         resultArea.innerHTML = output;
     }
@@ -158,24 +162,59 @@
         location.href = "/memberBoard/update/" + id;
     }
 
+    const count_likes = () => {
+        const count_likes = document.querySelector("#countLikes");
+        const id = document.querySelector("#id").value;
+
+        axios({
+            method: "get",
+            url: "/memberBoard/countLikes/" + id
+        }).then(res => {
+            const countLikes = res.data;
+            count_likes.innerHTML = countLikes;
+        }).catch(err = {
+
+        });
+    }
+
+    const send_alarm = () => {
+        const boardId = document.querySelector("#id");
+        const writerId = document.querySelector("#writerId");
+
+        axios({
+            method: "get",
+            url: "/memberBoard/sendAlarm",
+            data: {
+                boardId: boardId,
+                writerId: writerId
+            }
+        }).then(res => {
+
+        }).catch(err => {
+
+        });
+    }
+
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
     const toggleLike2 = () => {
         const icon = document.getElementById("likeIcon2");
         const id = document.querySelector("#id").value;
-        const writerId = document.querySelector("#writerId").value;
+
         axios({
             method: "get",
             url: "/memberBoard/findByBoardLikes/" + id,
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
-            location.href = "/memberBoard/detail/" + id;
-            location.href = "/memberBoard/SendAlarm/" + id + "/" + writerId;
+            count_likes();
+
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';
-            location.href = "/memberBoard/detail/" + id;
+            count_likes();
+
         });
+
     }
 
 

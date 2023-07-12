@@ -13,7 +13,10 @@ public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLik
     @Query(value = "select count(b) FROM MemberBoardLikesEntity b where b.memberBoardEntity =:memberBoardEntity")
     int countBoardLikes(MemberBoardEntity memberBoardEntity);
 
-    Optional<MemberBoardLikesEntity> findByMemberBoardEntityAndMemberEntity(Optional<MemberBoardEntity> memberBoardEntity, Optional<MemberEntity> memberEntity);
 
-    void deleteByMemberBoardEntityAndMemberEntity(Optional<MemberBoardEntity> memberBoardEntity, Optional<MemberEntity> memberEntity);
+    
+
+    void deleteByMemberBoardEntityAndMemberEntity(MemberBoardEntity memberBoardEntity, MemberEntity memberEntity);
+
+    MemberBoardLikesEntity findByMemberBoardEntityAndMemberEntity(MemberBoardEntity memberBoardEntity, MemberEntity memberEntity);
 }
