@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -83,6 +84,12 @@ public class MemberBoardController {
             memberBoardService.deleteBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping("/countLikes/{id}")
+    public ResponseEntity<Integer> countLikes(@PathVariable Long id) {
+        int countBoardLikes = memberBoardService.countBoardLikes(id);
+        return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
     }
 
     @GetMapping("/update/{id}")
