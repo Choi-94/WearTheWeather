@@ -86,4 +86,9 @@ public class MarketController {
         }
     }
 
+    @GetMapping("/tset")
+    public String testForm() {
+        return "test";
+    }
+
 }
