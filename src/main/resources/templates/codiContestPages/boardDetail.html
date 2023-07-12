@@ -207,11 +207,12 @@
             icon.classList.remove("bi-heart");
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             count_likes();
+
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';
             count_likes();
-            send_alarm();
+
         });
 
     }

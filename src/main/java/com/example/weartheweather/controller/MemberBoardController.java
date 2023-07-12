@@ -92,6 +92,7 @@ public class MemberBoardController {
         return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
     }
 
+
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
