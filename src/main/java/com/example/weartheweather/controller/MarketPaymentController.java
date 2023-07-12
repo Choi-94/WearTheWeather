@@ -25,7 +25,7 @@ public class MarketPaymentController {
     private final MemberService memberService;
 
     @GetMapping("/payment/{id}")
-    public String findById(@PathVariable Long id, HttpSession session,  Model model) {
+    public String findByIdForPayment(@PathVariable Long id, HttpSession session,  Model model) {
         String memberNickName = (String)session.getAttribute("memberNickName");
         String memberEmail = (String)session.getAttribute("loginEmail");
         MemberDTO memberDTO = memberService.findByMemberNickName(memberNickName);
@@ -46,11 +46,24 @@ public class MarketPaymentController {
     }
 
     @PostMapping("/addTransaction")
-    public ResponseEntity save(@RequestBody MarketPaymentDTO marketPaymentDTO,HttpSession session) throws IOException {
+    public ResponseEntity<Long> save(@RequestBody MarketPaymentDTO marketPaymentDTO,HttpSession session) throws IOException {
         System.out.println("marketPaymentDTO = " + marketPaymentDTO);
         String memberNickName = (String)session.getAttribute("memberNickName");
 
         marketPaymentService.save(marketPaymentDTO,memberNickName);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Long id = marketPaymentDTO.getId(); // 저장된 MarketPaymentDTO의 id 값을 가져옴
+        return ResponseEntity.ok(id);
     }
+
+    @GetMapping("/PaymentSuccess/{id}")
+    public String findByIdForPaymentSuccess(@PathVariable Long id, HttpSession session, Model model) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        MemberDTO memberDTO = memberService.findByMemberNickName(memberNickName);
+        MarketPaymentDTO marketPaymentDTO = marketPaymentService.findById(id);
+        model.addAttribute("MemberDTO", memberDTO);
+        model.addAttribute("MarketPaymentDTO", marketPaymentDTO);
+        model.addAttribute("memberNickName", memberNickName);
+        return "marketPages/marketPaymentSuccess";
+    }
+
 }

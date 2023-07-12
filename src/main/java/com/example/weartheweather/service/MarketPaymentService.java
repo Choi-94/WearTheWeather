@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -34,10 +35,11 @@ public class MarketPaymentService {
         marketPaymentRepository.save(marketPaymentEntity);
     }
 
+    public MarketPaymentDTO findById(Long id) {
+        MarketPaymentEntity marketPaymentEntity = marketPaymentRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MarketPaymentDTO.toDTO(marketPaymentEntity);
+    }
 
-//    public void save(MarketPaymentDTO marketPaymentDTO) {
-//        MarketPaymentEntity marketPaymentEntity = MarketPaymentEntity.toSaveEntity(marketPaymentDTO);
-//        marketPaymentRepository.save(marketPaymentEntity);
-//    }
+
 }
 

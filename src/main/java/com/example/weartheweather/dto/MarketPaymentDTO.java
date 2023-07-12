@@ -23,4 +23,15 @@ public class MarketPaymentDTO {
     private String productTitle;
     private String deliveryLocation;
 
+    public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
+        MarketPaymentDTO marketPaymentDTO = new MarketPaymentDTO();
+        marketPaymentDTO.setId(marketPaymentEntity.getId());
+        marketPaymentDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
+        marketPaymentDTO.setProductWriter(marketPaymentEntity.getProductWriter());
+        marketPaymentDTO.setProductPrice(marketPaymentEntity.getProductPrice());
+        marketPaymentDTO.setProductSize(marketPaymentEntity.getProductTitle());
+        marketPaymentDTO.setDeliveryLocation(marketPaymentEntity.getDeliveryLocation());
+        return marketPaymentDTO;
+    }
+
 }

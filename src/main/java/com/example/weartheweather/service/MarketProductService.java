@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,4 +125,34 @@ public class MarketProductService {
     }
 
 
+    @Transactional
+    public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
+        /* 조회수 로직 */
+        Cookie oldCookie3 = null;
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("adminBoardView")) {
+                    oldCookie3 = cookie;
+                }
+            }
+        }
+
+        if (oldCookie3 != null) {
+            if (!oldCookie3.getValue().contains("[[" + id.toString() + "]]")) {
+                marketProductRepository.updateHits(id);
+                oldCookie3.setValue(oldCookie3.getValue() + "_[[" + id + "]]");
+                oldCookie3.setPath("/");
+                oldCookie3.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie3);
+            }
+        } else {
+            marketProductRepository.updateHits(id);
+            Cookie newCookie = new Cookie("adminBoardView","[[" + id + "]]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
+    }
 }
