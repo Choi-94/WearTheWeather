@@ -123,14 +123,32 @@
                 deliveryLocation: address  // 수정: 주소 값을 가져옴
             }
         }).then(res => {
+            const marketPaymentDTO = res.data; // 응답에서 MarketPaymentDTO를 가져옴
+            const id = marketPaymentDTO.id; // MarketPaymentDTO의 id 값을 가져옴
             alert("결제가 완료 되었습니다")
-            location.href = "/marketPages/marketPaymentSuccess";
+            location.href = "/market/PaymentSuccess/" + id; // PaymentSuccess 페이지로 이동하면서 id 값을 전달
         }).catch(err=>{
             console.log("err",err);
         });
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //문서가 준비되면 제일 먼저 실행
     $(document).ready(function () {
@@ -183,6 +201,31 @@
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     function getCurrentPos() {

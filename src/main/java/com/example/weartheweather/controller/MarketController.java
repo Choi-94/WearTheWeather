@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -40,8 +42,9 @@ public class MarketController {
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, HttpSession session,Model model) {
-        marketProductService.updateHits(id);
+    public String findById(@PathVariable Long id, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse res) {
+//        marketProductService.updateHits(id);
+        marketProductService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
         MarketProductDTO marketProductDTO = marketProductService.findById(id);

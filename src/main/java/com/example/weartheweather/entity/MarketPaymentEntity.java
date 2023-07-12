@@ -44,6 +44,7 @@ public class MarketPaymentEntity extends BaseEntity {
 
     public static MarketPaymentEntity toSaveEntity(MarketPaymentDTO marketPaymentDTO,MemberEntity memberEntity,MemberEntity memberEntity1) {
         MarketPaymentEntity marketPaymentEntity = new MarketPaymentEntity();
+        marketPaymentEntity.setId(marketPaymentDTO.getId()); // 수정: id 값을 설정
         marketPaymentEntity.setProductWriter(marketPaymentDTO.getProductWriter());
         marketPaymentEntity.setProductSize(marketPaymentDTO.getProductSize());
         marketPaymentEntity.setProductPrice(marketPaymentDTO.getProductPrice());
