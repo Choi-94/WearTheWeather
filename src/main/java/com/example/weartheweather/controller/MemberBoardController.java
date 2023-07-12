@@ -1,6 +1,7 @@
 package com.example.weartheweather.controller;
 
 
+import com.example.weartheweather.dto.AlarmDTO;
 import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
@@ -91,6 +92,7 @@ public class MemberBoardController {
         int countBoardLikes = memberBoardService.countBoardLikes(id);
         return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
     }
+
 
 
     @GetMapping("/update/{id}")

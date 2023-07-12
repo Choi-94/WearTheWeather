@@ -178,12 +178,12 @@
     }
 
     const send_alarm = () => {
-        const boardId = document.querySelector("#id");
-        const writerId = document.querySelector("#writerId");
-
+        const boardId = document.querySelector("#id").value;
+        const writerId = document.querySelector("#writerId").value;
+        console.log(boardId);
         axios({
-            method: "get",
-            url: "/memberBoard/sendAlarm",
+            method: "post",
+            url: "/alarm/likesAlarm",
             data: {
                 boardId: boardId,
                 writerId: writerId
@@ -207,7 +207,7 @@
             icon.classList.remove("bi-heart");
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             count_likes();
-
+            send_alarm()
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';
