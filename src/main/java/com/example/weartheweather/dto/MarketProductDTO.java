@@ -25,7 +25,9 @@ public class MarketProductDTO {
     private String productSize;
     private String productTitle;
     private String transactionArea;
-    private int productPrice;
+    private Long productPrice;
+    private Long transactionFee;
+    private Long totalAmount;
 
     private String productContents;
     private String productSeason;
@@ -48,6 +50,8 @@ public class MarketProductDTO {
         marketProductDTO.setProductSize(marketProductEntity.getProductSize());
         marketProductDTO.setTransactionArea(marketProductEntity.getTransactionArea());
         marketProductDTO.setProductPrice(marketProductEntity.getProductPrice());
+        marketProductDTO.setTransactionFee(marketProductEntity.getTransactionFee());
+        marketProductDTO.setTotalAmount(marketProductEntity.getTotalAmount());
         marketProductDTO.setProductTitle(marketProductEntity.getProductTitle());
         marketProductDTO.setProductContents(marketProductEntity.getProductContents());
         marketProductDTO.setProductHashtag(marketProductEntity.getProductHashtag());
@@ -86,12 +90,14 @@ public class MarketProductDTO {
         return "+" + decimalFormat.format(transactionFee) + "원";
     }
 
-    public String getTotalAmount() {
+    public String getTotalAmount2() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         double transactionFee = this.productPrice * 0.03;
         double totalAmount = this.productPrice + transactionFee;
         return "+" + decimalFormat.format(totalAmount) + "원";
     }
+
+
 
     }
 
