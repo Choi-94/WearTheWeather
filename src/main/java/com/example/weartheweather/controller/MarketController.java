@@ -30,6 +30,7 @@ public class MarketController {
     public String save(@ModelAttribute MarketProductDTO marketProductDTO, HttpSession session) throws IOException {
         String memberNickName =  (String)session.getAttribute("memberNickName");
         System.out.println("memberNickName = " + memberNickName);
+        System.out.println("marketProductDTO = " +marketProductDTO);
         marketProductService.save(marketProductDTO, memberNickName);
         return "redirect:/market/list";
     }

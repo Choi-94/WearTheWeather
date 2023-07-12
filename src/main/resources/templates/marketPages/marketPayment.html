@@ -71,7 +71,6 @@
     </button>
     <p th:text="'사용 가능한 웨더포인트 : '+${MemberDTO.getMemberWeatherPay()}" id="weatherPay2"
        style="position: absolute;  top: 690px; left: 15px"></p>
-
     <div class="grayBox2" style="position: absolute;  top: 1230px; width: 650px; "></div>
     <h1 style="position: absolute;  top: 820px; left: 15px">결제금액</h1>
     <div style="border: 2px solid gainsboro; position: absolute; top: 900px; left: 20px; width: 600px; height: 440px; border-radius: 10px; ">
@@ -86,8 +85,9 @@
         <div style="position: absolute; top:220px; left: 15px; width: 550px; height: 2px; background-color: gainsboro;">
             <div>
                 <p style="position: absolute;  top: 30px;  font-size: 30px;">총 결제금액 :</p>
-                <p th:text="${ProductDTO.getTotalAmount()}"
-                   style="position: absolute;  top: 30px; right: 0px; font-size: 30px; color: #558BCF"></p>
+                <p th:text="${ProductDTO.getTotalAmount2()}" style="position: absolute;  top: 30px; right: 0px; font-size: 30px; color: #558BCF"></p>
+                <input type="hidden"  id="weatherPay3" th:value="${MemberDTO.memberWeatherPay}">
+                <input type="hidden" id="totalAmount" th:value="${ProductDTO.totalAmount}">
 
 
                 <button onclick="sbmit()" class="payButton">결제하기</button>
@@ -102,6 +102,7 @@
 <script>
     //서브밋
     const sbmit = () => {
+        const productId = document.querySelector('input[name="productId"]').value;
         const productWriter = document.querySelector('input[name="productWriter"]').value;
         const productPrice = document.querySelector('input[name="productPrice"]').value;
         const productSize = document.querySelector('input[name="productSize"]').value;
@@ -109,29 +110,33 @@
 
         const transactionArea = document.querySelector("#transactionArea").value;
         const extraAddress = document.querySelector("#sample6_extraAddress").value;
-        const address = transactionArea+extraAddress;
-        const weatherPay = document.querySelector("#weatherPay").value;
+        const address = transactionArea + extraAddress;
 
-        axios({
-            method: "post",
-            url: "/market/addTransaction",
-            data: {
-                productWriter: productWriter,
-                productPrice: productPrice,
-                productSize: productSize,
-                productTitle: productTitle,
-                deliveryLocation: address  // 수정: 주소 값을 가져옴
-            }
-        }).then(res => {
-            const marketPaymentDTO = res.data; // 응답에서 MarketPaymentDTO를 가져옴
-            const id = marketPaymentDTO.id; // MarketPaymentDTO의 id 값을 가져옴
-            alert("결제가 완료 되었습니다")
-            location.href = "/market/PaymentSuccess/" + id; // PaymentSuccess 페이지로 이동하면서 id 값을 전달
-        }).catch(err=>{
-            console.log("err",err);
-        });
+        const weatherPay3 = document.querySelector("#weatherPay3").value;
+        const totalAmount = document.querySelector("#totalAmount").value;
 
-
+        if (parseInt(weatherPay3) >= parseInt(totalAmount)) {
+            axios({
+                method: "post",
+                url: "/market/addTransaction",
+                data: {
+                    productId: productId,
+                    productWriter: productWriter,
+                    productPrice: productPrice,
+                    productSize: productSize,
+                    productTitle: productTitle,
+                    deliveryLocation: address,
+                    totalAmount: totalAmount
+                }
+            }).then(res => {
+                alert("결제가 완료되었습니다.");
+                location.href = "/market/PaymentSuccess/";
+            }).catch(err => {
+                console.log("err", err);
+            });
+        } else {
+            alert("웨더페이 잔액이 부족합니다.");
+        }
     }
 
 

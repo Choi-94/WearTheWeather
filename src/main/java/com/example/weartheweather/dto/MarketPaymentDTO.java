@@ -15,20 +15,25 @@ import javax.persistence.Column;
 public class MarketPaymentDTO {
 
     private Long id;
-    private Long memberId;
+    private Long buyerId;
+    private Long sellerId;
+    private Long productId;
     private String createdAt;
     private String productWriter;
-    private int productPrice;
+    private Long productPrice;
+    private Long transactionFee;
+    private Long totalAmount;
     private String productSize;
     private String productTitle;
     private String deliveryLocation;
 
     public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
         MarketPaymentDTO marketPaymentDTO = new MarketPaymentDTO();
-        marketPaymentDTO.setId(marketPaymentEntity.getId());
         marketPaymentDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
         marketPaymentDTO.setProductWriter(marketPaymentEntity.getProductWriter());
         marketPaymentDTO.setProductPrice(marketPaymentEntity.getProductPrice());
+        marketPaymentDTO.setTransactionFee(marketPaymentEntity.getTransactionFee());
+        marketPaymentDTO.setTotalAmount(marketPaymentEntity.getTotalAmount());
         marketPaymentDTO.setProductSize(marketPaymentEntity.getProductTitle());
         marketPaymentDTO.setDeliveryLocation(marketPaymentEntity.getDeliveryLocation());
         return marketPaymentDTO;

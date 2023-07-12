@@ -35,7 +35,13 @@ public class MarketProductEntity extends BaseEntity {
     private String transactionArea;  // 거래 지역
 
     @Column(nullable = false, length = 15)
-    private int productPrice;  // 상품 가격
+    private Long productPrice;  // 상품 가격
+
+    @Column(nullable = false, length = 15)
+    private Long transactionFee;
+
+    @Column(nullable = false, length = 15)
+    private Long totalAmount;
 
     @Column(nullable = false, length = 200)
     private String productContents;  // 상품 설명
@@ -71,6 +77,8 @@ public class MarketProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MarketLikesEntity> likesEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "marketProductEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MarketPaymentEntity> marketPaymentEntityList = new ArrayList<>();
 
     public static MarketProductEntity toSaveEntity(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
         MarketProductEntity marketProductEntity = new MarketProductEntity();
@@ -80,6 +88,8 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
         marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
         marketProductEntity.setProductPrice(marketProductDTO.getProductPrice());
+        marketProductEntity.setTransactionFee(Math.round(marketProductDTO.getProductPrice() * 0.03));
+        marketProductEntity.setTotalAmount(Math.round(marketProductDTO.getProductPrice() * 0.03) + marketProductDTO.getProductPrice());
         marketProductEntity.setProductContents(marketProductDTO.getProductContents());
         marketProductEntity.setProductSeason(marketProductDTO.getProductSeason());
         marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
@@ -98,6 +108,8 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
         marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
         marketProductEntity.setProductPrice(marketProductDTO.getProductPrice());
+        marketProductEntity.setTransactionFee(Math.round(marketProductDTO.getProductPrice() * 0.03));
+        marketProductEntity.setTotalAmount(Math.round(marketProductDTO.getProductPrice() * 0.03) + marketProductDTO.getProductPrice());
         marketProductEntity.setProductContents(marketProductDTO.getProductContents());
         marketProductEntity.setProductSeason(marketProductDTO.getProductSeason());
         marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
