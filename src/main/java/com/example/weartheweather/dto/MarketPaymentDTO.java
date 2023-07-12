@@ -19,22 +19,14 @@ public class MarketPaymentDTO {
     private Long sellerId;
     private Long productId;
     private String createdAt;
-    private String productWriter;
-    private Long productPrice;
-    private Long transactionFee;
-    private Long totalAmount;
-    private String productSize;
-    private String productTitle;
     private String deliveryLocation;
 
     public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
         MarketPaymentDTO marketPaymentDTO = new MarketPaymentDTO();
+        marketPaymentDTO.setId(marketPaymentEntity.getId());
+        marketPaymentDTO.setBuyerId(marketPaymentEntity.getMemberEntity().getId());
+        marketPaymentDTO.setBuyerId(marketPaymentEntity.getMemberEntity1().getId());
         marketPaymentDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
-        marketPaymentDTO.setProductWriter(marketPaymentEntity.getProductWriter());
-        marketPaymentDTO.setProductPrice(marketPaymentEntity.getProductPrice());
-        marketPaymentDTO.setTransactionFee(marketPaymentEntity.getTransactionFee());
-        marketPaymentDTO.setTotalAmount(marketPaymentEntity.getTotalAmount());
-        marketPaymentDTO.setProductSize(marketPaymentEntity.getProductTitle());
         marketPaymentDTO.setDeliveryLocation(marketPaymentEntity.getDeliveryLocation());
         return marketPaymentDTO;
     }

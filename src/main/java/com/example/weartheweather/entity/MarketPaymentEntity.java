@@ -17,24 +17,6 @@ public class MarketPaymentEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30)
-    private String productWriter;  // 글작성자
-
-    @Column(nullable = false, length = 15)
-    private Long productPrice;  // 상품 가격
-
-    @Column(nullable = false, length = 15)
-    private Long transactionFee;
-
-    @Column(nullable = false, length = 15)
-    private Long totalAmount;
-
-    @Column(nullable = false, length = 30)
-    private String productSize;  // 상품 크기
-
-    @Column(nullable = false, length = 30)
-    private String productTitle;  // 글 제목
-
     @Column(nullable = false, length = 50)
     private String deliveryLocation;  // 배송 지역
 
@@ -53,12 +35,6 @@ public class MarketPaymentEntity extends BaseEntity {
 
     public static MarketPaymentEntity toSaveEntity(MarketPaymentDTO marketPaymentDTO,MemberEntity loginMemberEntity,MemberEntity writerMemberEntity, MarketProductEntity marketProductEntity) {
         MarketPaymentEntity marketPaymentEntity = new MarketPaymentEntity();
-        marketPaymentEntity.setProductWriter(marketPaymentDTO.getProductWriter());
-        marketPaymentEntity.setProductSize(marketPaymentDTO.getProductSize());
-        marketPaymentEntity.setProductPrice(marketPaymentDTO.getProductPrice());
-        marketPaymentEntity.setTransactionFee(Math.round(marketPaymentDTO.getProductPrice() * 0.03));
-        marketPaymentEntity.setTotalAmount(Math.round(marketPaymentDTO.getProductPrice() * 0.03) + marketPaymentDTO.getProductPrice());
-        marketPaymentEntity.setProductTitle(marketPaymentDTO.getProductTitle());
         marketPaymentEntity.setDeliveryLocation(marketPaymentDTO.getDeliveryLocation());
         marketPaymentEntity.setMemberEntity(loginMemberEntity);
         marketPaymentEntity.setMemberEntity1(writerMemberEntity);

@@ -20,6 +20,11 @@ public class MarketPaymentService {
     private final MarketProductRepository marketProductRepository;
     private final MemberBoardService memberBoardService;
 
+    public MarketProductEntity marketProductEntityFindById (Long id) {
+        MarketProductEntity marketProductEntity = marketProductRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return marketProductEntity;
+    }
+
     public MemberDTO updatePay(String memberNickName, Long memberWeatherPay) {
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
         MemberDTO memberDTO = MemberDTO.toUpdatePay(loginMemberEntity, memberWeatherPay);
@@ -32,10 +37,10 @@ public class MarketPaymentService {
     @Transactional
     public void save(MarketPaymentDTO marketPaymentDTO, String memberNickName) {
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
-        MemberEntity writerMemberEntity = memberBoardService.findByMemberNickName(marketPaymentDTO.getProductWriter());
-        MarketProductEntity marketProductEntity = marketProductRepository.findById(marketPaymentDTO.getProductId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity writerMemberEntity = memberRepository.findById(marketPaymentDTO.getSellerId()).orElseThrow(() -> new NoSuchElementException());
+        MarketProductEntity marketProductEntity = this.marketProductEntityFindById(marketPaymentDTO.getProductId());
         MarketPaymentEntity marketPaymentEntity = MarketPaymentEntity.toSaveEntity(marketPaymentDTO,loginMemberEntity,writerMemberEntity, marketProductEntity);
-        Long balance = loginMemberEntity.getMemberWeatherPay() - marketPaymentEntity.getTotalAmount();
+        Long balance = loginMemberEntity.getMemberWeatherPay() - marketProductEntity.getTotalAmount();
         memberRepository.updateMemberWeatherPay(loginMemberEntity.getId(), balance);
         marketPaymentRepository.save(marketPaymentEntity);
     }
@@ -46,5 +51,11 @@ public class MarketPaymentService {
     }
 
 
+    public MarketPaymentDTO findByProductId(Long productId, String memberNickName) {
+        MemberEntity memberEntity = memberBoardService.findByMemberNickName(memberNickName);
+        MarketProductEntity marketProductEntity = this.marketProductEntityFindById(productId);
+        MarketPaymentEntity marketPaymentEntity = marketPaymentRepository.findByMemberEntityAndMarketProductEntity(memberEntity, marketProductEntity);
+        return MarketPaymentDTO.toDTO(marketPaymentEntity);
+    }
 }
 

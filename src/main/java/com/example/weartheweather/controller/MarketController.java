@@ -44,7 +44,6 @@ public class MarketController {
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse res) {
-//        marketProductService.updateHits(id);
         marketProductService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);

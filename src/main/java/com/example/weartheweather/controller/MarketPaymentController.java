@@ -29,9 +29,11 @@ public class MarketPaymentController {
         String memberNickName = (String)session.getAttribute("memberNickName");
         String memberEmail = (String)session.getAttribute("loginEmail");
         MemberDTO memberDTO = memberService.findByMemberNickName(memberNickName);
-        System.out.println("memberDTO = " + memberDTO);
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
+
+        System.out.println("memberDTO = " + memberDTO);
         System.out.println("marketProductDTO = " + marketProductDTO);
+
         model.addAttribute("MemberDTO", memberDTO);
         model.addAttribute("ProductDTO", marketProductDTO);
         model.addAttribute("memberNickName", memberNickName);
@@ -54,9 +56,11 @@ public class MarketPaymentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/PaymentSuccess/{id}")
-    public String findByIdForPaymentSuccess(@PathVariable Long id, HttpSession session, Model model) {
-
+    @GetMapping("/orderList/{productId}")
+    public String orderList(@PathVariable Long productId, HttpSession session, Model model) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        MarketPaymentDTO marketPaymentDTO = marketPaymentService.findByProductId(productId, memberNickName);
+        model.addAttribute("marketPay", marketPaymentDTO);
         return "marketPages/marketPaymentSuccess";
     }
 
