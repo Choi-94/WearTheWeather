@@ -89,6 +89,7 @@
                 <p th:text="${ProductDTO.getTotalAmount2()}" style="position: absolute;  top: 30px; right: 0px; font-size: 30px; color: #558BCF"></p>
                 <input type="hidden"  id="weatherPay3" th:value="${MemberDTO.getMemberWeatherPay()}">
                 <input type="hidden" id="totalAmount" th:value="${ProductDTO.totalAmount}">
+                <input type="hidden" id="writerId" th:value="${ProductDTO.getMemberId()}">
                 <input type="hidden" id="sellerId" th:value="${MemberDTO.id}">
 
 
@@ -107,13 +108,14 @@
 
 
 
+
+
     //문서가 준비되면 제일 먼저 실행
     $(document).ready(function () {
         $("#marketPayment").click(function () {
             payment(); //버튼 클릭하면 호출
         });
     })
-
 
     //버튼 클릭하면 실행
     function payment(data) {
@@ -161,10 +163,30 @@
         });
     }
 
+    const send_buyAlarm = () => {
+        const productId = document.querySelector('input[name="productId"]').value;
+        const writerId = document.querySelector("#writerId").value;
+        console.log(productId);
+        console.log(writerId);
+        axios({
+            method: "post",
+            url: "/alarm/buysAlarm",
+            data: {
+                productId: productId,
+                writerId: writerId
+            }
+        }).then(res => {
+            console.log("정상정상");
+            alert("정상정상");
+        }).catch(err => {
+            console.log("오류오류");
+            alert("오류오류");
+        });
+
+    }
+
     const sbmit = () => {
         const productId = document.querySelector('input[name="productId"]').value;
-        const sellerId = document.querySelector("#sellerId").value;
-        const weatherPay3 = document.querySelector("#weatherPay3").value;
         const sellerWriter = document.querySelector('input[name="productWriter"]').value;
         const totalAmount = document.querySelector("#totalAmount").value;
         const test = document.querySelector("#test").value;
@@ -184,6 +206,7 @@
                     deliveryLocation: address
                 }
             }).then(res => {
+                send_buyAlarm();
                 alert("결제가 완료되었습니다.");
                 location.href = "/market/orderList/" + productId;
             }).catch(err => {

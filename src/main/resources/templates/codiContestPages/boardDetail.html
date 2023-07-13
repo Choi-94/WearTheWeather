@@ -177,7 +177,7 @@
         });
     }
 
-    const send_alarm = () => {
+    const send_likeAlarm = () => {
         const boardId = document.querySelector("#id").value;
         const writerId = document.querySelector("#writerId").value;
         console.log(boardId);
@@ -207,7 +207,7 @@
             icon.classList.remove("bi-heart");
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             count_likes();
-            send_alarm()
+            send_likeAlarm();
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';

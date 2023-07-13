@@ -10,60 +10,43 @@
 
 <body>
 <div th:fragment="nav" class="container" id="nav">
-
-    <div class="box" style="background-color: black;">
-        <!--            <div class="dropdown">-->
-        <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
-        <!--                    <i class="bi bi-bell fs-4"></i>-->
-        <!--                </button>-->
-        <!--                <ul class="dropdown-menu flex-column">-->
-        <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>-->
-        <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>-->
-        <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>-->
-        <!--                    <li style="display: block; margin-left: 30px;" >-->
-        <!--                        <button onclick="location.href='index'"-->
-        <!--                                class="dropdown-item text-white rounded-pill"-->
-        <!--                                style="background-color: #558BCF; border-color:#558BCF; "-->
-        <!--                                type="button">-->
-        <!--                            모든 댓글 보기-->
-        <!--                        </button>-->
-        <!--                    </li>-->
+    <div class="box" style="background-color: #558BCF;">
 
 
-            <div class="dropdown">
-                <button type="button" onclick="findByMyAlarm()"
-                        class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
-                        style="position: absolute; top:-33px; left: 1020px;">
+        <div class="dropdown">
+            <button type="button" onclick="findByMyAlarm()"
+                    class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
+                    style="position: absolute; top:-33px; left: 1020px;">
 
-                    <i class="bi bi-bell fs-4"></i>
-                </button>
-                <!--            <div class="dropdown">-->
-                <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
-                <!--                    <i class="bi bi-bell fs-4"></i>-->
-                <!--                </button>-->
-                <!--                <ul class="dropdown-menu flex-column">-->
-                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>-->
-                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>-->
-                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>-->
-                <!--                    <li style="display: block; margin-left: 30px;" >-->
-                <!--                        <button onclick="location.href='index'"-->
-                <!--                                class="dropdown-item text-white rounded-pill"-->
-                <!--                                style="background-color: #558BCF; border-color:#558BCF; "-->
-                <!--                                type="button">-->
-                <!--                            모든 댓글 보기-->
-                <!--                        </button>-->
-                <!--                    </li>-->
+                <i class="bi bi-bell fs-4"></i>
+            </button>
+            <!--            <div class="dropdown">-->
+            <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
+            <!--                    <i class="bi bi-bell fs-4"></i>-->
+            <!--                </button>-->
+            <!--                <ul class="dropdown-menu flex-column">-->
+            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>-->
+            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>-->
+            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>-->
+            <!--                    <li style="display: block; margin-left: 30px;" >-->
+            <!--                        <button onclick="location.href='index'"-->
+            <!--                                class="dropdown-item text-white rounded-pill"-->
+            <!--                                style="background-color: #558BCF; border-color:#558BCF; "-->
+            <!--                                type="button">-->
+            <!--                            모든 댓글 보기-->
+            <!--                        </button>-->
+            <!--                    </li>-->
 
-                <!--                </ul>-->
-                <!--            </div>-->
-                <div>
-                    <ul class="dropdown-menu flex-column" id="dropdownList">
-                        <li style="display: block;">
-                            <a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a>
-                        </li>
-                    </ul>
-                </div>
+            <!--                </ul>-->
+            <!--            </div>-->
+            <div>
+                <ul class="dropdown-menu flex-column" id="dropdownList">
+                    <li style="display: block;">
+
+                    </li>
+                </ul>
             </div>
+        </div>
         <ul>
             <li style="font-size: 20px;">
                 <a href="/adminBoard/list">오늘의 코디</a>
@@ -112,13 +95,22 @@
                 alarmList.forEach(function (item) {
                     const li = document.createElement('li');
                     const message = item.message;
-                    li.innerHTML = '<li style="display: block;"><a class="dropdown-item text-dark" href=""></a></li>';
+                    const id = item.boardId;
+
+                    const a = document.createElement('a');
+                    a.classList.add('dropdown-item', 'text-dark');
+                    a.href = `/memberBoard/detail/` + id; // 게시물 상세 페이지 주소를 설정합니다.
+                    a.textContent = message;
+
+                    li.style.display = 'block';
+                    li.appendChild(a);
                     resultArea.appendChild(li);
                 });
             }).catch(err => {
 
             });
         }
+
     </script>
 
 </div>

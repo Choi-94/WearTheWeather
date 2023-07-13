@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,20 +18,28 @@ public class AlarmController {
     private final AlarmService alarmService;
 
 
-
     @PostMapping("/likesAlarm")
     public ResponseEntity likesAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
-        String memberNickName = (String)session.getAttribute("memberNickName");
+        String memberNickName = (String) session.getAttribute("memberNickName");
         alarmService.likesAlarm(alarmDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/buysAlarm")
+    public ResponseEntity buysAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        System.out.println("memberNickName = " + memberNickName);
+        alarmService.buysAlarm(alarmDTO, memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @GetMapping("/findByMyAlarm")
     public ResponseEntity findByMyAlarm(HttpSession session) {
-        String memberNickName = (String)session.getAttribute("memberNickName");
-            List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
-            return new ResponseEntity<>(alarmDTOList, HttpStatus.OK);
-        }
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
+        return new ResponseEntity<>(alarmDTOList, HttpStatus.OK);
+    }
 
 
 }
