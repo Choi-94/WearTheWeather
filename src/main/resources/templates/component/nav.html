@@ -10,6 +10,7 @@
 
 <body>
 <div th:fragment="nav" class="container" id="nav">
+
     <div class="box" style="background-color: black;">
         <!--            <div class="dropdown">-->
         <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
@@ -28,24 +29,41 @@
         <!--                        </button>-->
         <!--                    </li>-->
 
-        <!--                </ul>-->
-        <!--            </div>-->
-        <div th:if="${session.memberNickName != null}">
+
             <div class="dropdown">
                 <button type="button" onclick="findByMyAlarm()"
                         class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
                         style="position: absolute; top:-33px; left: 1020px;">
+
                     <i class="bi bi-bell fs-4"></i>
                 </button>
-                <ul class="dropdown-menu flex-column" id="dropdownList" style="max-height: 200px; overflow-y: auto;">
-                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>
-                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>
-                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>
-                    <li style="display: block; margin-left: 30px;"></li>
-                </ul>
+                <!--            <div class="dropdown">-->
+                <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
+                <!--                    <i class="bi bi-bell fs-4"></i>-->
+                <!--                </button>-->
+                <!--                <ul class="dropdown-menu flex-column">-->
+                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>-->
+                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>-->
+                <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>-->
+                <!--                    <li style="display: block; margin-left: 30px;" >-->
+                <!--                        <button onclick="location.href='index'"-->
+                <!--                                class="dropdown-item text-white rounded-pill"-->
+                <!--                                style="background-color: #558BCF; border-color:#558BCF; "-->
+                <!--                                type="button">-->
+                <!--                            모든 댓글 보기-->
+                <!--                        </button>-->
+                <!--                    </li>-->
+
+                <!--                </ul>-->
+                <!--            </div>-->
+                <div>
+                    <ul class="dropdown-menu flex-column" id="dropdownList">
+                        <li style="display: block;">
+                            <a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div th:unless="${session.memberNickName != null}"></div>
         <ul>
             <li style="font-size: 20px;">
                 <a href="/adminBoard/list">오늘의 코디</a>
@@ -66,26 +84,43 @@
         </ul>
     </div>
     <script th:inline="javascript">
-        const dropdownList = (alarmList) => {
-            const resultArea = document.querySelector("#dropdownList");
-            l
-        }
+        // const dropdownList = (alarmList) => {
+        //     console.log(alarmList);
+        //     const resultArea = document.querySelector("#dropdownList");
+        //
+        //     alarmList.forEach(function (item) {
+        //         const li = document.createElement('li');
+        //         li.textContent = item;
+        //         resultArea.appendChild(li);
+        //     });
+        // })
+        //
+        // });
 
         const findByMyAlarm = () => {
+            const resultArea = document.querySelector("#dropdownList");
+            resultArea.innerHTML = "";
 
             axios({
                 method: "get",
                 url: "/alarm/findByMyAlarm"
             }).then(res => {
-                dropdownList(res.data);
+                console.log(res.data);
+
+                const alarmList = res.data;
+
+                alarmList.forEach(function (item) {
+                    const li = document.createElement('li');
+                    const message = item.message;
+                    li.innerHTML = '<li style="display: block;"><a class="dropdown-item text-dark" href=""></a></li>';
+                    resultArea.appendChild(li);
+                });
             }).catch(err => {
 
             });
-
         }
-
-
     </script>
+
 </div>
 
 </body>
