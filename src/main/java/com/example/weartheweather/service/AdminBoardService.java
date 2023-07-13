@@ -135,35 +135,42 @@ public class AdminBoardService {
         }
     }
     @Transactional
-    public List<AdminBoardDTO> findByBoardLikesNick(String memberNickName) {
-
+    public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<AdminBoardLikesEntity> adminBoardLikesEntityList = adminBoardLikesRepository.findByMemberEntity(memberEntity.get());
         List<AdminBoardLikesDTO> adminBoardLikesDTOList = new ArrayList<>();
         adminBoardLikesEntityList.forEach(adminBoardLikesEntity -> {
             adminBoardLikesDTOList.add(AdminBoardLikesDTO.toDTO(adminBoardLikesEntity));
         });
-        System.out.println("adminBoardLikesDTOList = " + adminBoardLikesDTOList);
+
         List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
         adminBoardLikesDTOList.forEach(adminBoardLikesDTO -> {
             Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(adminBoardLikesDTO.getBoardId());
             adminBoardDTOList.add(AdminBoardDTO.toDTO(adminBoardEntity.get()));
         });
-        System.out.println("adminBoardDTOList = " + adminBoardDTOList);
-        return adminBoardDTOList;
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), adminBoardDTOList.size());
+        Page<AdminBoardDTO> adminBoardDTOPage = new PageImpl<>(adminBoardDTOList.subList(start, end), pageable, adminBoardDTOList.size());
+
+        return adminBoardDTOPage;
     }
+
     @Transactional
-    public List<MemberBoardDTO> findByMemberBoard(String memberNickName) {
+    public Page<MemberBoardDTO> findByMemberBoard(String memberNickName,Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findByMemberEntity(memberEntity.get());
         List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
         memberBoardEntityList.forEach(memberBoardEntity -> {
             memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
         });
-        return memberBoardDTOList;
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), memberBoardDTOList.size());
+        Page<MemberBoardDTO> memberBoardDTOS = new PageImpl<>(memberBoardDTOList.subList(start, end), pageable, memberBoardDTOList.size());
+        return memberBoardDTOS;
     }
     @Transactional
-    public List<MarketProductDTO> findByMarketProduct(String memberNickName) {
+    public Page<MarketProductDTO> findByMarketProduct(String memberNickName,Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<MarketLikesEntity> marketLikesEntityList = marketLikesRepository.findByMemberEntity(memberEntity.get());
         List<MarketLikesDTO> marketLikesDTOList = new ArrayList<>();
@@ -175,7 +182,10 @@ public class AdminBoardService {
             Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(marketLikesDTO.getBoardId());
             marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity.get()));
         });
-            return marketProductDTOList;
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), marketProductDTOList.size());
+        Page<MarketProductDTO> marketProductDTOS = new PageImpl<>(marketProductDTOList.subList(start, end), pageable, marketProductDTOList.size());
+            return marketProductDTOS;
     }
 //        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findByMemberEntity(memberEntity.get());
 //        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();

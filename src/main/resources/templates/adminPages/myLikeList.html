@@ -26,7 +26,9 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div th:replace="component/infonav :: infonav"></div>
+<div>총 건수 : <span th:text="${adminBoardLikeList.totalElements}"></span>
 <div th:each="likeList: ${adminBoardLikeList}" varStatus="loop">
+
     <table>
         <tr>
             <th>Id</th>
@@ -44,6 +46,20 @@
             <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
         </tr>
     </table>
+
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${1==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
+            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <li class="page-item" th:classappend="${i==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${i - 1})}" th:text="${i}">1</a></li>
+        <li class="page-item" th:classappend="${adminBoardLikeList.totalPages==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
+            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber+1})}">Next</a>
+        </li>
+    </ul>
+</nav>
 </div>
 
 
