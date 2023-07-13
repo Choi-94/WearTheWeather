@@ -60,7 +60,9 @@ public class MarketPaymentController {
     public String orderList(@PathVariable Long productId, HttpSession session, Model model) {
         String memberNickName = (String)session.getAttribute("memberNickName");
         MarketPaymentDTO marketPaymentDTO = marketPaymentService.findByProductId(productId, memberNickName);
+        MarketProductDTO marketProductDTO = marketProductService.findById(productId);
         model.addAttribute("marketPay", marketPaymentDTO);
+        model.addAttribute("marketProduct", marketProductDTO);
         return "marketPages/marketPaymentSuccess";
     }
 

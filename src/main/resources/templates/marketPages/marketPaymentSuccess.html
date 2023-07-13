@@ -8,13 +8,20 @@
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <body>
-<img src="/img/paymentSuccess.png" style="width: 625px; height: 625px; margin-left: 20px;">
+<img src="/img/paymentSuccess.png" style="width: 600px; height: 600px; margin-left: 20px;">
 <h1 style="margin-left: 90px;">결제가 정상적으로 완료되었습니다. </h1>
 <div style="border: 2px solid gainsboro; position: absolute; top: 700px; left: 20px; width: 600px; height: 340px; border-radius: 10px; ">
-
-<div>거래시간, 게시글제목, 결제금액, 배송주소, 사이즈</div>
-  <div th:text="${marketPay.id}"></div>
-  </div>
+<div style="margin-left: 20px; margin-top: 20px; font-size: 25px;">
+  <div th:text="'결제제수단 : 카카오페이(카드)'"></div>
+  <div th:text="'결제금액 : '+${marketProduct.getFormattedPrice()}"></div>
+  <div class="successLine"></div>
+  <div th:text="'주문번호 : '+${marketPay.getCreatedAt()}"></div>
+  <div th:text="'주문번호 : '+${marketPay.getId()}"></div>
+  <div class="successLine"></div>
+  <div th:text="'주문상품 : '+${marketProduct.productTitle}"></div>
+  <div th:text="'배송지 : '+${marketPay.getDeliveryLocation()}"></div>
+</div>
+</div>
 
 </body>
 
