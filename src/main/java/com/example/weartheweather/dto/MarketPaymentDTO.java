@@ -19,6 +19,7 @@ public class MarketPaymentDTO {
     private Long sellerId;
     private Long productId;
     private String createdAt;
+    private String sellerWriter;
     private String deliveryLocation;
 
     public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {

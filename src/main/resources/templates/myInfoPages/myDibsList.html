@@ -30,6 +30,7 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div th:replace="component/infonav :: infonav"></div>
+<div>총 건수 : <span th:text="${MarketProduct.totalElements}"></span>
 <div class="container">
     <table class="table">
         <thead>
@@ -65,6 +66,18 @@
         </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${1==MarketProduct.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${MarketProduct.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item" th:classappend="${i==MarketProduct.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${i - 1})}" th:text="${i}">1</a></li>
+            <li class="page-item" th:classappend="${MarketProduct.totalPages==MarketProduct.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${MarketProduct.pageable.pageNumber+1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
