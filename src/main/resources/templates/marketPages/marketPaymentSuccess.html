@@ -8,21 +8,30 @@
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <body>
-<img src="/img/paymentSuccess.png" style="width: 600px; height: 600px; margin-left: 20px;">
+<img src="/img/paymentSuccess.png" style="width: 450px; height: 450px; margin-left: 110px;">
 <h1 style="margin-left: 90px;">결제가 정상적으로 완료되었습니다. </h1>
-<div style="border: 2px solid gainsboro; position: absolute; top: 700px; left: 20px; width: 600px; height: 340px; border-radius: 10px; ">
+<div style="border: 2px solid gainsboro; position: absolute; top: 500px; left: 20px; width: 600px; height: 430px; border-radius: 10px; ">
 <div style="margin-left: 20px; margin-top: 20px; font-size: 25px;">
   <div th:text="'결제제수단 : 카카오페이(카드)'"></div>
   <div th:text="'결제금액 : '+${marketProduct.getFormattedPrice()}"></div>
   <div class="successLine"></div>
-  <div th:text="'주문번호 : '+${marketPay.getCreatedAt()}"></div>
+  <div style="margin-top: 20px;"></div>
+  <div th:text="'주문시간 : '+${marketPay.getCreatedAt()}"></div>
   <div th:text="'주문번호 : '+${marketPay.getId()}"></div>
   <div class="successLine"></div>
+  <div style="margin-top: 20px;"></div>
   <div th:text="'주문상품 : '+${marketProduct.productTitle}"></div>
   <div th:text="'배송지 : '+${marketPay.getDeliveryLocation()}"></div>
+  <div id="closeButton">
+  <button onclick="closeWindow()" style="margin-left: 200px; margin-top: 30px; font-size: 20px;">결제내역닫기</button>
+  </div>
 </div>
 </div>
 
 </body>
-
+<script>
+  function closeWindow() {
+    window.close();
+  }
+</script>
 </html>
