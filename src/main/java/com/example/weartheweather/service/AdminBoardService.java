@@ -28,6 +28,7 @@ public class AdminBoardService {
     private final MemberBoardRepository memberBoardRepository;
     private final MarketProductRepository marketProductRepository;
     private final MarketLikesRepository marketLikesRepository;
+    private final MarketPaymentRepository marketPaymentRepository;
     public Long save(AdminBoardDTO adminBoardDTO) throws IOException {
         AdminBoardEntity adminBoardEntity = AdminBoardEntity.toSaveEntity(adminBoardDTO);
         AdminBoardEntity savedEntity = adminBoardRepository.save(adminBoardEntity);
@@ -186,6 +187,21 @@ public class AdminBoardService {
         int end = Math.min((start + pageable.getPageSize()), marketProductDTOList.size());
         Page<MarketProductDTO> marketProductDTOS = new PageImpl<>(marketProductDTOList.subList(start, end), pageable, marketProductDTOList.size());
             return marketProductDTOS;
+    }
+
+    public Page<MarketPaymentDTO> findByMarketPayment(String memberNickName, Pageable pageable) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
+        List<MarketPaymentEntity> marketPaymentEntityListAll = marketPaymentRepository.findByMemberEntityOrMemberEntity1(memberEntity.get(),memberEntity.get());
+        List<MarketPaymentDTO> marketPaymentDTOList = new ArrayList<>();
+        marketPaymentEntityListAll.forEach(marketPaymentEntity -> {
+            marketPaymentDTOList.add(MarketPaymentDTO.toDTO(marketPaymentEntity));
+        });
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), marketPaymentDTOList.size());
+        Page<MarketPaymentDTO> marketPaymentDTOS = new PageImpl<>(marketPaymentDTOList.subList(start, end), pageable, marketPaymentDTOList.size());
+        return marketPaymentDTOS;
+
+
     }
 //        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findByMemberEntity(memberEntity.get());
 //        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();

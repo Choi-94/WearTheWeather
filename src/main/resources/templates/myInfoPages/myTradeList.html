@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <th:block th:replace="component/config :: config"></th:block>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* CSS 스타일을 추가하여 테이블을 꾸밀 수 있습니다 */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div th:replace="component/infonav :: infonav"></div>
+<div>총 건수 : <span th:text="${marketPaymentDTOS.totalElements}"></span>
+  <div class="container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>이미지</th>
+        <th>제품이름</th>
+        <th>제품 거래상태</th>
+
+        <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="marketPaymentDTOS: ${marketPaymentDTOS}" varStatus="loop">
+        <td th:text="${marketPaymentDTOS.id}"></td>
+
+        <td th:text="${marketPaymentDTOS.productId}">
+        </td>
+
+        <td th:text="${marketPaymentDTOS.createdAt}">
+        </td>
+        <td>
+          <button class="btn btn-primary"
+                  th:text="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1} ? '구매확정' : '' "
+                  th:if="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1}"
+                  onclick="myFunction()"></button>
+          <span th:text="${marketPaymentDTOS.sellerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1} ? '판매중' : '' "}></span>
+        </td>
+
+        <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
+      </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${1==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
+          <a class="page-link" href="#" th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <li class="page-item" th:classappend="${i==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+          <a class="page-link" href="#" th:href="@{/member/myTradeList(page=${i - 1})}" th:text="${i}">1</a></li>
+        <li class="page-item" th:classappend="${marketPaymentDTOS.totalPages==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
+          <a class="page-link" href="#" th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber+1})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <script>
+    const myFunction = () =>{
+      console.log(1);
+    }
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

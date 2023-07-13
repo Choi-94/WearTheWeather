@@ -21,14 +21,16 @@ public class MarketPaymentDTO {
     private String createdAt;
     private String sellerWriter;
     private String deliveryLocation;
+    private int tradeStatus;
 
     public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
         MarketPaymentDTO marketPaymentDTO = new MarketPaymentDTO();
         marketPaymentDTO.setId(marketPaymentEntity.getId());
         marketPaymentDTO.setBuyerId(marketPaymentEntity.getMemberEntity().getId());
-        marketPaymentDTO.setBuyerId(marketPaymentEntity.getMemberEntity1().getId());
+        marketPaymentDTO.setSellerId(marketPaymentEntity.getMemberEntity1().getId());
         marketPaymentDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
         marketPaymentDTO.setDeliveryLocation(marketPaymentEntity.getDeliveryLocation());
+        marketPaymentDTO.setTradeStatus(marketPaymentEntity.getTradeStatus());
         return marketPaymentDTO;
     }
 
