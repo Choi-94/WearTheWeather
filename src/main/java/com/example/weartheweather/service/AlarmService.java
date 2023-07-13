@@ -9,6 +9,9 @@ import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -25,5 +28,15 @@ public class AlarmService {
         String type = "Likes";
         AlarmEntity alarmEntity = AlarmEntity.toSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
         alarmRepository.save(alarmEntity);
+    }
+
+    public List<AlarmDTO> findByMyAlarm(String memberNickName) {
+        MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
+        List<AlarmEntity> alarmEntityList = alarmRepository.findByWriterMemberEntity(loginMemberEntity);
+        List<AlarmDTO> alarmDTOList = new ArrayList<>();
+        alarmEntityList.forEach(alarmEntity -> {
+            alarmDTOList.add(AlarmDTO.toDTO(alarmEntity));
+        });
+        return alarmDTOList;
     }
 }
