@@ -20,6 +20,9 @@ public class MarketPaymentEntity extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String deliveryLocation;  // 배송 지역
 
+    @Column
+    private int tradeStatus;
+
     //멤버테이블과 조인(멤버 엔티티에 @OneToMany로 연결해주세요~)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_id")
@@ -39,6 +42,7 @@ public class MarketPaymentEntity extends BaseEntity {
         marketPaymentEntity.setMemberEntity(loginMemberEntity);
         marketPaymentEntity.setMemberEntity1(sellerMemberEntity);
         marketPaymentEntity.setMarketProductEntity(marketProductEntity);
+        marketPaymentEntity.setTradeStatus(1);
         return marketPaymentEntity;
     }
 }

@@ -1,9 +1,8 @@
 package com.example.weartheweather.controller;
 
-import com.example.weartheweather.dto.AdminBoardDTO;
-import com.example.weartheweather.dto.MarketProductDTO;
-import com.example.weartheweather.dto.MemberBoardDTO;
+import com.example.weartheweather.dto.*;
 import com.example.weartheweather.service.AdminBoardService;
+import com.example.weartheweather.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +22,7 @@ import java.util.List;
 @RequestMapping("/member")
 public class MyinfoController {
     private final AdminBoardService adminBoardService;
+    private final MemberService memberService;
 
     @GetMapping("/myBoardList")
     public String myBoardListForm(Model model, HttpSession session,@PageableDefault(size = 3) Pageable pageable){
@@ -62,6 +62,19 @@ public class MyinfoController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("MarketProduct", marketProductDTOList);
         return "/myInfoPages/myDibsList";
+    }
+    @GetMapping("/myTradeList")
+    public String myTradeListForm(Model model, HttpSession session,@PageableDefault(size = 3) Pageable pageable){
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        MemberDTO memberDTO = memberService.findByMemberNickName(memberNickName);
+        Page<MarketPaymentDTO> marketPaymentDTOS = adminBoardService.findByMarketPayment(memberNickName,pageable);
+        int startPage = Math.max(1,marketPaymentDTOS.getPageable().getPageNumber()-4);
+        int endPage = Math.min(marketPaymentDTOS.getTotalPages(), marketPaymentDTOS.getPageable().getPageNumber()+4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("marketPaymentDTOS",marketPaymentDTOS);
+        model.addAttribute("currentMember",memberDTO);
+        return "/myInfoPages/myTradeList";
 
     }
 
