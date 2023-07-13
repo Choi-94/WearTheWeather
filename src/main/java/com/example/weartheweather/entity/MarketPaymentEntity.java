@@ -33,11 +33,11 @@ public class MarketPaymentEntity extends BaseEntity {
     @JoinColumn(name = "product_id")
     private MarketProductEntity marketProductEntity;
 
-    public static MarketPaymentEntity toSaveEntity(MarketPaymentDTO marketPaymentDTO,MemberEntity loginMemberEntity,MemberEntity writerMemberEntity, MarketProductEntity marketProductEntity) {
+    public static MarketPaymentEntity toSaveEntity(MarketPaymentDTO marketPaymentDTO,MemberEntity loginMemberEntity,MemberEntity sellerMemberEntity, MarketProductEntity marketProductEntity) {
         MarketPaymentEntity marketPaymentEntity = new MarketPaymentEntity();
         marketPaymentEntity.setDeliveryLocation(marketPaymentDTO.getDeliveryLocation());
         marketPaymentEntity.setMemberEntity(loginMemberEntity);
-        marketPaymentEntity.setMemberEntity1(writerMemberEntity);
+        marketPaymentEntity.setMemberEntity1(sellerMemberEntity);
         marketPaymentEntity.setMarketProductEntity(marketProductEntity);
         return marketPaymentEntity;
     }
