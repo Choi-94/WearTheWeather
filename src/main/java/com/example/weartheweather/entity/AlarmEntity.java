@@ -43,22 +43,27 @@ public class AlarmEntity extends BaseEntity{
     private MarketProductEntity marketProductEntity;
 
 
-    public static AlarmEntity toSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
+    public static AlarmEntity LikesToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
         alarmEntity.setIsRead(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
+        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 좋아요를 눌렀습니다.");
         alarmEntity.setMarketProductEntity(null);
         alarmEntity.setType(type);
+        return alarmEntity;
+    }
 
-        if (type == "Likes") {
-            alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 좋아요를 눌렀습니다.");
-        } else if (type == "comments") {
-            alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 댓글을 작성했습니다.");
-        } else {
-            alarmEntity.setMessage("냥야냐ㅑ양");
-        }
+    public static AlarmEntity buysToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MarketProductEntity marketProductEntity, String type) {
+        AlarmEntity alarmEntity = new AlarmEntity();
+        alarmEntity.setIsRead(1);
+        alarmEntity.setLoginMemberEntity(loginMemberEntity);
+        alarmEntity.setWriterMemberEntity(writerMemberEntity);
+        alarmEntity.setMemberBoardEntity(null);
+        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "을" + loginMemberEntity.getMemberNickName() + "님이 " + "배송요청했습니다.");
+        alarmEntity.setMarketProductEntity(marketProductEntity);
+        alarmEntity.setType(type);
         return alarmEntity;
     }
 }

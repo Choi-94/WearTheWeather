@@ -60,6 +60,7 @@ public class MarketProductDTO {
         marketProductDTO.setProductTemp(marketProductEntity.getProductTemp());
         marketProductDTO.setMarketLikes(marketProductEntity.getMarketLikes());
         marketProductDTO.setProductHits(marketProductEntity.getProductHits());
+        marketProductDTO.setMemberId(marketProductEntity.getMemberEntity().getId());
         marketProductDTO.setCreatedAt(UtilClass.dateFormat(marketProductEntity.getCreatedAt()));
         if (marketProductEntity.getFileAttached() == 1) {
             marketProductDTO.setFileAttached(1);

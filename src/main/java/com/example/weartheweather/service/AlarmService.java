@@ -2,9 +2,11 @@ package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.AlarmDTO;
 import com.example.weartheweather.entity.AlarmEntity;
+import com.example.weartheweather.entity.MarketProductEntity;
 import com.example.weartheweather.entity.MemberBoardEntity;
 import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.AlarmRepository;
+import com.example.weartheweather.repository.MarketProductRepository;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,24 @@ public class AlarmService {
     private final AlarmRepository alarmRepository;
     private final MemberBoardService memberBoardService;
     private final MemberRepository memberRepository;
+    private final MarketProductRepository marketProductRepository;
 
     public void likesAlarm(AlarmDTO alarmDTO, String memberNickName) {
         MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
         MemberBoardEntity memberBoardEntity = memberBoardService.findByMemberBoardId(alarmDTO.getBoardId());
         String type = "Likes";
-        AlarmEntity alarmEntity = AlarmEntity.toSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
+        AlarmEntity alarmEntity = AlarmEntity.LikesToSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
+        alarmRepository.save(alarmEntity);
+    }
+
+    public void buysAlarm(AlarmDTO alarmDTO, String memberNickName) {
+        MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
+        MarketProductEntity marketProductEntity = marketProductRepository.findById(alarmDTO.getProductId()).orElseThrow(() -> new NoSuchElementException());
+        String type = "buys";
+        System.out.println("type = " + type);
+        AlarmEntity alarmEntity = AlarmEntity.buysToSaveEntity(writerMemberEntity, loginMemberEntity, marketProductEntity, type);
         alarmRepository.save(alarmEntity);
     }
 
@@ -39,4 +52,6 @@ public class AlarmService {
         });
         return alarmDTOList;
     }
+
+
 }
