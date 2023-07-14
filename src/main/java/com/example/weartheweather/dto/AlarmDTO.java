@@ -28,11 +28,13 @@ public class AlarmDTO {
         alarmDTO.setIsRead(alarmEntity.getIsRead());
         alarmDTO.setWriterId(alarmEntity.getWriterMemberEntity().getId());
         alarmDTO.setLoginId(alarmEntity.getLoginMemberEntity().getId());
-        if (alarmEntity.getMarketProductEntity() == null) {
+
+        if (alarmEntity.getMemberBoardEntity() != null) {
             alarmDTO.setBoardId(alarmEntity.getMemberBoardEntity().getId());
         } else {
             alarmDTO.setProductId(alarmEntity.getMarketProductEntity().getId());
         }
+
         alarmDTO.setCreatedAt(UtilClass.dateFormat(alarmEntity.getCreatedAt()));
         return alarmDTO;
     }

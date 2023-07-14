@@ -28,8 +28,14 @@ public class AlarmController {
     @PostMapping("/buysAlarm")
     public ResponseEntity buysAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
-        System.out.println("memberNickName = " + memberNickName);
         alarmService.buysAlarm(alarmDTO, memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/commentAlarm")
+    public ResponseEntity commentAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        alarmService.commentAlarm(alarmDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -38,6 +44,7 @@ public class AlarmController {
     public ResponseEntity findByMyAlarm(HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
         List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
+        System.out.println("alarmDTOList = " + alarmDTOList);
         return new ResponseEntity<>(alarmDTOList, HttpStatus.OK);
     }
 

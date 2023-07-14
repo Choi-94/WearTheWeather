@@ -12,7 +12,7 @@
 <div th:fragment="nav" class="container" id="nav">
     <div class="box" style="background-color: #558BCF;">
 
-
+        div
         <div class="dropdown">
             <button type="button" onclick="findByMyAlarm()"
                     class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
@@ -20,25 +20,6 @@
 
                 <i class="bi bi-bell fs-4"></i>
             </button>
-            <!--            <div class="dropdown">-->
-            <!--                <button type="button" onclick="findByMyAlarm()" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown" style="position: absolute; top:-33px; left: 1020px;">-->
-            <!--                    <i class="bi bi-bell fs-4"></i>-->
-            <!--                </button>-->
-            <!--                <ul class="dropdown-menu flex-column">-->
-            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">옷이팔렸습니다..</a></li>-->
-            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">댓글이달렸습니다..</a></li>-->
-            <!--                    <li style="display: block;"><a class="dropdown-item text-dark" href="#">거래가완료되었습니다..</a></li>-->
-            <!--                    <li style="display: block; margin-left: 30px;" >-->
-            <!--                        <button onclick="location.href='index'"-->
-            <!--                                class="dropdown-item text-white rounded-pill"-->
-            <!--                                style="background-color: #558BCF; border-color:#558BCF; "-->
-            <!--                                type="button">-->
-            <!--                            모든 댓글 보기-->
-            <!--                        </button>-->
-            <!--                    </li>-->
-
-            <!--                </ul>-->
-            <!--            </div>-->
             <div>
                 <ul class="dropdown-menu flex-column" id="dropdownList">
                     <li style="display: block;">
@@ -67,18 +48,6 @@
         </ul>
     </div>
     <script th:inline="javascript">
-        // const dropdownList = (alarmList) => {
-        //     console.log(alarmList);
-        //     const resultArea = document.querySelector("#dropdownList");
-        //
-        //     alarmList.forEach(function (item) {
-        //         const li = document.createElement('li');
-        //         li.textContent = item;
-        //         resultArea.appendChild(li);
-        //     });
-        // })
-        //
-        // });
 
         const findByMyAlarm = () => {
             const resultArea = document.querySelector("#dropdownList");
