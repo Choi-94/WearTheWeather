@@ -20,6 +20,8 @@
 
                     <i class="bi bi-bell fs-4"></i>
                 </button>
+                <!-- 알림수 -->
+                <div></div>
                 <div>
                     <ul class="dropdown-menu flex-column" id="dropdownList">
                         <li style="display: block;"></li>
@@ -75,25 +77,25 @@
                     const boardId = item.boardId;
                     const productId = item.productId;
 
+                        const a = document.createElement('a');
+                        a.classList.add('dropdown-item', 'text-dark');
+                        if (item.type == "buys") {
+                            a.href = `/market/` + productId;
+                        } else if (item.type == "buyConfirm") {
+                            a.href = `/member/myTradeList/`;
+                        } else {
+                            a.href = `/memberBoard/detail/` + boardId;
+                        }
+                        a.textContent = message;
 
-                    const a = document.createElement('a');
-                    a.classList.add('dropdown-item', 'text-dark');
-                    if (item.type == "buys") {
-                        a.href = `/market/` + productId;
-                    } else if (item.type == "buyConfirm") {
-                        a.href = `/member/myTradeList/`;
-                    } else {
-                        a.href = `/memberBoard/detail/` + boardId;
-                    }
-                    a.textContent = message;
+                        a.addEventListener('click', function () {
+                            setIsRead(item.id); // 클릭한 게시물의 id를 전달합니다.
+                        });
 
-                    a.addEventListener('click', function () {
-                        setIsRead(item.id); // 클릭한 게시물의 id를 전달합니다.
-                    });
+                        li.style.display = 'block';
+                        li.appendChild(a);
+                        resultArea.appendChild(li);
 
-                    li.style.display = 'block';
-                    li.appendChild(a);
-                    resultArea.appendChild(li);
                 });
             }).catch(err => {
 

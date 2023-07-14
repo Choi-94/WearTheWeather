@@ -27,7 +27,7 @@
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
         <div style="margin-top: -490px; margin-left: 530px; font-size: 35px;">
             <i class="bi bi-heart-fill" style="display: inline-block; font-size: 25px;"></i>
-            <p th:text="${countMarketLikes}" style="font-size: 25px; display: inline-block;"></p>
+            <p th:text="${countMarketLikes}" id="countMarketLikes" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-eye" style="display: inline-block; font-size: 25px;"></i>
             <p th:text="${ProductDTO.productHits}" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-clock" style="display: inline-block; font-size: 25px;"></i>
@@ -133,6 +133,20 @@
         popupWindow.focus();
     }
 
+    const count_marketLikes = () => {
+        const count_likes = document.querySelector("#countMarketLikes");
+        const id = document.querySelector("#id").value;
+
+        axios({
+            method: "get",
+            url: "/market/countLikes/" + id
+        }).then(res => {
+            const countLikes = res.data;
+            count_likes.innerHTML = countLikes;
+        }).catch(err = {
+
+        });
+    }
     const toggleLike3 = () => {
         const icon = document.getElementById("likeIcon3");
         const id = document.querySelector("#id").value;
@@ -143,11 +157,11 @@
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
-            location.href = "/market/" + id;
+            count_marketLikes();
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML =  '<i class="bi bi-heart"></i>';
-            location.href = "/market/" + id;
+            count_marketLikes();
         });
     }
 
