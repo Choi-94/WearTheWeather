@@ -1,6 +1,7 @@
 package com.example.weartheweather.service;
 
 
+import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.entity.*;
@@ -9,6 +10,10 @@ import com.example.weartheweather.repository.MemberBoardLikesRepository;
 import com.example.weartheweather.repository.MemberBoardRepository;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
@@ -20,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -58,13 +64,28 @@ public class MemberBoardService {
     }
 
     @Transactional
-    public List<MemberBoardDTO> findAll() {
-        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findAll();
+    public Page<MemberBoardDTO> findAll(Pageable pageable, String type, String q) {
+        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
         memberBoardEntityList.forEach(memberBoardEntity -> {
             memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
         });
-        return memberBoardDTOList;
+
+        // Filter adminBoardDTOList based on search criteria
+        List<MemberBoardDTO> filtermemberBoardDTOList = new ArrayList<>();
+        if(type.equals("title")){
+            filtermemberBoardDTOList = memberBoardDTOList.stream().filter(memberBoardDTO -> memberBoardDTO.getBoardTitle().contains(q))
+                    .collect(Collectors.toList());
+        }else if(type.equals("writer")){
+            filtermemberBoardDTOList = memberBoardDTOList.stream().filter(memberBoardDTO -> memberBoardDTO.getBoardWriter().contains(q))
+                    .collect(Collectors.toList());
+        }else{
+            filtermemberBoardDTOList = memberBoardDTOList;
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filtermemberBoardDTOList.size());
+        Page<MemberBoardDTO> memberBoardDTOPage  = new PageImpl<>(filtermemberBoardDTOList.subList(start, end), pageable, filtermemberBoardDTOList.size());
+        return memberBoardDTOPage ;
     }
 
     public MemberBoardLikesDTO findByBoardLikes(String memberNickName, Long id) {

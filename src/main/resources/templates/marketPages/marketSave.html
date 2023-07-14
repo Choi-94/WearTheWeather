@@ -10,7 +10,7 @@
 <div id="section">
     <form action="/market/save" method="post" enctype="multipart/form-data">
         <input type="text" id="NickName" style="display: none">
-        <input type="file" name="productImage" class="form-control" multiple onblur="fileCheck()"><br>
+        <input type="file" name="productImage" class="form-control" multiple><br>
         <h6 id="productFileCheck"></h6>
         <input type="text" name="productSize" class="form-control" placeholder="상품 판매페이지에 적혀있는 사이즈 또는 제품 라벨 사이즈를 입력해주세요"
         onblur="sizeCheck()"><br>
@@ -67,22 +67,22 @@
             document.getElementById("productContentsCheck").focus();
         }
     }
-    const fileCheck = () => {
-        const filecheck = document.querySelector('input[name="productImage"]').value;
-        const exp = /\.(png|jpg)$/i;
-        if (filecheck.match(exp)) {
-            document.getElementById("productFileCheck").innerText = "사진이 첨부되었습니다";
-            document.getElementById("productFileCheck").style.color = "green";
-        } else if (sizecheck.length == 0) {
-            document.getElementById("productFileCheck").innerText = "기입 필수 항목입니다";
-            document.getElementById("productFileCheck").style.color = "red";
-            document.getElementById("productFileCheck").focus();
-        } else {
-            document.getElementById("productFileCheck").innerText = "jpg, png 이미지 파일을 첨부해주세요";
-            document.getElementById("productFileCheck").style.color = "red";
-            document.getElementById("productFileCheck").focus();
-        }
-    }
+    // const fileCheck = () => {
+    //     const filecheck = document.querySelector('input[name="productImage"]').value;
+    //     const exp = /\.(png|jpg)$/i;
+    //     if (filecheck.match(exp)) {
+    //         document.getElementById("productFileCheck").innerText = "사진이 첨부되었습니다";
+    //         document.getElementById("productFileCheck").style.color = "green";
+    //     } else if (sizecheck.length == 0) {
+    //         document.getElementById("productFileCheck").innerText = "기입 필수 항목입니다";
+    //         document.getElementById("productFileCheck").style.color = "red";
+    //         document.getElementById("productFileCheck").focus();
+    //     } else {
+    //         document.getElementById("productFileCheck").innerText = "jpg, png 이미지 파일을 첨부해주세요";
+    //         document.getElementById("productFileCheck").style.color = "red";
+    //         document.getElementById("productFileCheck").focus();
+    //     }
+    // }
     const sizeCheck = () => {
         const sizecheck = document.querySelector('input[name="productSize"]').value;
         const exp = /^[가-힣a-zA-Z0-9\s]{4,8}$/;
@@ -227,7 +227,15 @@
 
     }
 
-
+    // document.getElementById("myForm").addEventListener("submit", function(event) {
+    //     const fileInput = document.querySelector('input[name="productImage"]');
+    //     const files = fileInput.files;
+    //
+    //     if (files.length === 0) {
+    //         event.preventDefault(); // Prevent form submission
+    //         alert("파일 첨부는 필수입니다.");
+    //     }
+    // });
 
 </script>
 </html>

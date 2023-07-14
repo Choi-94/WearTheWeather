@@ -10,6 +10,14 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div class="menu search">
+    <select name="type" id="type">
+        <option value="writer">작성자</option>
+        <option value="title">제목</option>
+    </select>
+    <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block;">
+    <i class="bi bi-search" onclick="search_func()"></i>
+</div>
 <div id="section">
     <a href="/memberBoard/save">저장하기</a>
     <div  id="memberBoard-list">
@@ -30,11 +38,23 @@
                         </tr>
                     </table>
                 </td>
-                <th:block th:if="${(iterationStatus.index + 1) % 5 == 0 or iterationStatus.last}">
-                    </tr>
-                </th:block>
             </th:block>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
+                    <a class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+
     </div>
 
 
@@ -47,5 +67,12 @@
         location.href = "/memberBoard/detail/" + id;
     }
 
+</script>
+<script>
+    const search_func = () => {
+        const type = document.querySelector("#type").value;
+        const q = document.querySelector("#q").value;
+        location.href = "/memberBoard/list?type=" + type + "&q=" + q;
+    }
 </script>
 </html>
