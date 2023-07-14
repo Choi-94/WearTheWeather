@@ -38,8 +38,16 @@ public class AlarmService {
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
         MarketProductEntity marketProductEntity = marketProductRepository.findById(alarmDTO.getProductId()).orElseThrow(() -> new NoSuchElementException());
         String type = "buys";
-        System.out.println("type = " + type);
         AlarmEntity alarmEntity = AlarmEntity.buysToSaveEntity(writerMemberEntity, loginMemberEntity, marketProductEntity, type);
+        alarmRepository.save(alarmEntity);
+    }
+
+    public void commentAlarm(AlarmDTO alarmDTO, String memberNickName) {
+        MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
+        MemberBoardEntity memberBoardEntity = memberBoardService.findByMemberBoardId(alarmDTO.getBoardId());
+        String type = "comment";
+        AlarmEntity alarmEntity = AlarmEntity.commentToSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
         alarmRepository.save(alarmEntity);
     }
 
@@ -53,5 +61,8 @@ public class AlarmService {
         return alarmDTOList;
     }
 
-
+    @Transactional
+    public void updateIsReadFlag(Long id) {
+        alarmRepository.updateIsReadFlag(id);
+    }
 }

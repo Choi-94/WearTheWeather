@@ -13,7 +13,7 @@ public class AlarmDTO {
     private Long id;
     private String message;
     private String type;
-    private int isRead;
+    private int isReadFlag;
     private Long writerId;
     private Long loginId;
     private Long boardId;
@@ -25,14 +25,16 @@ public class AlarmDTO {
         alarmDTO.setId(alarmEntity.getId());
         alarmDTO.setMessage(alarmEntity.getMessage());
         alarmDTO.setType(alarmEntity.getType());
-        alarmDTO.setIsRead(alarmEntity.getIsRead());
+        alarmDTO.setIsReadFlag(alarmEntity.getIsReadFlag());
         alarmDTO.setWriterId(alarmEntity.getWriterMemberEntity().getId());
         alarmDTO.setLoginId(alarmEntity.getLoginMemberEntity().getId());
-        if (alarmEntity.getMarketProductEntity() == null) {
+
+        if (alarmEntity.getMemberBoardEntity() != null) {
             alarmDTO.setBoardId(alarmEntity.getMemberBoardEntity().getId());
         } else {
             alarmDTO.setProductId(alarmEntity.getMarketProductEntity().getId());
         }
+
         alarmDTO.setCreatedAt(UtilClass.dateFormat(alarmEntity.getCreatedAt()));
         return alarmDTO;
     }

@@ -119,6 +119,24 @@
         resultArea.innerHTML = output;
     }
 
+    const send_commentAlarm = () => {
+        const boardId = document.querySelector("#id").value;
+        const writerId = document.querySelector("#writerId").value;
+        console.log(boardId);
+        axios({
+            method: "post",
+            url: "/alarm/commentAlarm",
+            data: {
+                boardId: boardId,
+                writerId: writerId
+            }
+        }).then(res => {
+
+        }).catch(err => {
+
+        });
+
+    }
     const comment_write = () => {
         const writer = document.querySelector("#comment-writer").value;
         const contents = document.querySelector("#comment-contents").value;
@@ -135,7 +153,7 @@
             console.log("res", res);
             console.log("댓글 목록", res.data);
             document.querySelector("#comment-contents").value = "";
-            // comment_list(res.data);
+            send_commentAlarm();
             location.href = "/memberBoard/detail/" + boardId;
         }).catch(err => {
             console.log("err", err);

@@ -24,7 +24,7 @@ public class AlarmEntity extends BaseEntity{
     @Column(length = 50)
     private String type;
     @Column
-    private int isRead;
+    private int isReadFlag;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
@@ -45,7 +45,7 @@ public class AlarmEntity extends BaseEntity{
 
     public static AlarmEntity LikesToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
-        alarmEntity.setIsRead(1);
+        alarmEntity.setIsReadFlag(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
@@ -57,12 +57,24 @@ public class AlarmEntity extends BaseEntity{
 
     public static AlarmEntity buysToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MarketProductEntity marketProductEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
-        alarmEntity.setIsRead(1);
+        alarmEntity.setIsReadFlag(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
         alarmEntity.setMessage(marketProductEntity.getProductTitle() + "을" + loginMemberEntity.getMemberNickName() + "님이 " + "배송요청했습니다.");
         alarmEntity.setMarketProductEntity(marketProductEntity);
+        alarmEntity.setType(type);
+        return alarmEntity;
+    }
+
+    public static AlarmEntity commentToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
+        AlarmEntity alarmEntity = new AlarmEntity();
+        alarmEntity.setIsReadFlag(1);
+        alarmEntity.setLoginMemberEntity(loginMemberEntity);
+        alarmEntity.setWriterMemberEntity(writerMemberEntity);
+        alarmEntity.setMemberBoardEntity(memberBoardEntity);
+        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 댓글을 달았습니다.");
+        alarmEntity.setMarketProductEntity(null);
         alarmEntity.setType(type);
         return alarmEntity;
     }

@@ -60,5 +60,47 @@ public class MarketPaymentService {
         MarketPaymentEntity marketPaymentEntity = marketPaymentRepository.findByMemberEntityAndMarketProductEntity(memberEntity, marketProductEntity);
         return MarketPaymentDTO.toDTO(marketPaymentEntity);
     }
+
+    public void buyConfirm(Long paymentId, String adminId) {
+        Optional<MarketPaymentEntity> marketPaymentEntity = marketPaymentRepository.findById(paymentId);
+        System.out.println("marketPaymentEntity = " + marketPaymentEntity.get());
+        // 밑에값을 DTO로 변환해서 저장해야하는지 의문 --> 나중에 error가 뜨면 확인해야함
+        MarketPaymentDTO marketPaymentDTO = MarketPaymentDTO.toDTO(marketPaymentEntity.get());
+        System.out.println("marketPaymentDTO = " + marketPaymentDTO);
+        Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(marketPaymentDTO.getProductId());
+        Optional<MemberEntity> memberEntity = memberRepository.findById(marketPaymentDTO.getSellerId());
+
+
+        Long ProductPrice = marketProductEntity.get().getProductPrice();
+        System.out.println("ProductPrice = " + ProductPrice);
+        Long TotalAmount = marketProductEntity.get().getTotalAmount();
+        System.out.println("TotalAmount = " + TotalAmount);
+        Long sellerId = memberEntity.get().getId();
+        //관리자 weatherpay 처리 코드
+        System.out.println("어드민"+adminId);
+        Optional<MemberEntity> memberAdminEntity = memberRepository.findByMemberEmail(adminId);
+        MemberDTO memberDTO = MemberDTO.updatePayConfirm(memberAdminEntity.get(),ProductPrice);
+        MemberEntity updateEntity = MemberEntity.toUpdateEntity(memberDTO);
+        memberRepository.save(updateEntity);
+
+        //판매자 weatherpay 처리 코드
+        Optional<MemberEntity> memberEntitySeller = memberRepository.findById(sellerId);
+        MemberDTO membersellerDTO = MemberDTO.updateSellerPay(memberEntitySeller.get(),ProductPrice);
+        MemberEntity updateSellerEntity = MemberEntity.toUpdateEntity(membersellerDTO);
+        memberRepository.save(updateSellerEntity);
+
+        //paymententity tradeStatus값 변환 처리 코드
+       MarketPaymentEntity marketStatusPayment = MarketPaymentEntity.toStatusUpdateEntity(marketPaymentEntity.get());
+       marketPaymentRepository.save(marketStatusPayment);
+
+    }
+
+    public void paymentAdmin(String adminId, Long totalAmount) {
+        Optional<MemberEntity> memberAdminEntity = memberRepository.findByMemberEmail(adminId);
+        MemberDTO memberDTO = MemberDTO.updatePay(memberAdminEntity.get(),totalAmount);
+        MemberEntity updateEntity = MemberEntity.toUpdateEntity(memberDTO);
+        memberRepository.save(updateEntity);
+
+    }
 }
 

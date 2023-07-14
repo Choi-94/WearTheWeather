@@ -176,11 +176,9 @@
                 writerId: writerId
             }
         }).then(res => {
-            console.log("정상정상");
-            alert("정상정상");
+
         }).catch(err => {
-            console.log("오류오류");
-            alert("오류오류");
+
         });
 
     }
@@ -203,7 +201,8 @@
                 data: {
                     productId: productId,
                     sellerWriter: sellerWriter,
-                    deliveryLocation: address
+                    deliveryLocation: address,
+                    totalAmount: totalAmount
                 }
             }).then(res => {
                 send_buyAlarm();
