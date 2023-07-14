@@ -56,6 +56,21 @@
         location.href = "/adminBoard/update/" + id;
     }
 
+    const count_adminLikes = () => {
+        const count_likes = document.querySelector("#countLikes");
+        const id = document.querySelector("#id").value;
+
+        axios({
+            method: "get",
+            url: "/adminBoard/countLikes/" + id
+        }).then(res => {
+            const countLikes = res.data;
+            count_likes.innerHTML = countLikes;
+        }).catch(err = {
+
+        });
+    }
+
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
     const toggleLike = () => {
         const icon = document.getElementById("likeIcon");
@@ -67,11 +82,13 @@
         }).then(res => {
             icon.classList.remove("bi-heart");
             icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
-            location.href = "/adminBoard/detail/" + id;
+            // location.href = "/adminBoard/detail/" + id;
+            count_adminLikes();
         }).catch(err => {
+
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML =  '<i class="bi bi-heart"></i>';
-            location.href = "/adminBoard/detail/" + id;
+            count_adminLikes();
         });
     }
 

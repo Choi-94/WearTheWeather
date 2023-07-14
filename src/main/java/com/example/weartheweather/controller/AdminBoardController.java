@@ -90,6 +90,12 @@ public class AdminBoardController {
         }
     }
 
+    @GetMapping("/countLikes/{id}")
+    public ResponseEntity<Integer> countLikes(@PathVariable Long id) {
+        int countBoardLikes = adminBoardService.countBoardLikes(id);
+        return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
+    }
+
 
 
 }
