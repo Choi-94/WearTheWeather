@@ -66,4 +66,16 @@ public class AlarmEntity extends BaseEntity{
         alarmEntity.setType(type);
         return alarmEntity;
     }
+
+    public static AlarmEntity commentToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
+        AlarmEntity alarmEntity = new AlarmEntity();
+        alarmEntity.setIsRead(1);
+        alarmEntity.setLoginMemberEntity(loginMemberEntity);
+        alarmEntity.setWriterMemberEntity(writerMemberEntity);
+        alarmEntity.setMemberBoardEntity(memberBoardEntity);
+        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 댓글을 달았습니다.");
+        alarmEntity.setMarketProductEntity(null);
+        alarmEntity.setType(type);
+        return alarmEntity;
+    }
 }
