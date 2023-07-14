@@ -8,7 +8,7 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
-    <form action="/market/save" method="post" enctype="multipart/form-data">
+    <form action="/market/save" method="post" enctype="multipart/form-data" id="myform">
         <input type="text" id="NickName" style="display: none">
         <input type="file" name="productImage" class="form-control" multiple><br>
         <h6 id="productFileCheck"></h6>
@@ -227,15 +227,18 @@
 
     }
 
-    // document.getElementById("myForm").addEventListener("submit", function(event) {
-    //     const fileInput = document.querySelector('input[name="productImage"]');
-    //     const files = fileInput.files;
-    //
-    //     if (files.length === 0) {
-    //         event.preventDefault(); // Prevent form submission
-    //         alert("파일 첨부는 필수입니다.");
-    //     }
-    // });
+    document.getElementById("myform").addEventListener("submit", function(event) {
+        const fileInput = document.querySelector('input[name="productImage"]');
+        const files = fileInput.files;
+        console.log(files.length);
+        if (files.length === 0) {
+            console.log(files.length);
+            event.preventDefault(); // Prevent form submission
+            alert("파일 첨부는 필수입니다.");
+        }else{
+            console.log(files.length);
+        }
+    });
 
 </script>
 </html>

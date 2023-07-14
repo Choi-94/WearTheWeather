@@ -16,7 +16,7 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-    <form action="/memberBoard/save" method="post" enctype="multipart/form-data" onblur="fileCheck()">
+    <form action="/memberBoard/save" method="post" enctype="multipart/form-data" onblur="fileCheck()" id="myform">
         <input type="file" name="boardFile" multiple> <br>
         <label>
             <input type="radio" name="season" value="Spring">봄
@@ -46,14 +46,19 @@
 
 <div th:replace="component/footer :: footer"></div>
 </body>
-<!--<script>-->
-<!--    const filecheck = document.querySelector('input[name="boardFile"]').value;-->
-<!--    $("form").on("submit", function (event) {-->
-<!--        if (!filecheck) {-->
-<!--            alert("파일첨부는 필수입니다");-->
-<!--            event.preventDefault();-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
+<script>
+    document.getElementById("myform").addEventListener("submit", function(event) {
+        const fileInput = document.querySelector('input[name="boardFile"]');
+        const files = fileInput.files;
+        console.log(files.length);
+        if (files.length === 0) {
+            console.log(files.length);
+            event.preventDefault(); // Prevent form submission
+            alert("파일 첨부는 필수입니다.");
+        }else{
+            console.log(files.length);
+        }
+    });
+</script>
 
 </html>
