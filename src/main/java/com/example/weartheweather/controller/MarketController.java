@@ -86,6 +86,12 @@ public class MarketController {
         }
     }
 
+    @GetMapping("/countLikes/{id}")
+    public ResponseEntity<Integer> countLikes(@PathVariable Long id) {
+        int countBoardLikes = marketProductService.countMarketLikes(id);
+        return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
+    }
+
     @GetMapping("/tset")
     public String testForm() {
         return "test";
