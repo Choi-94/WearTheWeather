@@ -61,6 +61,8 @@ public class AlarmService {
         return alarmDTOList;
     }
 
-
-
+    @Transactional
+    public void updateIsReadFlag(Long id) {
+        alarmRepository.updateIsReadFlag(id);
+    }
 }

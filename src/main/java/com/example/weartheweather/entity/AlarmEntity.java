@@ -24,7 +24,7 @@ public class AlarmEntity extends BaseEntity{
     @Column(length = 50)
     private String type;
     @Column
-    private int isRead;
+    private int isReadFlag;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
@@ -45,7 +45,7 @@ public class AlarmEntity extends BaseEntity{
 
     public static AlarmEntity LikesToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
-        alarmEntity.setIsRead(1);
+        alarmEntity.setIsReadFlag(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
@@ -57,7 +57,7 @@ public class AlarmEntity extends BaseEntity{
 
     public static AlarmEntity buysToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MarketProductEntity marketProductEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
-        alarmEntity.setIsRead(1);
+        alarmEntity.setIsReadFlag(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
@@ -69,7 +69,7 @@ public class AlarmEntity extends BaseEntity{
 
     public static AlarmEntity commentToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MemberBoardEntity memberBoardEntity, String type) {
         AlarmEntity alarmEntity = new AlarmEntity();
-        alarmEntity.setIsRead(1);
+        alarmEntity.setIsReadFlag(1);
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
