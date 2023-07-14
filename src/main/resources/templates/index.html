@@ -18,10 +18,7 @@
             <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" style="background-color: gray"></button>
             <button type="button" data-bs-target="#demo" data-bs-slide-to="1" style="background-color: gray"></button>
             <button type="button" data-bs-target="#demo" data-bs-slide-to="2" style="background-color: gray"></button>
-
-
         </div>
-
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="/img/Slides1.gif" class="d-block" href="/adminBoard/list">
@@ -41,16 +38,26 @@
             <span class="carousel-control-next-icon" style="position: absolute;"></span>
         </button>
     </div>
-    //d
-    <div style="margin-top: 50px;">
-        <h1>주간코디예보</h1>
-        <div style="display: none;" id="weatherResult"></div>
-        <div style="display: flex;" id="temperatureResult"></div>
-        <div style="display: flex;" id="weather2Result"></div>
-        <div style="display: flex;" id="locationResult"></div>
-        <div style="display: flex; margin-top: -200px; margin-left: 400px;" id="icon"></div>
 
-        <div id="day-buttons" style="margin-left: -15px; margin-top: 15px;">
+        <div style="height: 500px; margin-top: 50px;">
+            <div>
+                <h1>주간코디예보</h1>
+               <div style="display: none;" id="weatherResult"></div>
+                    <div>
+                        <div style="display: flex; margin-top: -70px; margin-left: 280px;" id="locationResult"></div>
+                    </div>
+                <div>
+                <div style="display: flex;margin-top: -10px; margin-left: 280px;" id="temperatureResult"></div>
+                </div>
+                <div>
+                <div style="display: flex;margin-top: -5px; margin-left: 280px;" id="weather2Result"></div>
+                    </div>
+                <div>
+                <div style="display: flex;margin-top: -50px; margin-left: 230px;" id="icon"></div>
+                </div>
+            </div>
+
+        <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
             <button id="monday-button" class="day-button" onclick="toggleButton('monday-button')">
                 <img id="monday-img-0" class="day-img" src="/img/week/monday_button_0.png">
                 <img id="monday-img-1" class="day-img" src="/img/week/monday_button_1.png">
@@ -88,9 +95,35 @@
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
                 <a href="/adminBoard/list" style="text-decoration: none;  font-size: 15px; color: black;">더 보기 ></a>
             </h4>
+        </div>
+            <div id="adminList" style="margin-top: 30px;">
+                <table>
+                    <th:block th:each="adminBoard, iterationStatus: ${adminBoardDTOList}">
+                        <th:block th:if="${iterationStatus.index % 5 == 0}">
+                            <tr>
+                        </th:block>
+                        <td th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${#strings.replace(adminBoard.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${adminBoard.id}]])">
+                        </td>
+                        <td th:if="${iterationStatus.index >= 5}" th:unless="${(iterationStatus.index - 5) % 5 == 0}" style="display: none;">
+                            <img th:src="@{|/upload/${#strings.replace(adminBoard.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${adminBoard.id}]])">
+                        </td>
+                        <th:block th:if="${iterationStatus.index % 5 == 4 || iterationStatus.last}">
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${iterationStatus.index == 4 && adminBoardDTOList.size() > 5}">
+                            <tr>
+                                <td colspan="5">
+                                    <p>더 많은 이미지가 있습니다.</p>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </th:block>
+                </table>
+            </div>
 
         </div>
-    </div>
+
 
 
 </div>
@@ -172,7 +205,7 @@
         const resultElement = document.getElementById("weatherResult");
         resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather} 접속위치:${name}`;
         const resultTemperature = document.getElementById("temperatureResult");
-        resultTemperature.innerHTML = `${temperature}`;
+        resultTemperature.innerHTML = `${temperature}°C`;
         const resultWeather= document.getElementById("weather2Result");
         resultWeather.innerHTML = `${weather}`;
         const resultLocation= document.getElementById("locationResult");
@@ -235,7 +268,7 @@
             alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
         }
     }
-
+ // dd
     // 정해진 간격으로 실시간으로 날씨 정보 업데이트
     setInterval(getWeather, 60000); // 1분마다 업데이트
 
