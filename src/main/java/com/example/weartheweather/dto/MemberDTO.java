@@ -46,4 +46,42 @@ public class MemberDTO {
         return memberDTO;
     }
 
+    public static MemberDTO updatePay(MemberEntity memberEntity,Long totalAmount){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberGender(memberEntity.getMemberGender());
+        memberDTO.setMemberWeatherPay(memberEntity.getMemberWeatherPay()+totalAmount);
+        memberDTO.setMemberNickName(memberEntity.getMemberNickName());
+        memberDTO.setMemberPoints(memberEntity.getMemberPoints());
+        memberDTO.setPlatform(memberEntity.getPlatform());
+        return memberDTO;
+    }
+    public static MemberDTO updatePayConfirm(MemberEntity memberEntity,Long ProductPrice){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberGender(memberEntity.getMemberGender());
+        memberDTO.setMemberWeatherPay(memberEntity.getMemberWeatherPay()-ProductPrice);
+        memberDTO.setMemberNickName(memberEntity.getMemberNickName());
+        memberDTO.setMemberPoints(memberEntity.getMemberPoints());
+        memberDTO.setPlatform(memberEntity.getPlatform());
+        return memberDTO;
+    }
+
+    public static MemberDTO updateSellerPay(MemberEntity memberEntity,Long ProductPrice){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberGender(memberEntity.getMemberGender());
+        memberDTO.setMemberWeatherPay(memberEntity.getMemberWeatherPay()+ProductPrice);
+        memberDTO.setMemberNickName(memberEntity.getMemberNickName());
+        memberDTO.setMemberPoints(memberEntity.getMemberPoints());
+        memberDTO.setPlatform(memberEntity.getPlatform());
+        return memberDTO;
+    }
+
 }
