@@ -10,7 +10,7 @@
 .box {
     width: 100%;
     height: 120px;
-    background-color: black;
+    background-color: #558BCF;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -179,4 +179,14 @@
     color: white;
     width: 130px; height: 40px; border-radius: 10px;
     border: black solid 1px;
+}
+
+.day-button {
+    background: none; /* 배경색을 투명하게 설정 */
+    border: none; /* 외곽선 제거 */
+}
+
+.day-img {
+    width: 50px;
+    height: 50px;
 }
