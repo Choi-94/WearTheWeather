@@ -12,22 +12,22 @@
 <div th:fragment="nav" class="container" id="nav">
     <div class="box" style="background-color: #558BCF;">
 
-        div
-        <div class="dropdown">
-            <button type="button" onclick="findByMyAlarm()"
-                    class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
-                    style="position: absolute; top:-33px; left: 1020px;">
+        <div th:if="${session.memberNickName != null}">
+            <div class="dropdown">
+                <button type="button" onclick="findByMyAlarm()"
+                        class="btn btn-primary dropdown-toggle bg-transparent border-0" data-bs-toggle="dropdown"
+                        style="position: absolute; top:-33px; left: 1020px;">
 
-                <i class="bi bi-bell fs-4"></i>
-            </button>
-            <div>
-                <ul class="dropdown-menu flex-column" id="dropdownList">
-                    <li style="display: block;">
-
-                    </li>
-                </ul>
+                    <i class="bi bi-bell fs-4"></i>
+                </button>
+                <div>
+                    <ul class="dropdown-menu flex-column" id="dropdownList">
+                        <li style="display: block;"></li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <div th:unless="${session.memberNickName != null}"></div>
         <ul>
             <li style="font-size: 20px;">
                 <a href="/adminBoard/list">오늘의 코디</a>
