@@ -46,59 +46,14 @@
 
 <div th:replace="component/footer :: footer"></div>
 </body>
-<script th:inline="javascript">
-    // let oEditors = [];
-    // smartEditor = function () {
-    //     nhn.husky.EZCreator.createInIFrame({
-    //         oAppRef: oEditors,
-    //         elPlaceHolder: "boardContents",
-    //         sSkinURI: "/smartEditor/SmartEditor2Skin.html",
-    //         fCreator: "createSEditor2"
-    //     })
-    // }
-    //
-    // $(document).ready(function () {
-    //     smartEditor()
-    // })
-    //
-    // submitPost= function () {
-    //     oEditors.getById["boardContents"].exec("UPDATE_CONTENTS_FIELD",[])
-    //     let content = document.getElementById("boardContents").value;
-    //
-    //     if (content == '') {
-    //         alert("내용을 입력해주세요.")
-    //         oEditors.getById["boardContents"].exec("FOCUS");
-    //         return
-    //     } else  {
-    //         console.log(content);
-    //     }
-    // }
-    //
-    // savePost = function () {
-    //     oEditors.getById["boardContents"].exec("UPDATE_CONTENTS_FIELD", [])
-    //     let content = document.getElementById("boardContents").value;
-    //
-    //     if (content == '') {
-    //         alert("내용을 입력해주세요.");
-    //         oEditors.getById["boardContents"].exec("FOCUS");
-    //         return
-    //     } else {
-    //         let post = {
-    //             title: $("#title")[0].value
-    //             , content: content
-    //         }
-    //
-    //         $.ajax({
-    //             url: "/memberBoard/save",
-    //             data: post,
-    //             success: function (data) {
-    //                 alert('저장하였습니다.')
-    //             },
-    //             error: function (jqXHR, textStatus, errorThrown) {
-    //                 alert('오류가 발생하였습니다.')
-    //             }
-    //         })
-    //     }
-    // }
-</script>
+<!--<script>-->
+<!--    const filecheck = document.querySelector('input[name="boardFile"]').value;-->
+<!--    $("form").on("submit", function (event) {-->
+<!--        if (!filecheck) {-->
+<!--            alert("파일첨부는 필수입니다");-->
+<!--            event.preventDefault();-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+
 </html>

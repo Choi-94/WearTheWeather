@@ -9,6 +9,9 @@ import com.example.weartheweather.service.CommentService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,9 +45,16 @@ public class MemberBoardController {
     }
 
     @GetMapping("/list")
-    public String findAll(Model model) {
-        List<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll();
+    public String findAll(Model model, @PageableDefault(size = 15)Pageable pageable,@RequestParam(value = "type", required = false, defaultValue = "") String type,
+                          @RequestParam(value = "q", required = false, defaultValue = "") String q) {
+        Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
+        int startPage = Math.max(1,memberBoardDTOList.getPageable().getPageNumber()-4);
+        int endPage = Math.min(memberBoardDTOList.getTotalPages(), memberBoardDTOList.getPageable().getPageNumber()+4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("boardList", memberBoardDTOList);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
         return "/codiContestPages/boardList";
     }
 
@@ -53,11 +63,16 @@ public class MemberBoardController {
                            HttpServletRequest req, HttpServletResponse res) {
         memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
-        MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
-        if (memberBoardLikesDTO != null) {
-            boardLikes = "bi-heart-fill";
+        if(memberNickName!=null){
+            MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
+            if (memberBoardLikesDTO != null) {
+                boardLikes = "bi-heart-fill";
+            }
+        }else{
+
         }
+
         int countBoardLikes = memberBoardService.countBoardLikes(id);
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
         List<CommentDTO> commentDTOList = commentService.findAll(id);
