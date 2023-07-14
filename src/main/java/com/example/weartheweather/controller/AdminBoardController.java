@@ -46,7 +46,7 @@ public class AdminBoardController {
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, HttpSession session, Model model,
                            HttpServletRequest req, HttpServletResponse res) {
-        adminBoardService.CookieBoardView(id, req, res);
+        adminBoardService.CookieAdminBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         AdminBoardLikesDTO adminBoardLikesDTO = adminBoardService.findByBoardLikes(memberNickName, id);
         String boardLikes = "";
@@ -88,6 +88,12 @@ public class AdminBoardController {
             adminBoardService.deleteBoardLikes(memberNickName, id);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping("/countLikes/{id}")
+    public ResponseEntity<Integer> countLikes(@PathVariable Long id) {
+        int countBoardLikes = adminBoardService.countBoardLikes(id);
+        return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
     }
 
 

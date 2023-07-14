@@ -69,6 +69,9 @@
                           th:text="'판매완료'"></span>
                 </td>
 
+                <input type="hidden" th:value="${marketPaymentDTOS.productId}" id="productId">
+                <input type="hidden" th:value="${marketPaymentDTOS.sellerId}" id="writerId">
+
                 <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
             </tr>
             </tbody>
@@ -98,6 +101,26 @@
 
 </body>
 <script th:inline="javascript">
+    const send_buyConfirmAlarm = () => {
+        console.log("거래확인됌")
+        const productId = document.querySelector("#productId").value;
+        const writerId = document.querySelector("#writerId").value;
+        console.log(productId, writerId);
+        axios({
+            method: "post",
+            url: "/alarm/buyConfirmAlarm",
+            data: {
+                productId: productId,
+                writerId: writerId
+            }
+        }).then(res => {
+
+        }).catch(err => {
+
+        });
+
+    }
+
     myFunction = (id) => {
         const  id1 = id;
         if (!confirm("구매 확정을 하시겠습니까?")) {
@@ -109,6 +132,7 @@
                 data: {
                     id: id1
                 }, success: function (res) {
+                    send_buyConfirmAlarm();
                     alert("구매 확정 되었습니다");
                     console.log(res);
                     location.reload();
