@@ -78,10 +78,12 @@
 
                     const a = document.createElement('a');
                     a.classList.add('dropdown-item', 'text-dark');
-                    if (item.type != "buys") {
-                        a.href = `/memberBoard/detail/` + boardId;
-                    } else {
+                    if (item.type == "buys") {
                         a.href = `/market/` + productId;
+                    } else if (item.type == "buyConfirm") {
+                        a.href = `/member/myTradeList/`;
+                    } else {
+                        a.href = `/memberBoard/detail/` + boardId;
                     }
                     a.textContent = message;
 

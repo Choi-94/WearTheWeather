@@ -25,6 +25,13 @@ public class AlarmController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/commentAlarm")
+    public ResponseEntity commentAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
+        String memberNickName = (String) session.getAttribute("memberNickName");
+        alarmService.commentAlarm(alarmDTO, memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/buysAlarm")
     public ResponseEntity buysAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
@@ -32,12 +39,15 @@ public class AlarmController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/commentAlarm")
-    public ResponseEntity commentAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
+    @PostMapping("/buyConfirmAlarm")
+    public ResponseEntity buyConfirmAlarm(@RequestBody AlarmDTO alarmDTO, HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
-        alarmService.commentAlarm(alarmDTO, memberNickName);
+        alarmService.buyConfirmAlarm(alarmDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
 
 
     @GetMapping("/")

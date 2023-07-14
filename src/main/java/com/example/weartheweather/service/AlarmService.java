@@ -33,6 +33,15 @@ public class AlarmService {
         alarmRepository.save(alarmEntity);
     }
 
+    public void commentAlarm(AlarmDTO alarmDTO, String memberNickName) {
+        MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
+        MemberBoardEntity memberBoardEntity = memberBoardService.findByMemberBoardId(alarmDTO.getBoardId());
+        String type = "comment";
+        AlarmEntity alarmEntity = AlarmEntity.commentToSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
+        alarmRepository.save(alarmEntity);
+    }
+
     public void buysAlarm(AlarmDTO alarmDTO, String memberNickName) {
         MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
@@ -42,14 +51,18 @@ public class AlarmService {
         alarmRepository.save(alarmEntity);
     }
 
-    public void commentAlarm(AlarmDTO alarmDTO, String memberNickName) {
+    public void buyConfirmAlarm(AlarmDTO alarmDTO, String memberNickName) {
         MemberEntity writerMemberEntity = memberRepository.findById(alarmDTO.getWriterId()).orElseThrow(() -> new NoSuchElementException());
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
-        MemberBoardEntity memberBoardEntity = memberBoardService.findByMemberBoardId(alarmDTO.getBoardId());
-        String type = "comment";
-        AlarmEntity alarmEntity = AlarmEntity.commentToSaveEntity(writerMemberEntity, loginMemberEntity, memberBoardEntity, type);
+        MarketProductEntity marketProductEntity = marketProductRepository.findById(alarmDTO.getProductId()).orElseThrow(() -> new NoSuchElementException());
+        String type = "buyConfirm";
+        AlarmEntity alarmEntity = AlarmEntity.buyConfirmToSaveEntity(writerMemberEntity, loginMemberEntity, marketProductEntity, type);
         alarmRepository.save(alarmEntity);
     }
+
+
+
+
 
     public List<AlarmDTO> findByMyAlarm(String memberNickName) {
         MemberEntity loginMemberEntity = memberBoardService.findByMemberNickName(memberNickName);
@@ -65,4 +78,7 @@ public class AlarmService {
     public void updateIsReadFlag(Long id) {
         alarmRepository.updateIsReadFlag(id);
     }
+
+
+
 }

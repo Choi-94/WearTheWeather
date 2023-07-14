@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "alarm_table")
-public class AlarmEntity extends BaseEntity{
+public class AlarmEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -61,9 +61,9 @@ public class AlarmEntity extends BaseEntity{
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
-        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "을" + loginMemberEntity.getMemberNickName() + "님이 " + "배송요청했습니다.");
-        alarmEntity.setMarketProductEntity(marketProductEntity);
         alarmEntity.setType(type);
+        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "의 상품을" + loginMemberEntity.getMemberNickName() + "님이 배송요청했습니다.");
+        alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
 
@@ -76,6 +76,18 @@ public class AlarmEntity extends BaseEntity{
         alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 댓글을 달았습니다.");
         alarmEntity.setMarketProductEntity(null);
         alarmEntity.setType(type);
+        return alarmEntity;
+    }
+
+    public static AlarmEntity buyConfirmToSaveEntity(MemberEntity writerMemberEntity, MemberEntity loginMemberEntity, MarketProductEntity marketProductEntity, String type) {
+        AlarmEntity alarmEntity = new AlarmEntity();
+        alarmEntity.setIsReadFlag(1);
+        alarmEntity.setLoginMemberEntity(loginMemberEntity);
+        alarmEntity.setWriterMemberEntity(writerMemberEntity);
+        alarmEntity.setMemberBoardEntity(null);
+        alarmEntity.setType(type);
+        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "의 상품을" + loginMemberEntity.getMemberNickName() + "님이 구매확정했습니다.");
+        alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
 }
