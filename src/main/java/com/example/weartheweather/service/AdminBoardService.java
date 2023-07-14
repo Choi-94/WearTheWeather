@@ -106,7 +106,7 @@ public class AdminBoardService {
 
 
     @Transactional
-    public void CookieBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
+    public void CookieAdminBoardView(Long id, HttpServletRequest req, HttpServletResponse res) {
         /* 조회수 로직 */
         Cookie oldCookie = null;
 
