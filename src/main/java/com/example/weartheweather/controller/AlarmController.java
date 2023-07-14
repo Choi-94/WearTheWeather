@@ -40,12 +40,18 @@ public class AlarmController {
     }
 
 
-    @GetMapping("/findByMyAlarm")
+    @GetMapping("/")
     public ResponseEntity findByMyAlarm(HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
         List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
         System.out.println("alarmDTOList = " + alarmDTOList);
         return new ResponseEntity<>(alarmDTOList, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity setIsRead (@PathVariable Long id) {
+        alarmService.updateIsReadFlag(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
