@@ -50,7 +50,6 @@
     <script th:inline="javascript">
 
         const setIsRead = (id) => {
-            console.log("id = " + id);
             axios({
                 method: "put",
                 url: "/alarm/" + id
@@ -68,23 +67,25 @@
                 method: "get",
                 url: "/alarm/"
             }).then(res => {
-                console.log(res.data);
-
                 const alarmList = res.data;
 
                 alarmList.forEach(function (item) {
                     const li = document.createElement('li');
                     const message = item.message;
-                    const id = item.boardId;
+                    const boardId = item.boardId;
+                    const productId = item.productId;
 
 
                     const a = document.createElement('a');
                     a.classList.add('dropdown-item', 'text-dark');
-                    a.href = `/memberBoard/detail/` + id; // 게시물 상세 페이지 주소를 설정합니다.
+                    if (item.type != "buys") {
+                        a.href = `/memberBoard/detail/` + boardId;
+                    } else {
+                        a.href = `/market/` + productId;
+                    }
                     a.textContent = message;
 
                     a.addEventListener('click', function () {
-                        console.log("알람id = " + item.id);
                         setIsRead(item.id); // 클릭한 게시물의 id를 전달합니다.
                     });
 
