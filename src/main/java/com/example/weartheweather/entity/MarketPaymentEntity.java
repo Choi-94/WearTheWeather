@@ -45,4 +45,15 @@ public class MarketPaymentEntity extends BaseEntity {
         marketPaymentEntity.setTradeStatus(1);
         return marketPaymentEntity;
     }
+
+    public static MarketPaymentEntity toStatusUpdateEntity(MarketPaymentEntity marketPaymentEntity1) {
+        MarketPaymentEntity marketPaymentEntity = new MarketPaymentEntity();
+        marketPaymentEntity.setId(marketPaymentEntity1.getId());
+        marketPaymentEntity.setDeliveryLocation(marketPaymentEntity1.getDeliveryLocation());
+        marketPaymentEntity.setMemberEntity(marketPaymentEntity1.getMemberEntity());
+        marketPaymentEntity.setMemberEntity1(marketPaymentEntity1.getMemberEntity1());
+        marketPaymentEntity.setMarketProductEntity(marketPaymentEntity1.getMarketProductEntity());
+        marketPaymentEntity.setTradeStatus(2);
+        return marketPaymentEntity;
+    }
 }

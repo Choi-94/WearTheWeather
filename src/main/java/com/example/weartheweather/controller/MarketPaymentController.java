@@ -1,4 +1,5 @@
 package com.example.weartheweather.controller;
+import com.example.weartheweather.dto.AdminDTO;
 import com.example.weartheweather.dto.MarketPaymentDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
 import com.example.weartheweather.dto.MemberDTO;
@@ -50,9 +51,10 @@ public class MarketPaymentController {
     }
 
     @PostMapping("/addTransaction")
-    public ResponseEntity<Long> save(@RequestBody MarketPaymentDTO marketPaymentDTO,HttpSession session) throws IOException {
+    public ResponseEntity<Long> save(AdminDTO adminDTO, @RequestBody MarketPaymentDTO marketPaymentDTO,HttpSession session) throws IOException {
         String memberNickName = (String)session.getAttribute("memberNickName");
         marketPaymentService.save(marketPaymentDTO,memberNickName);
+        marketPaymentService.paymentAdmin(adminDTO.getMail(),marketPaymentDTO.getTotalAmount());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -64,6 +66,13 @@ public class MarketPaymentController {
         model.addAttribute("marketPay", marketPaymentDTO);
         model.addAttribute("marketProduct", marketProductDTO);
         return "marketPages/marketPaymentSuccess";
+    }
+    @PostMapping("/buyConfirm")
+    public ResponseEntity buyConfirm(AdminDTO adminDTO , @RequestParam Long id){
+        System.out.println("id = " + id);
+        System.out.println("어드민 아이디"+adminDTO.getMail());
+        marketPaymentService.buyConfirm(id,adminDTO.getMail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
