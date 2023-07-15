@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+
 @Getter
 @Setter
 @ToString
@@ -20,7 +22,6 @@ public class AdminBoardDTO {
     private String gender;
     private int boardHits;
     private int boardLikes;
-
     private String top;
     private String topDetail;
     private Long topPrice;
@@ -34,6 +35,7 @@ public class AdminBoardDTO {
     private MultipartFile boardFile;
     private String originalFileName;
     private String storedFileName;
+    private String totalTags;
 
     public static AdminBoardDTO toDTO(AdminBoardEntity adminBoardEntity) {
         AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
@@ -58,6 +60,35 @@ public class AdminBoardDTO {
         adminBoardDTO.setOriginalFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getOriginalFileName());
         adminBoardDTO.setStoredFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getStoredFileName());
         adminBoardDTO.setCreatedAt(UtilClass.dateFormat(adminBoardEntity.getCreatedAt()));
+
+        return adminBoardDTO;
+    }
+
+    public static AdminBoardDTO Search(AdminBoardEntity adminBoardEntity) {
+        AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
+        adminBoardDTO.setId(adminBoardEntity.getId());
+        adminBoardDTO.setHashTags(adminBoardEntity.getHashTags());
+        adminBoardDTO.setSeason(adminBoardEntity.getSeason());
+        adminBoardDTO.setWeather(adminBoardEntity.getWeather());
+        adminBoardDTO.setTemp(adminBoardEntity.getTemp());
+        adminBoardDTO.setHeight(adminBoardEntity.getHeight());
+        adminBoardDTO.setGender(adminBoardEntity.getGender());
+        adminBoardDTO.setBoardHits(adminBoardEntity.getBoardHits());
+        adminBoardDTO.setBoardLikes(adminBoardEntity.getBoardLikes());
+        adminBoardDTO.setTop(adminBoardEntity.getTop());
+        adminBoardDTO.setTopDetail(adminBoardEntity.getTopDetail());
+        adminBoardDTO.setTopPrice(adminBoardEntity.getTopPrice());
+        adminBoardDTO.setBottom(adminBoardEntity.getBottom());
+        adminBoardDTO.setBottomDetail(adminBoardEntity.getBottomDetail());
+        adminBoardDTO.setBottomPrice(adminBoardEntity.getBottomPrice());
+        adminBoardDTO.setEtc(adminBoardEntity.getEtc());
+        adminBoardDTO.setEtcDetail(adminBoardEntity.getEtcDetail());
+        adminBoardDTO.setEtcPrice(adminBoardEntity.getEtcPrice());
+        adminBoardDTO.setOriginalFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getOriginalFileName());
+        adminBoardDTO.setStoredFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getStoredFileName());
+        adminBoardDTO.setCreatedAt(UtilClass.dateFormat(adminBoardEntity.getCreatedAt()));
+        adminBoardDTO.setTotalTags(adminBoardEntity.getHashTags()+adminBoardEntity.getSeason()+adminBoardEntity.getBottom()
+        +adminBoardEntity.getBottomDetail()+adminBoardEntity.getEtc()+adminBoardEntity.getEtcDetail()+adminBoardEntity.getTop()+adminBoardEntity.getTopDetail());
 
         return adminBoardDTO;
     }
