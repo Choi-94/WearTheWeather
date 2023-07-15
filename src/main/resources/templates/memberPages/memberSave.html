@@ -7,6 +7,8 @@
 
 <body>
 <div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+<div class="container">
 <form method="post" action="/member/memberSave">
     <!-- 이메일 입력 -->
     <div class="form-group last mb-4 email_input">
@@ -43,7 +45,7 @@
     </div>
     <button type="submit" class="form-control" >가입하기</button>
 </form>
-
+</div>
 
 <script>
 
