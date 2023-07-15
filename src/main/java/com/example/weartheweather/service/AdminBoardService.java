@@ -7,6 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +35,8 @@ public class AdminBoardService {
     private final MarketProductRepository marketProductRepository;
     private final MarketLikesRepository marketLikesRepository;
     private final MarketPaymentRepository marketPaymentRepository;
+    private final PopularKeyWordsRepository popularKeyWordsRepository;
+    private final EntityManager entityManager;
     public Long save(AdminBoardDTO adminBoardDTO) throws IOException {
         AdminBoardEntity adminBoardEntity = AdminBoardEntity.toSaveEntity(adminBoardDTO);
         AdminBoardEntity savedEntity = adminBoardRepository.save(adminBoardEntity);
@@ -203,12 +211,39 @@ public class AdminBoardService {
 
 
     }
-//        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findByMemberEntity(memberEntity.get());
-//        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();
-//        marketProductEntityList.forEach(marketProductEntity -> {
-//            marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity));
-//        });
-//        return marketProductDTOList;
-//    }
+
+    public void popularSave(PopularKeywordsDTO popularKeywordsDTO) {
+        PopularKeywordsEntity popularKeywordsEntity = PopularKeywordsEntity.toSaveEntity(popularKeywordsDTO);
+        popularKeyWordsRepository.save(popularKeywordsEntity);
+
+
+    }
+
+    public List<PopularKeywordsDTO> popularSearch() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createQuery(Tuple.class);
+
+        Root<PopularKeywordsEntity> root = criteriaQuery.from(PopularKeywordsEntity.class);
+        criteriaQuery.multiselect(root.get("keyword"), criteriaBuilder.count(root.get("keyword")));
+        criteriaQuery.groupBy(root.get("keyword"));
+        criteriaQuery.orderBy(criteriaBuilder.desc(criteriaBuilder.count(root.get("keyword"))));
+
+        TypedQuery<Tuple> query = entityManager.createQuery(criteriaQuery);
+        query.setMaxResults(10);
+
+        List<Tuple> results = query.getResultList();
+
+        List<PopularKeywordsDTO> popularKeywordsDTOList = new ArrayList<>();
+
+        for (Tuple result : results) {
+            PopularKeywordsDTO popularKeywordsDTO = new PopularKeywordsDTO();
+            popularKeywordsDTO.setKeyword(result.get(0, String.class));
+            popularKeywordsDTO.setCount(result.get(1, Long.class));
+            popularKeywordsDTOList.add(popularKeywordsDTO);
+        }
+
+        return popularKeywordsDTOList;
+    }
+
 }
 

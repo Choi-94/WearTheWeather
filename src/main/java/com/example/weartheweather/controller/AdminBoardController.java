@@ -2,6 +2,7 @@ package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.AdminBoardLikesDTO;
+import com.example.weartheweather.dto.PopularKeywordsDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
@@ -97,9 +98,20 @@ public class AdminBoardController {
     }
 
     @GetMapping("/firstSearch")
-    public String firstSearchForm(){
+    public String firstSearchForm(Model model){
+        List<PopularKeywordsDTO> popularKeywordsDTOList = adminBoardService.popularSearch();
+        model.addAttribute("popularKeywordsDTOList",popularKeywordsDTOList);
+        System.out.println("popularKeywordsDTOList = " + popularKeywordsDTOList);
         return "/adminPages/firstSearch";
     }
+
+    @PostMapping("/firstSearch")
+    public ResponseEntity firstSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO){
+        adminBoardService.popularSave(popularKeywordsDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 
 
 

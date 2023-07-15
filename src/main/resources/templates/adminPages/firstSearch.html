@@ -14,10 +14,44 @@
 <nav class="navbar bg-light">
     <div class="container-fluid">
         <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" onclick="search_func()">Search</button>
         </form>
     </div>
 </nav>
 </body>
+<script>
+    const search_func = () => {
+        const q = document.querySelector('input[name="totalTags"]').value;
+        $.ajax({
+            type:"post",
+            uri:"/adminBoard/firstSearch",
+            data:{
+                keyword: q
+            }, success: function (res){
+                location.href = "/adminBoards/secondSearch?q=" + q;
+            },error:function (res){
+                alert("찾을 수 없습니다")
+            }
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/market/addWeatherPay",
+        //         data: {
+        //             memberWeatherPay: weatherPay
+        //         }, success: function (res) {
+        //             document.getElementById("weatherPay2").innerHTML = '사용 가능한 웨더포인트 : ' + res;
+        //             reg = res;
+        //
+        //             console.log(res);
+        //         }, error: function (res) {
+        //             console.log("111" + res);
+        //         }
+        //     });
+        // } else {
+        //     alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
+        // }
+
+        });
+    }
+</script>
 </html>
