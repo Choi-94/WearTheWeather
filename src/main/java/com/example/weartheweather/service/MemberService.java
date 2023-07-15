@@ -6,6 +6,7 @@ import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -96,6 +97,16 @@ public class MemberService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberNickName(memberNickName);
         MemberDTO memberDTO = MemberDTO.tofindAll(optionalMemberEntity.get());
         return memberDTO;
+    }
+
+    @Transactional
+    public void addLikePoint(Long writerId) {
+        memberRepository.addLikePoint(writerId);
+    }
+
+    @Transactional
+    public void addCommentPoint(Long writerId) {
+        memberRepository.addCommentPoint(writerId);
     }
 }
 

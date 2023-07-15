@@ -40,7 +40,7 @@ public class MarketController {
     }
 
     @GetMapping("/list")
-    public String list(Model model,@PageableDefault(size = 15) Pageable pageable, @RequestParam(value = "type" , required = false, defaultValue = "") String type,
+    public String list(Model model,@PageableDefault(size = 5) Pageable pageable, @RequestParam(value = "type" , required = false, defaultValue = "") String type,
                         @RequestParam(value = "q" , required = false, defaultValue = "") String q) {
         Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable,type,q);
         int startPage = Math.max(1,marketProductDTOList.getPageable().getPageNumber()-4);

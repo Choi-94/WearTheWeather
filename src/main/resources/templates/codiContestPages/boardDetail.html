@@ -137,6 +137,19 @@
         });
 
     }
+
+    const add_commentPoint = () => {
+        const writerId = document.querySelector("#writerId").value;
+
+        axios({
+            method: "get",
+            url: "/member/addCommentPoint/" + writerId
+        }).then(res => {
+
+        }).catch(err => {
+
+        })
+    }
     const comment_write = () => {
         const writer = document.querySelector("#comment-writer").value;
         const contents = document.querySelector("#comment-contents").value;
@@ -154,6 +167,7 @@
             console.log("댓글 목록", res.data);
             document.querySelector("#comment-contents").value = "";
             send_commentAlarm();
+            add_commentPoint();
             location.href = "/memberBoard/detail/" + boardId;
         }).catch(err => {
             console.log("err", err);
@@ -195,6 +209,20 @@
         });
     }
 
+    const add_likePoint = () => {
+        const writerId = document.querySelector("#writerId").value;
+
+        axios({
+            method: "get",
+            url: "/member/addLikePoint/" + writerId
+        }).then(res => {
+
+        }).catch(err => {
+
+        })
+    }
+
+
     const send_likeAlarm = () => {
         const boardId = document.querySelector("#id").value;
         const writerId = document.querySelector("#writerId").value;
@@ -226,6 +254,7 @@
             icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             count_likes();
             send_likeAlarm();
+            add_likePoint();
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
             icon.innerHTML = '<i class="bi bi-heart"></i>';
