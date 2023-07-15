@@ -2,8 +2,12 @@ package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
+import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.service.MarketProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,11 +40,35 @@ public class MarketController {
     }
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<MarketProductDTO> marketProductDTOList = marketProductService.findAll();
+    public String list(Model model,@PageableDefault(size = 15) Pageable pageable, @RequestParam(value = "type" , required = false, defaultValue = "") String type,
+                        @RequestParam(value = "q" , required = false, defaultValue = "") String q) {
+        Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable,type,q);
+        int startPage = Math.max(1,marketProductDTOList.getPageable().getPageNumber()-4);
+        int endPage = Math.min(marketProductDTOList.getTotalPages(), marketProductDTOList.getPageable().getPageNumber()+4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("marketProductList", marketProductDTOList);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
         return "marketPages/marketList";
+
     }
+
+//    @GetMapping("/list")
+//    public String findAll(Model model, @PageableDefault(size = 15) Pageable pageable, @RequestParam(value = "type", required = false, defaultValue = "") String type,
+//                          @RequestParam(value = "q", required = false, defaultValue = "") String q) {
+//        Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
+//        int startPage = Math.max(1,memberBoardDTOList.getPageable().getPageNumber()-4);
+//        int endPage = Math.min(memberBoardDTOList.getTotalPages(), memberBoardDTOList.getPageable().getPageNumber()+4);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("boardList", memberBoardDTOList);
+//        model.addAttribute("type", type);
+//        model.addAttribute("q", q);
+//        return "/codiContestPages/boardList";
+//    }
+
+
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse res) {

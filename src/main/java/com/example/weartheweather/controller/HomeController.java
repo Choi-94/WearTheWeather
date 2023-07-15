@@ -36,7 +36,7 @@ public class HomeController {
         Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
         model.addAttribute("memberBoardList", memberBoardDTOList);
 
-        List<MarketProductDTO> marketProductDTOList = marketProductService.findAll();
+        Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable, type, q);
         model.addAttribute("marketProductList", marketProductDTOList);
         return "index";
     }

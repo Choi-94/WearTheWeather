@@ -2,6 +2,7 @@ package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.MarketLikesDTO;
 import com.example.weartheweather.dto.MarketProductDTO;
+import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.entity.*;
 import com.example.weartheweather.repository.MarketLikesRepository;
@@ -9,6 +10,10 @@ import com.example.weartheweather.repository.MarketProductFileRepository;
 import com.example.weartheweather.repository.MarketProductRepository;
 import com.example.weartheweather.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,14 +66,53 @@ public class MarketProductService {
     }
 
     @Transactional
-    public List<MarketProductDTO> findAll() {
-        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findAll();
+    public Page<MarketProductDTO> findAll(Pageable pageable, String type, String q) {
+        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         List<MarketProductDTO> marketProductDTOList = new ArrayList<>();
         marketProductEntityList.forEach(marketProductEntity -> {
             marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity));
         });
-        return marketProductDTOList;
+        List<MarketProductDTO> filterMarketProductList = new ArrayList<>();
+        if(type.equals("title")){
+            filterMarketProductList = marketProductDTOList.stream().filter(marketProductDTO -> marketProductDTO.getProductTitle().contains(q))
+                    .collect(Collectors.toList());
+        }else if(type.equals("writer")){
+            filterMarketProductList = marketProductDTOList.stream().filter(marketProductDTO -> marketProductDTO.getProductWriter().contains(q))
+                    .collect(Collectors.toList());
+        }else{
+            filterMarketProductList = marketProductDTOList;
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filterMarketProductList.size());
+        Page<MarketProductDTO> marketProductDTOS  = new PageImpl<>(filterMarketProductList.subList(start, end), pageable, filterMarketProductList.size());
+        return marketProductDTOS ;
+
     }
+//    @javax.transaction.Transactional
+//    public Page<MemberBoardDTO> findAll(Pageable pageable, String type, String q) {
+//        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+//        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+//        memberBoardEntityList.forEach(memberBoardEntity -> {
+//            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
+//        });
+//
+//        // Filter adminBoardDTOList based on search criteria
+//        List<MemberBoardDTO> filtermemberBoardDTOList = new ArrayList<>();
+//        if(type.equals("title")){
+//            filtermemberBoardDTOList = memberBoardDTOList.stream().filter(memberBoardDTO -> memberBoardDTO.getBoardTitle().contains(q))
+//                    .collect(Collectors.toList());
+//        }else if(type.equals("writer")){
+//            filtermemberBoardDTOList = memberBoardDTOList.stream().filter(memberBoardDTO -> memberBoardDTO.getBoardWriter().contains(q))
+//                    .collect(Collectors.toList());
+//        }else{
+//            filtermemberBoardDTOList = memberBoardDTOList;
+//        }
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), filtermemberBoardDTOList.size());
+//        Page<MemberBoardDTO> memberBoardDTOPage  = new PageImpl<>(filtermemberBoardDTOList.subList(start, end), pageable, filtermemberBoardDTOList.size());
+//        return memberBoardDTOPage ;
+//    }
+
 
     @Transactional
     public MarketProductDTO findById(Long id) {
