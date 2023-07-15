@@ -1,5 +1,7 @@
 package com.example.weartheweather.entity;
 
+import com.example.weartheweather.dto.MemberDTO;
+import com.example.weartheweather.dto.PopularKeywordsDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +20,11 @@ public class PopularKeywordsEntity {
         @Column(length = 50)
         private String keyword;
 
-        @Column
-        private Long count;
+        public static PopularKeywordsEntity toSaveEntity(PopularKeywordsDTO popularKeywordsDTO) {
+
+                PopularKeywordsEntity popularKeywordsEntity = new PopularKeywordsEntity();
+                popularKeywordsEntity.setKeyword(popularKeywordsDTO.getKeyword());
+                return popularKeywordsEntity;
+        }
 
 }

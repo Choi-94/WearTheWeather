@@ -11,5 +11,4 @@ public class PopularKeywordsDTO {
     private Long id;
     private String keyword;
     private Long count;
-
 }
