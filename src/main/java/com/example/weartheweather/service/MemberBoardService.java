@@ -1,7 +1,5 @@
 package com.example.weartheweather.service;
 
-
-import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.entity.*;
@@ -163,5 +161,15 @@ public class MemberBoardService {
             newCookie.setMaxAge(60 * 60 * 24);
             res.addCookie(newCookie);
         }
+    }
+
+    @Transactional
+    public List<MemberBoardDTO> rankingList() {
+        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findTop20ByOrderByBoardLikesDesc();
+        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+        memberBoardEntityList.forEach(memberBoardEntity -> {
+            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
+        });
+        return memberBoardDTOList;
     }
 }

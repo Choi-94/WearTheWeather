@@ -108,5 +108,10 @@ public class MemberService {
     public void addCommentPoint(Long writerId) {
         memberRepository.addCommentPoint(writerId);
     }
+
+    @Transactional
+    public void addSavePoint(String memberNickName) {
+        memberRepository.addSavePoint(memberNickName);
+    }
 }
 

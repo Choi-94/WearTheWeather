@@ -1,14 +1,12 @@
 package com.example.weartheweather.controller;
 
 
-import com.example.weartheweather.dto.AlarmDTO;
 import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.CommentService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -56,6 +52,14 @@ public class MemberBoardController {
         model.addAttribute("type", type);
         model.addAttribute("q", q);
         return "/codiContestPages/boardList";
+    }
+
+    @GetMapping("/rankingList")
+    public String rankingList(Model model) {
+        List<MemberBoardDTO> memberBoardDTOList = memberBoardService.rankingList();
+        System.out.println("랭킹 memberBoardDTOList = " + memberBoardDTOList);
+        model.addAttribute("boardList", memberBoardDTOList);
+        return "/codiContestPages/boardRankingList";
     }
 
     @GetMapping("/detail/{id}")
