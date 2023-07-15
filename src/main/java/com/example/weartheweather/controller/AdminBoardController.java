@@ -96,6 +96,11 @@ public class AdminBoardController {
         return new ResponseEntity<>(countBoardLikes, HttpStatus.OK);
     }
 
+    @GetMapping("/firstSearch")
+    public String firstSearchForm(){
+        return "/adminPages/firstSearch";
+    }
+
 
 
 }
