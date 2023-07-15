@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+
+<div id="section">
+    <div  id="memberBoardRanking-list">
+        <table>
+            <th:block th:each="board, iterationStatus: ${boardList}">
+                <th:block th:if="${iterationStatus.index % 5 == 0}">
+                    <tr>
+                </th:block>
+                <td>
+                    <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${board.id}]])">
+                </td>
+            </th:block>
+        </table>
+
+    </div>
+
+
+</div>
+
+<div th:replace="component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+    const detail = (id) => {
+        location.href = "/memberBoard/detail/" + id;
+    }
+
+</script>
+<script>
+    const search_func = () => {
+        const type = document.querySelector("#type").value;
+        const q = document.querySelector("#q").value;
+        location.href = "/memberBoard/list?type=" + type + "&q=" + q;
+    }
+</script>
+</html>
