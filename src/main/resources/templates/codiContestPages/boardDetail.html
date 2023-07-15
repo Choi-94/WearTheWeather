@@ -68,6 +68,7 @@
                         <th></th>
                     </tr>
                     <tr th:each="comment: ${commentList}">
+                        <input type="hidden" id="commentWriterId" th:value="${comment.writerId}">
                         <td th:text="${comment.id}"></td>
                         <td th:text="${comment.commentWriter}" id="commentWriter"></td>
                         <td th:text="${comment.commentContents}"></td>
@@ -75,9 +76,7 @@
                         <td th:if="${session.memberNickName eq comment.commentWriter}">
                             <i class="bi bi-x" th:onclick="comment_delete([[${comment.id}]])"></i>
                         </td>
-                        <td th:unless="${session.memberNickName eq comment.commentWriter}">
-
-                        </td>
+                        <td th:unless="${session.memberNickName eq comment.commentWriter}"></td>
                     </tr>
                 </table>
             </div>
@@ -139,7 +138,7 @@
     }
 
     const add_commentPoint = () => {
-        const writerId = document.querySelector("#writerId").value;
+        const writerId = document.querySelector("#commentWriterId").value;
 
         axios({
             method: "get",

@@ -115,4 +115,10 @@ public class MemberController {
         memberService.addCommentPoint(writerId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/addSavePoint/{memberNickName}")
+    public ResponseEntity addSavePoint (@PathVariable String memberNickName) {
+        memberService.addSavePoint(memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

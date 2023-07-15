@@ -29,4 +29,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Modifying
     @Query("update MemberEntity m set m.memberPoints = m.memberPoints + 10 where m.id = :id")
     void addCommentPoint(@Param("id") Long writerId);
+
+    @Modifying
+    @Query("update MemberEntity m set m.memberPoints = m.memberPoints + 100 where m.memberNickName = :memberNickName")
+    void addSavePoint(@Param("memberNickName") String memberNickName);
 }
