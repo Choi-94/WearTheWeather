@@ -30,14 +30,14 @@ public class HomeController {
     public String findByDetailList(Model model, @PageableDefault(size = 15) Pageable pageable, @RequestParam(value = "type", required = false, defaultValue = "") String type,
                                    @RequestParam(value = "q", required = false, defaultValue = "") String q) {
 
-        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.findAll();
-        model.addAttribute("adminBoardDTOList", adminBoardDTOList);
-
-        Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
-        model.addAttribute("memberBoardList", memberBoardDTOList);
-
-        Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable, type, q);
-        model.addAttribute("marketProductList", marketProductDTOList);
+//        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.findAll();
+//        model.addAttribute("adminBoardDTOList", adminBoardDTOList);
+//
+//        Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
+//        model.addAttribute("memberBoardList", memberBoardDTOList);
+//
+//        Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable, type, q);
+//        model.addAttribute("marketProductList", marketProductDTOList);
         return "index";
     }
 }

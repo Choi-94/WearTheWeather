@@ -10,16 +10,10 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div class="menu search">
-    <select name="type" id="type">
-        <option value="writer">작성자</option>
-        <option value="title">제목</option>
-    </select>
-    <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block;">
-    <i class="bi bi-search" onclick="search_func()"></i>
-</div>
+<div class="container">
+
 <div id="section">
-    <a href="/memberBoard/save">저장하기</a>
+
     <div  id="memberBoard-list">
         <table>
             <th:block th:each="board, iterationStatus: ${boardList}">
@@ -40,26 +34,45 @@
                 </td>
             </th:block>
         </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
-                    <a class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
-                </li>
-                <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">Next</a>
-                </li>
-            </ul>
-        </nav>
+
 
 
     </div>
 
 
 </div>
+    <div class="bottom_menu" style=" display: flex; margin-top: 45px;">
+    <div class="menu search" style="margin-left: 990px;">
+        <select name="type" id="type">
+            <option value="writer">작성자</option>
+            <option value="title">제목</option>
+        </select>
+        <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block;">
+        <i class="bi bi-search" onclick="search_func()"></i>
+    </div>
+        <div style="margin-left: -1285px;">
+<button onclick="save()" style="background-color: #558BCF;  color: white;
+    width: 100px; height: 40px; border-radius: 10px;">글작성하기</button>
+        </div>
+        <div style="margin-left: 470px;">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">이전</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
+                    <a class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">다음</a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
 
+</div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
@@ -75,4 +88,9 @@
         location.href = "/memberBoard/list?type=" + type + "&q=" + q;
     }
 </script>
+<script>
+    const save = () => {
+        location.href = "/memberBoard/save";
+    }
+    </script>
 </html>
