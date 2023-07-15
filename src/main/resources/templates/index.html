@@ -125,6 +125,19 @@
         </div>
 
 
+            <div id="rankBox" style="height: 500px;" >
+                <h1>실시간랭킹</h1>
+                <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
+                    <a href="/memberBoard/list" style="text-decoration: none;  font-size: 15px; color: black;">더 보기 ></a>
+                </h4>
+            </div>
+    <div id="marketBox" style="height: 400px;" >
+        <h1>웨더장터</h1>
+        <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
+        <a href="/market/list" style="text-decoration: none;  font-size: 15px; color: black;">더 보기 ></a>
+        </h4>
+
+    </div>
 
 </div>
 </div>
@@ -201,17 +214,21 @@
 
 
     function displayWeather(temperature, weather, name) {
-        console.log("디스플레이 콘솔"+temperature,weather,name)
+        console.log("디스플레이 콘솔" + temperature, weather, name);
         const resultElement = document.getElementById("weatherResult");
         resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather} 접속위치:${name}`;
         const resultTemperature = document.getElementById("temperatureResult");
         resultTemperature.innerHTML = `${temperature}°C`;
-        const resultWeather= document.getElementById("weather2Result");
+        const resultWeather = document.getElementById("weather2Result");
         resultWeather.innerHTML = `${weather}`;
-        const resultLocation= document.getElementById("locationResult");
+        const resultLocation = document.getElementById("locationResult");
         resultLocation.innerHTML = `${name}`;
 
         const icon = document.getElementById("icon");
+
+        // 기존 이미지 삭제
+        icon.innerHTML = "";
+
         const weatherIconElement = document.createElement("img");
         weatherIconElement.classList.add("weather-icon");
         weatherIconElement.style.width = "45px"; // 가로 크기 설정
@@ -270,9 +287,18 @@
     }
  // dd
     // 정해진 간격으로 실시간으로 날씨 정보 업데이트
-    setInterval(getWeather, 60000); // 1분마다 업데이트
+    setInterval(() => {
+        // 기존 날씨 이모티콘 삭제 후 업데이트
+        const icon = document.getElementById("icon");
+        const weatherIconElement = icon.querySelector(".weather-icon");
 
-    // 페이지 로드 시 초기 날씨 정보 출력
+        if (weatherIconElement) {
+            // 이미지가 존재할 경우 삭제
+            icon.removeChild(weatherIconElement);
+        }
+
+        getWeather();
+    }, 60000); // 1분마다 업데이트
     window.onload = getWeather;
 </script>
 
