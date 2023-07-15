@@ -103,4 +103,16 @@ public class MemberController {
         memberService.update(memberDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/addLikePoint/{writerId}")
+    public ResponseEntity addLikePoint (@PathVariable Long writerId) {
+        memberService.addLikePoint(writerId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/addCommentPoint/{writerId}")
+    public ResponseEntity addCommentPoint (@PathVariable Long writerId) {
+        memberService.addCommentPoint(writerId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
