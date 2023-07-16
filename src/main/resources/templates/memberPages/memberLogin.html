@@ -17,11 +17,9 @@
     }
 </style>
 <body>
-
-
 <div th:replace="component/navLogin :: navLogin"></div>
-<div class="containerLogin" style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    <div id="whiteBox" style="width: 650px; height: 900px; background-color: white; margin-left: 627px; margin-right: auto;">
+<div class="containerLogin" style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 390px 0 0 0; height: 400px">
+    <div id="whiteBox" style="width: 650px; height: 900px; background-color: white; margin-top: -20px">
         <div id="weatherResult" style="margin-left: 75px; margin-top: 20px;"></div>
         <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
             <form action="/member/memberLogin" method="post" style="width: 400px;">
@@ -32,11 +30,11 @@
                 </div>
                 <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 틀렸습니다.</p>
                 <input type="button" value="로그인" onclick="login()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em;">
-                <button onclick="saveForm()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em; margin-left: 10px;">회원가입</button>
+                <input type="button" value="회원가입" onclick="saveForm()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em; margin-left: 10px;">
             </form>
         </div>
         <form style="display: flex; justify-content: center;">
-            <!--enter your email password and click the login button-->
+            <!--이메일과 비밀번호를 입력하고 로그인 버튼을 클릭하세요-->
         </form>
         <div style="display: flex; justify-content: center; margin-top:20px; margin-bottom: 20px;">
             <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type=' code')}">
@@ -45,6 +43,7 @@
         </div>
     </div>
 </div>
+
 <script>
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
@@ -170,9 +169,6 @@
             alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
         }
     }
-
-    // 정해진 간격으로 실시간으로 날씨 정보 업데이트
-    setInterval(getWeather, 60000); // 1분마다 업데이트
 
     // 페이지 로드 시 초기 날씨 정보 출력
     window.onload = getWeather;

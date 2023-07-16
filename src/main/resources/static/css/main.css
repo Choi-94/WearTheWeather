@@ -202,3 +202,47 @@
     height: 50px;
 }
 
+.day-button:hover img {
+    transform: scale(1.2);
+    transition: transform 0.3s;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.more-link:hover {
+    color: #558BCF !important;
+}
+
+.nav-link:hover {
+    color: #558BCF !important;
+    background-color: white !important;
+}
+
+.save_button{
+    background-color: #558BCF;
+    color:white;
+    border: none;
+    font-size: 15px;
+    border-radius: 5px;
+    position: absolute;
+    top: -168px;
+    left: 445px;
+
+}
+
+.login_button2{
+    background-color: #558BCF;
+    color:white;
+    border: none;
+    font-size: 20px;
+    width: 400px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 55px;
+
+
+}
+
+.gender-label {
+    margin-right: 10px; /* 원하는 간격으로 조정하세요 */
+}

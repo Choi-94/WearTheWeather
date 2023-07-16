@@ -45,10 +45,10 @@ public class MemberController {
 
 
     @PostMapping("/memberSave")
-    public String save(@ModelAttribute MemberDTO memberDTO, Model model){
+    public String save(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session){
         memberService.save(memberDTO);
         System.out.println("memberDTO = " + memberDTO);
-        return "/memberPages/memberLogin";
+        return "/memberPages/memberSaveComplete";
 
     }
 

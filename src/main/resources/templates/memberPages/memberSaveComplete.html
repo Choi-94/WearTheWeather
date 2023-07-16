@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <th:block th:replace="component/config :: config"></th:block>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<style>
+  body {
+    background-color: gainsboro;
+  }
+
+  body > :not(.containerLogin) {
+    background-color: white;
+  }
+</style>
+<body>
+<div  th:replace="component/navLogin :: navLogin"></div>
+<div class="containerLogin" style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 390px 0 0 0; height: 100px">
+  <div id="whiteBox" style="width: 650px; background-color: white; margin-top: -95px ">
+    <div style="margin-left: 80px;  background-color: white; height: 800px; margin-top:10px ">
+    <img src="/img/memberSave_img/member_save.png" style="width: 500px; height: 613px; margin-top: 50px;"/>
+      <button class="login_button2" onclick="login()">로그인하기</button>
+    </div>
+</div>
+</div>
+</body>
+<script>
+  const login = () => {
+    location.href = "/member/memberLogin";
+  }
+</script>
