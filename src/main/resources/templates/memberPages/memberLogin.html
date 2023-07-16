@@ -8,41 +8,43 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <style>
-    #weatherResult{
-        position: relative;
-        display: flex;
-        left: 450px;
+    body {
+        background-color: gainsboro;
+    }
+
+    body > :not(.containerLogin) {
+        background-color: white;
     }
 </style>
 <body>
-<
-<div th:replace="component/header :: header"></div>
-<div class="container" id="section">
-    <div id="weatherResult">
 
 
-    </div>
-    <div>
-        <form action="/member/memberLogin" method="post">
-            <input type="hidden" name="redirectURI" th:value="${redirectURI}">
-            <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
-            <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control"> <br>
-            <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 맞지 않습니다</p>
-            <input type="button" value="로그인" onclick="login()">
+<div th:replace="component/navLogin :: navLogin"></div>
+<div class="containerLogin" style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div id="whiteBox" style="width: 650px; height: 900px; background-color: white; margin-left: 627px; margin-right: auto;">
+        <div id="weatherResult" style="margin-left: 75px; margin-top: 20px;"></div>
+        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+            <form action="/member/memberLogin" method="post" style="width: 400px;">
+                <input type="hidden" name="redirectURI" th:value="${redirectURI}">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
+                    <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control"> <br>
+                </div>
+                <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 틀렸습니다.</p>
+                <input type="button" value="로그인" onclick="login()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em;">
+                <button onclick="saveForm()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em; margin-left: 10px;">회원가입</button>
+            </form>
+        </div>
+        <form style="display: flex; justify-content: center;">
+            <!--enter your email password and click the login button-->
         </form>
+        <div style="display: flex; justify-content: center; margin-top:20px; margin-bottom: 20px;">
+            <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type=' code')}">
+                <img src="/image/kakao_login_medium_wide.png" style="width: 400px; height: 55px;"/>
+            </a>
+        </div>
     </div>
-    <div>
-        <button onclick="saveForm()">회원가입</button>
-    </div>
-    <form>
-        <!--이메일 비밀번호 입력 받고 로그인 버튼-->
-    </form>
-    <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id='cbfb51c5fe3c24569106a577d987998b', redirect_uri='http://localhost:8045/auth/kakao/callback', response_type='code')}">
-        <img src="/image/kakao_login_medium_wide.png"/>
-    </a>
 </div>
-
-
 <script>
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
@@ -114,8 +116,8 @@
         const weatherIconElement = document.createElement("img");
         weatherIconElement.classList.remove("weather-icon");
         weatherIconElement.classList.add("weather-icon");
-        weatherIconElement.style.width = "400px"; // 가로 크기 설정
-        weatherIconElement.style.height = "400px"; // 세로 크기 설정
+        weatherIconElement.style.width = "500px"; // 가로 크기 설정
+        weatherIconElement.style.height = "613px"; // 세로 크기 설정
         const iconFileName = getIconFileName(weather);
         weatherIconElement.src = `/img/${iconFileName}`;
 
@@ -124,10 +126,10 @@
 
     function getIconFileName(weather) {
         const weatherIcons = {
-            "Clear": "w_w-맑음.png",
-            "Clouds": "w_w-흐림.png",
-            "Rain": "w_w-비.png",
-            "Snow": "w_w-눈.png"
+            "Clear": "login_img/Clear.png",
+            "Clouds": "login_img/Clouds.png",
+            "Rain": "login_img/Rain.png",
+            "Snow": "login_img/Snow.png"
         };
 
         const weatherKey = Object.keys(weatherIcons).find(key => weather.includes(key));
