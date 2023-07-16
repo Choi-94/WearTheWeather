@@ -34,8 +34,13 @@
                         <tr>
                             <td>
                                 <span th:text="${product.getFormattedPrice()}" style="display: inline-block;  loat: left; font-size: 20px;"></span>
-                                <span><i class="bi bi-geo-alt" style="display: inline-block; margin-left: 32px; font-size: 20px;"></i></span>
-                                <span th:text="${product.transactionArea.substring(0, 6)}" style="display: inline-block;  float: right; font-size: 20px"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="background-color: gainsboro; width: 245px; height: 2px; margin-top: 10px"></div>
+                                <span><i class="bi bi-geo-alt" style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
+                                <span th:text="${product.transactionArea.substring(0, 6)}" style="display: inline-block; font-size: 15px"></span>
                             </td>
                         </tr>
                     </table>
