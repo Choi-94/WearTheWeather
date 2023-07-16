@@ -100,8 +100,11 @@ public class AdminBoardController {
     @GetMapping("/firstSearch")
     public String firstSearchForm(Model model){
         List<PopularKeywordsDTO> popularKeywordsDTOList = adminBoardService.popularSearch();
+        List<PopularKeywordsDTO> recentKeywordsDTOList = adminBoardService.findAllRecent();
         model.addAttribute("popularKeywordsDTOList",popularKeywordsDTOList);
+        model.addAttribute("recentpopularKeywordsDTOList",recentKeywordsDTOList);
         System.out.println("popularKeywordsDTOList = " + popularKeywordsDTOList);
+
         return "/adminPages/firstSearch";
     }
 

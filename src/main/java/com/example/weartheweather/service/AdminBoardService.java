@@ -37,6 +37,7 @@ public class AdminBoardService {
     private final MarketPaymentRepository marketPaymentRepository;
     private final PopularKeyWordsRepository popularKeyWordsRepository;
     private final EntityManager entityManager;
+
     public Long save(AdminBoardDTO adminBoardDTO) throws IOException {
         AdminBoardEntity adminBoardEntity = AdminBoardEntity.toSaveEntity(adminBoardDTO);
         AdminBoardEntity savedEntity = adminBoardRepository.save(adminBoardEntity);
@@ -45,7 +46,7 @@ public class AdminBoardService {
         String savePath = "C:\\data/weather_img\\" + storedFileName;
         adminBoardDTO.getBoardFile().transferTo(new File(savePath));
         AdminBoardFileEntity adminBoardFileEntity =
-                 AdminBoardFileEntity.toSaveBoardFileEntity(savedEntity, originalFileName, storedFileName);
+                AdminBoardFileEntity.toSaveBoardFileEntity(savedEntity, originalFileName, storedFileName);
         adminBoardFileRepository.save(adminBoardFileEntity);
         return savedEntity.getId();
 
@@ -61,6 +62,7 @@ public class AdminBoardService {
         });
         return adminBoardDTOList;
     }
+
     @Transactional
     public AdminBoardDTO findById(Long id) {
         AdminBoardEntity adminBoardEntity = adminBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
@@ -90,7 +92,6 @@ public class AdminBoardService {
     }
 
 
-
     public AdminBoardLikesDTO findByBoardLikes(String memberNickName, Long boardId) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
@@ -109,8 +110,6 @@ public class AdminBoardService {
         Optional<AdminBoardEntity> adminBoardEntity = adminBoardRepository.findById(boardId);
         adminBoardLikesRepository.deleteByAdminBoardEntityAndMemberEntity(adminBoardEntity, memberEntity);
     }
-
-
 
 
     @Transactional
@@ -137,12 +136,13 @@ public class AdminBoardService {
             }
         } else {
             adminBoardRepository.updateHits(id);
-            Cookie newCookie = new Cookie("adminBoardView","[[" + id + "]]");
+            Cookie newCookie = new Cookie("adminBoardView", "[[" + id + "]]");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60 * 24);
             res.addCookie(newCookie);
         }
     }
+
     @Transactional
     public Page<AdminBoardDTO> findByBoardLikesNick(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
@@ -166,7 +166,7 @@ public class AdminBoardService {
     }
 
     @Transactional
-    public Page<MemberBoardDTO> findByMemberBoard(String memberNickName,Pageable pageable) {
+    public Page<MemberBoardDTO> findByMemberBoard(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findByMemberEntity(memberEntity.get());
         List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
@@ -178,15 +178,16 @@ public class AdminBoardService {
         Page<MemberBoardDTO> memberBoardDTOS = new PageImpl<>(memberBoardDTOList.subList(start, end), pageable, memberBoardDTOList.size());
         return memberBoardDTOS;
     }
+
     @Transactional
-    public Page<MarketProductDTO> findByMarketProduct(String memberNickName,Pageable pageable) {
+    public Page<MarketProductDTO> findByMarketProduct(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<MarketLikesEntity> marketLikesEntityList = marketLikesRepository.findByMemberEntity(memberEntity.get());
         List<MarketLikesDTO> marketLikesDTOList = new ArrayList<>();
         marketLikesEntityList.forEach(marketLikesEntity -> {
-        marketLikesDTOList.add(MarketLikesDTO.toDTO(marketLikesEntity));
+            marketLikesDTOList.add(MarketLikesDTO.toDTO(marketLikesEntity));
         });
-        List<MarketProductDTO> marketProductDTOList =new ArrayList<>();
+        List<MarketProductDTO> marketProductDTOList = new ArrayList<>();
         marketLikesDTOList.forEach(marketLikesDTO -> {
             Optional<MarketProductEntity> marketProductEntity = marketProductRepository.findById(marketLikesDTO.getBoardId());
             marketProductDTOList.add(MarketProductDTO.toDTO(marketProductEntity.get()));
@@ -194,12 +195,12 @@ public class AdminBoardService {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), marketProductDTOList.size());
         Page<MarketProductDTO> marketProductDTOS = new PageImpl<>(marketProductDTOList.subList(start, end), pageable, marketProductDTOList.size());
-            return marketProductDTOS;
+        return marketProductDTOS;
     }
 
     public Page<MarketPaymentDTO> findByMarketPayment(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
-        List<MarketPaymentEntity> marketPaymentEntityListAll = marketPaymentRepository.findByMemberEntityOrMemberEntity1(memberEntity.get(),memberEntity.get());
+        List<MarketPaymentEntity> marketPaymentEntityListAll = marketPaymentRepository.findByMemberEntityOrMemberEntity1(memberEntity.get(), memberEntity.get());
         List<MarketPaymentDTO> marketPaymentDTOList = new ArrayList<>();
         marketPaymentEntityListAll.forEach(marketPaymentEntity -> {
             marketPaymentDTOList.add(MarketPaymentDTO.toDTO(marketPaymentEntity));
@@ -245,5 +246,30 @@ public class AdminBoardService {
         return popularKeywordsDTOList;
     }
 
+    public List<PopularKeywordsDTO> findAllRecent() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createQuery(Tuple.class);
+
+        Root<PopularKeywordsEntity> root = criteriaQuery.from(PopularKeywordsEntity.class);
+        criteriaQuery.multiselect(root.get("keyword"), criteriaBuilder.count(root.get("keyword")));
+        criteriaQuery.groupBy(root.get("keyword"));
+        criteriaQuery.orderBy(criteriaBuilder.desc(criteriaBuilder.max(root.get("id"))));
+
+        TypedQuery<Tuple> query = entityManager.createQuery(criteriaQuery);
+        query.setMaxResults(10);
+
+        List<Tuple> results = query.getResultList();
+
+        List<PopularKeywordsDTO> popularKeywordsDTOList = new ArrayList<>();
+
+        for (Tuple result : results) {
+            PopularKeywordsDTO popularKeywordsDTO = new PopularKeywordsDTO();
+            popularKeywordsDTO.setKeyword(result.get(0, String.class));
+            popularKeywordsDTO.setCount(result.get(1, Long.class));
+            popularKeywordsDTOList.add(popularKeywordsDTO);
+        }
+
+        return popularKeywordsDTOList;
+    }
 }
 
