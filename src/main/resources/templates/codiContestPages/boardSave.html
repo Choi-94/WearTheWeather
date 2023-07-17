@@ -37,9 +37,7 @@
 <!--            <textarea name="boardContents" id="boardContents" cols="50" rows="25" placeholder="내용을 입력하세요"-->
 <!--                          style="width: 500px"></textarea>-->
 <!--        </div>-->
-        <label for="seasonsRange" class="form-label">착용 계절을 선택해주세요.</label>
-        <input type="range" class="form-range" id="seasonsRange" name="season" min="1" max="4" step="1" onchange="showSeason(this.value)">
-        <p id="seasonDisplay">Spring</p>
+
 
         <input type="submit" value="작성" onclick="add_savePoint()" class="btn btn-primary">
     </form>
@@ -82,26 +80,5 @@
 
 </script>
 
-<script>
-    function showSeason(value) {
-        let season;
-        switch (value) {
-            case '1':
-                season = '봄';
-                break;
-            case '2':
-                season = '여름';
-                break;
-            case '3':
-                season = '가을';
-                break;
-            case '4':
-                season = '겨울';
-                break;
-            default:
-                season = 'Unknown';
-        }
-        document.getElementById('seasonDisplay').innerHTML = season;
-    }
-</script>
+
 </html>

@@ -17,7 +17,7 @@
 <div th:replace="component/navLogin :: navLogin"></div>
 <div class="containerLogin"
      style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 390px 0 0 0; height: 0px">
-    <div id="whiteBox" style="width: 650px; height: 1100px; background-color: white; margin-top: -95px ">
+    <div id="whiteBox" style="width: 650px; height: 1100px; background-color: white;">
         <div style="margin-left: 50px;">
             <h1 style="margin-top: 50px">회원가입</h1>
             <form method="post" action="/member/memberSave" style="margin-top: 50px;">
@@ -30,12 +30,15 @@
                 </div>
 
                 <!-- 이메일 인증번호 요청 버튼 -->
-                <button class="save_button" type="button" id="checkEmail">인증번호발송</button>
+
 
                 <!-- 이메일 인증번호 입력 -->
                 <div class="form-group last mb-4 check_input" style="margin-top: -40px">
                     <label for="memailconfirm" id="memailconfirmTxt" style="margin-top: 20px">인증번호</label>
-                    <input style="margin-top: 20px; width: 500px;" type="text" class="form-control" id="memailconfirm">
+                    <div style="display: flex; align-items: center;">
+                        <input style="margin-top: 20px; width: 400px;" type="text" class="form-control" id="memailconfirm">
+                        <button class="save_button" type="button" id="checkEmail">코드발송</button>
+                    </div>
                 </div>
                 <div>
                     <p style="font-size: 14px">비밀번호</p>
@@ -104,7 +107,7 @@
                 $("#emconfirmchk").css({
                     "color": "#FA3E3E",
                     "font-weight": "bold",
-                    "font-size": "10px"
+                    "font-size": "16px"
                 });
                 $("#submitBtn").prop("disabled", true); // 가입하기 버튼 비활성화
             } else {

@@ -222,11 +222,12 @@
     background-color: #558BCF;
     color:white;
     border: none;
-    font-size: 15px;
+    font-size: 17px;
     border-radius: 5px;
-    position: absolute;
-    top: -168px;
-    left: 445px;
+    height: 35px;
+    margin-top: 18px;
+    margin-left: 23px;
+
 
 }
 
