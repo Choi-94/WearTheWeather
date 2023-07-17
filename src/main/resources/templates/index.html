@@ -27,14 +27,23 @@
 </style>
 
 <body>
-
-
 <p th:text="${day11}"></p>
 <p th:text="${day13}"></p>
 <p th:text="${day15}"></p>
 <p th:text="${day17}"></p>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+
+<div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 230px; border-radius: 30px; color: white; margin-left: 45px; margin-top: 30px;">
+    <div class="floating_menu"><a href="/member/mypage">오늘의 코디</a></div>
+    <div class="floating_menu"><a href="/member/myBoardList">실시간 랭킹</a></div>
+    <div class="floating_menu"><a href="/member/myLikeList">코디 콘테스트</a></div>
+    <div class="floating_menu"><a href="/member/myDibsList">웨더 마켓</a></div>
+    <div style="position: absolute; margin-top: -5px;">
+        <img id="bannerImage" src="/img/42.png" onclick="moveToTop()">
+    </div></div>
+
+
 <div class="container">
     <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 1300px;">
         <div class="carousel-indicators">
@@ -357,6 +366,34 @@
         window.location.href = "/market/" + id;
     }
 
+</script>
+<script>
+    const floatPosition = parseInt($(".sideBanner").css('top'))
+
+    // scroll 인식
+    $(window).scroll(function() {
+
+        // 현재 스크롤 위치
+        const currentTop = $(window).scrollTop();
+        const bannerTop = currentTop + floatPosition + "px";
+
+        // 이미지 변경
+        if (currentTop > 0) {
+            $("#bannerImage").attr("src", "/img/43.png");
+        } else {
+            $("#bannerImage").attr("src", "/img/42.png");
+        }
+
+        // 이동 애니메이션
+        $(".sideBanner").stop().animate({
+            "top" : bannerTop
+        }, 500);
+
+    });
+
+    function moveToTop() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+    }
 </script>
 
 

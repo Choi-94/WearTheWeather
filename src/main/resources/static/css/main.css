@@ -247,3 +247,22 @@
 .gender-label {
     margin-right: 10px; /* 원하는 간격으로 조정하세요 */
 }
+
+.sideBanner {
+    position: absolute;
+    width: 150px;
+    height: 200px;
+    top: 50px;
+
+}
+
+.floating_menu{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.floating_menu a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
