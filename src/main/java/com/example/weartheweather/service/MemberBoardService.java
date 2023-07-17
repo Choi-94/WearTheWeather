@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -164,16 +165,20 @@ public class MemberBoardService {
         }
     }
 
-//    @Transactional
-//    public List<MemberBoardDTO> rankingList() {
-////        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findTop20ByOrderByBoardLikesDesc();
-////        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
-////        memberBoardEntityList.forEach(memberBoardEntity -> {
-////            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
-////        });
-////        return memberBoardDTOList;
-//        LocalDateTime today = LocalDateTime.now();
-//        LocalDateTime lastWeek = today.minusWeeks(1);
-//        List<MemberBoardLikesDTO> weeklyLikesList = memberBoardLikesRepository.findByTodayBetweenLastWeek;
-//    }
+    @Transactional
+    public List<MemberBoardDTO> weeklyLikesList(LocalDateTime today, LocalDateTime lastWeek) {
+        List<MemberBoardLikesEntity> weeklyLikesEntityList = memberBoardLikesRepository.findByCreatedAtBetween(lastWeek, today);
+        List<MemberBoardLikesDTO> weeklyLikesDTOList = new ArrayList<>();
+        weeklyLikesEntityList.forEach(memberBoardLikesEntity -> {
+            weeklyLikesDTOList.add(MemberBoardLikesDTO.toDTO(memberBoardLikesEntity));
+        });
+        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+        weeklyLikesDTOList.forEach(memberBoardLikesDTO -> {
+            Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(memberBoardLikesDTO.getBoardId());
+            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity.get()));
+        });
+        return memberBoardDTOList;
+    }
+
+
 }
