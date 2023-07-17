@@ -115,9 +115,9 @@ public class AdminBoardController {
 
     }
     @GetMapping("/secondSearch")
-    public String secondSearchForm(Model model,@RequestParam("q")String q){
+    public String secondSearchForm(Model model,@RequestParam("q")String q ,@RequestParam(value = "tall", defaultValue = "0")int tall){
         //q값해당하는 adminboardList 가져오기
-        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q);
+        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q,tall);
         System.out.println("서치리스트 = " + adminBoardDTOList);
         model.addAttribute("qSearchList",adminBoardDTOList);
 
@@ -126,8 +126,16 @@ public class AdminBoardController {
         return "/adminPages/secondSearch";
     }
     @PostMapping("/secondSearch")
-    public ResponseEntity SecondSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO){
+    public ResponseEntity SecondSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO,Model model,@RequestParam("q")String q ,@RequestParam(value = "tall", defaultValue = "0")int tall){
+        //q값해당하는 adminboardList 가져오기
+        System.out.println("tall값 확인"+tall);
+        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q,tall);
+        System.out.println("서치리스트 = " + adminBoardDTOList);
         adminBoardService.popularSave(popularKeywordsDTO);
+        model.addAttribute("qSearchList",adminBoardDTOList);
+
+
+        model.addAttribute("q",q);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
