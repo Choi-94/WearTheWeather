@@ -271,5 +271,18 @@ public class AdminBoardService {
 
         return popularKeywordsDTOList;
     }
+    @Transactional
+    public List<AdminBoardDTO> searchBoardList(String q) {
+        List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
+        List<AdminBoardDTO> result = new ArrayList<>();
+
+        adminBoardEntityList.forEach(adminBoardEntity -> {
+            AdminBoardDTO adminBoardDTO = AdminBoardDTO.Search(adminBoardEntity);
+            if(adminBoardDTO.getTotalTags().contains(q)){
+                result.add(adminBoardDTO);
+            }
+        });
+        return result;
+    }
 }
 
