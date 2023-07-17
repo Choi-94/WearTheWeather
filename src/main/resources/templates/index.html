@@ -27,6 +27,10 @@
 </style>
 
 <body>
+
+<p th:text="${day0}+요일은+${day0_temp0}+도+'~'+${day0_temp1}+도"></p>
+<p th:text="${day0_temp0}"></p>
+<p th:text="${day0_temp1}"></p>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div class="container">
@@ -72,6 +76,7 @@
                 <div>
                 <div style="display: flex;margin-top: -50px; margin-left: 230px;" id="icon"></div>
                 </div>
+
             </div>
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
@@ -112,6 +117,10 @@
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
                 <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
+            <div id="weather-info"></div>
+
+
+
         </div>
             <div id="adminList" style="margin-top: 30px;">
                 <table>
@@ -321,7 +330,7 @@
                         } else {
                             weather = data.weather[0].main;
                         } // 날씨 조건
-                        const name = data.name; // 날씨 조건
+                        const name = data.name; //
                         displayWeather(temperature, weather, name);
 
                     })
@@ -335,25 +344,17 @@
             alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
         }
     }
- // dd
     // 정해진 간격으로 실시간으로 날씨 정보 업데이트
-    setInterval(() => {
-        // 기존 날씨 이모티콘 삭제 후 업데이트
-        const icon = document.getElementById("icon");
-        const weatherIconElement = icon.querySelector(".weather-icon");
+    setInterval(getWeather, 60000); // 1분마다 업데이트
 
-        if (weatherIconElement) {
-            // 이미지가 존재할 경우 삭제
-            icon.removeChild(weatherIconElement);
-        }
-
-        getWeather();
-    }, 60000); // 1분마다 업데이트
+    // 페이지 로드 시 초기 날씨 정보 출력
     window.onload = getWeather;
+
 
     const productDetail = (id) =>{
         window.location.href = "/market/" + id;
     }
+
 </script>
 
 
