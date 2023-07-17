@@ -116,9 +116,20 @@ public class AdminBoardController {
     }
     @GetMapping("/secondSearch")
     public String secondSearchForm(Model model,@RequestParam("q")String q){
-        System.out.println("q"+ q);
+        //q값해당하는 adminboardList 가져오기
+        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q);
+        System.out.println("서치리스트 = " + adminBoardDTOList);
+        model.addAttribute("qSearchList",adminBoardDTOList);
+
+
         model.addAttribute("q",q);
         return "/adminPages/secondSearch";
+    }
+    @PostMapping("/secondSearch")
+    public ResponseEntity SecondSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO){
+        adminBoardService.popularSave(popularKeywordsDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 
