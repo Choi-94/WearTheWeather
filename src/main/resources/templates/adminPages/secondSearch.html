@@ -16,6 +16,14 @@
       <button class="btn btn-outline-success" onclick="search_func()">Search</button>
   </div>
 </nav>
+<div class="container mt-5">
+    <div class="form-group">
+        <label for="heightRange">키(cm): </label>
+        <input type="range" class="form-range" id="heightRange" name="height" min="140" max="200" step="1" onchange="showHeight(this.value)">
+    </div>
+    <p id="heightValue" class="mt-3"></p>
+</div>
+
 <div id="section">
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="check2" viewBox="0 0 16 16">
@@ -115,13 +123,16 @@
       q = document.querySelector('input[name="totalTags"]').value;
       console.log(q)
     }
+      const tall = document.querySelector('input[name="height"]').value;
+
     $.ajax({
       type:"post",
-      uri:"/adminBoard/firstSearch",
+      uri:"/adminBoard/secondSearch?q="+q+"&tall="+tall,
       data:{
-        keyword: q
+        keyword: q,
+
       }, success: function (res){
-        location.href = "/adminBoard/secondSearch?q=" + q;
+        location.href = "/adminBoard/secondSearch?q=" + q + "&tall="+tall;
       },error:function (res){
         alert("찾을 수 없습니다")
       }
@@ -133,7 +144,10 @@
     location.href = "/adminBoard/detail/" + id;
   }
 
+  function showHeight(value) {
+      document.getElementById("heightValue").innerText = value + "cm";
 
+  }
 
 </script>
 </html>
