@@ -16,7 +16,13 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div th:replace="component/infonav :: infonav"></div>
+<div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 280px; border-radius: 20px; color: white; margin-left: 45px; margin-top: 30px;">
+    <div class="floating_menu"><a href="/member/mypage">회원 정보 수정</a></div>
+    <div class="floating_menu"><a href="/member/myBoardList">내가 쓴 글</a></div>
+    <div class="floating_menu"><a href="/member/myLikeList">좋아요한 글</a></div>
+    <div class="floating_menu"><a href="/member/myDibsList">찜한 상품</a></div>
+    <div class="floating_menu"><a href="/member/myTradeList">마켓거래내역</a></div>
+</div>
 <div class="container" id="section">
     <form>
         <input type="hidden" name="memberPoints" th:value="${member.memberPoints}">
@@ -136,6 +142,22 @@
         })
     }
 </script>
+<script>
+    const floatPosition = parseInt($(".sideBanner").css('top'))
 
+    // scroll 인식
+    $(window).scroll(function() {
+
+        // 현재 스크롤 위치
+        const currentTop = $(window).scrollTop();
+        const bannerTop = currentTop + floatPosition + "px";
+
+        //이동 애니메이션
+        $(".sideBanner").stop().animate({
+            "top" : bannerTop
+        }, 500);
+
+    }).scroll();
+</script>
 
 </html>
