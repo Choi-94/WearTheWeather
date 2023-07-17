@@ -14,58 +14,67 @@
     }
 </style>
 <body>
-<div  th:replace="component/navLogin :: navLogin"></div>
-<div class="containerLogin" style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 390px 0 0 0; height: 0px">
+<div th:replace="component/navLogin :: navLogin"></div>
+<div class="containerLogin"
+     style="width: 650px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 390px 0 0 0; height: 0px">
     <div id="whiteBox" style="width: 650px; height: 1100px; background-color: white; margin-top: -95px ">
-       <div style="margin-left: 50px;">
-        <h1 style="margin-top: 50px">회원가입</h1>
-    <form method="post" action="/member/memberSave" style="margin-top: 50px;">
-    <!-- 이메일 입력 -->
-    <div class="form-group last mb-4 email_input">
-        <label for="memail" id="mailTxt">이메일</label>
-        <input type="text" class="form-control" name="memberEmail" id="memail" onblur="email()" style="width: 500px; margin-top: 20px;">
-        <h6 id="member_emailcheck"></h6><br>
-    </div>
+        <div style="margin-left: 50px;">
+            <h1 style="margin-top: 50px">회원가입</h1>
+            <form method="post" action="/member/memberSave" style="margin-top: 50px;">
+                <!-- 이메일 입력 -->
+                <div class="form-group last mb-4 email_input">
+                    <label for="memail" id="mailTxt">이메일</label>
+                    <input type="text" class="form-control" name="memberEmail" id="memail" onblur="email()"
+                           style="width: 500px; margin-top: 20px;">
+                    <h6 id="member_emailcheck"></h6><br>
+                </div>
 
-    <!-- 이메일 인증번호 요청 버튼 -->
-    <button class="save_button" type="button" id="checkEmail">인증번호발송</button>
+                <!-- 이메일 인증번호 요청 버튼 -->
+                <button class="save_button" type="button" id="checkEmail">인증번호발송</button>
 
-    <!-- 이메일 인증번호 입력 -->
-    <div class="form-group last mb-4 check_input" style="margin-top: -40px">
-        <label for="memailconfirm" id="memailconfirmTxt"style="margin-top: 20px">인증번호</label>
-        <input style="margin-top: 20px; width: 500px;" type="text" class="form-control" id="memailconfirm">
-    </div>
-    <div>
-        <p style="font-size: 14px">비밀번호</p>
-        <input style="width: 500px;" type="password" class="form-control" name="memberPassword" placeholder="대문자, 소문자, 숫자, 특수문자 포함 6자 이상이여야 합니다." onblur="passwordcheck()">
-        <h6 id="memberpasswordtext"></h6><br>
-    </div>
-    <div>
-        <p style="font-size: 14px">비밀번호 확인</p>
-        <input style="width: 500px;" type="password" class="form-control" name="memberPasswordConfirm" placeholder="동일한 비밀번호를 입력해주세요"
-               onblur="passwordconfirm()" id="memberPasswordConfirm">
-        <h6 id="memberpasswordconfirmtext"></h6><br>
-    </div>
-    <div>
-        <p style="font-size: 14px">닉네임</p>
-        <input style="width: 500px;" type="text" class="form-control" name="memberNickName" placeholder="닉네임은 중복이 불가능합니다." onblur="nickname()" id="memberNickName">
-        <h6 id="membernicknameconfirmtext"></h6><br>
-    </div>
-    <div>
-        <label class="gender-label">성별:</label>
-        <label class="gender-label"><input type="radio" name="memberGender" value="male">남성</label>
-        <label><input type="radio" name="memberGender" value="female">여성</label>
-    </div>
-    <button style="width: 500px; height: 50px; font-size: 20px; margin-top: 20px;" type="submit" class="form-control" >가입하기</button>
-        <div style="background-color: white; width: 500px; height:100px;"></div>
-    </form>
+                <!-- 이메일 인증번호 입력 -->
+                <div class="form-group last mb-4 check_input" style="margin-top: -40px">
+                    <label for="memailconfirm" id="memailconfirmTxt" style="margin-top: 20px">인증번호</label>
+                    <input style="margin-top: 20px; width: 500px;" type="text" class="form-control" id="memailconfirm">
+                </div>
+                <div>
+                    <p style="font-size: 14px">비밀번호</p>
+                    <input style="width: 500px;" type="password" class="form-control" name="memberPassword"
+                           placeholder="대문자, 소문자, 숫자, 특수문자 포함 6자 이상이여야 합니다." onblur="passwordcheck()">
+                    <h6 id="memberpasswordtext"></h6><br>
+                </div>
+                <div>
+                    <p style="font-size: 14px">비밀번호 확인</p>
+                    <input style="width: 500px;" type="password" class="form-control" name="memberPasswordConfirm"
+                           placeholder="동일한 비밀번호를 입력해주세요"
+                           onblur="passwordconfirm()" id="memberPasswordConfirm">
+                    <h6 id="memberpasswordconfirmtext"></h6><br>
+                </div>
+                <div>
+                    <p style="font-size: 14px">닉네임</p>
+                    <input style="width: 500px;" type="text" class="form-control" name="memberNickName"
+                           placeholder="닉네임은 중복이 불가능합니다." onblur="nickname()" id="memberNickName">
+                    <h6 id="membernicknameconfirmtext"></h6><br>
+                </div>
+                <div>
+                    <label class="gender-label">성별:</label>
+                    <label class="gender-label"><input type="radio" name="memberGender" value="male">남성</label>
+                    <label><input type="radio" name="memberGender" value="female">여성</label>
+                </div>
+                <button style="width: 500px; height: 50px; font-size: 20px; margin-top: 20px;" type="submit"
+                        class="form-control">가입하기
+                </button>
+                <div style="background-color: white; width: 500px; height:100px;"></div>
+            </form>
 
-       </div>
+        </div>
     </div>
 </div>
 
-<script>
-
+<script th:inline="javascript">
+    emconfirmchk = false;
+    Nickconfirmchk = false;
+    Passconfirmchk = false;
 
     // 이메일 인증번호
     $("#checkEmail").click(function () {
@@ -110,7 +119,6 @@
             }
         });
     }
-
 
 
     //비밀번호 정규식 메서드
@@ -203,7 +211,7 @@
                 "memberNickName": memberNickName
             },
             success: function (res) {
-                if(memberNickName.length!=0){
+                if (memberNickName.length != 0) {
                     if (memberNickName.match(exp)) {
                         if (res == 0) {
                             Nickconfirmchk = true;
@@ -220,7 +228,7 @@
                         memberNickNameCheck.style.color = "red";
                         Nickconfirmchk = false;
                     }
-                }else{
+                } else {
                     Nickconfirmchk = false;
                     memberNickNameCheck.innerText = "필수 입력 사항입니다"
                     memberNickNameCheck.style.color = "red";
@@ -240,10 +248,10 @@
             event.preventDefault(); // submit 이벤트를 막음
             // 인증번호가 틀렸을 때 사용자에게 알림을 줄 수 있습니다.
             alert("인증번호가 잘못되었습니다. 다시 확인해주세요.");
-        }else if(!Passconfirmchk){
+        } else if (!Passconfirmchk) {
             event.preventDefault();
             alert("비밀번호를 다시 확인해주세요.");
-        } else if(!Nickconfirmchk){
+        } else if (!Nickconfirmchk) {
             event.preventDefault();
             alert("닉네임을 다시 확인해주세요.");
         }

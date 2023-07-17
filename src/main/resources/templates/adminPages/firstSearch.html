@@ -70,10 +70,10 @@
 
 <nav class="navbar bg-light">
     <div class="container-fluid">
-        <form class="d-flex" role="search">
+
             <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" onclick="search_func()">Search</button>
-        </form>
+
     </div>
 </nav>
 
@@ -128,7 +128,7 @@
             data:{
                 keyword: q
             }, success: function (res){
-                location.href = "/adminBoards/secondSearch?q=" + q;
+                location.href = "/adminBoard/secondSearch?q=" + q;
             },error:function (res){
                 alert("찾을 수 없습니다")
             }
