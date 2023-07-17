@@ -114,6 +114,12 @@ public class AdminBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+    @GetMapping("/secondSearch")
+    public String secondSearchForm(Model model,@RequestParam("q")String q){
+        System.out.println("q"+ q);
+        model.addAttribute("q",q);
+        return "/adminPages/secondSearch";
+    }
 
 
 
