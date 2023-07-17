@@ -23,7 +23,7 @@ public class PointScheduler {
     private final MemberRepository memberRepository;
     private final MemberBoardService memberBoardService;
 
-    @Scheduled(cron = "0 0 9 * * MON") // 매주 월요일 09:00에 실행
+    @Scheduled(cron = "0 0 9 * * 2")
     public void givePointsToMembers() {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
