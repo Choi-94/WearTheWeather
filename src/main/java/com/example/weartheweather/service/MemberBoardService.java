@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -163,13 +164,16 @@ public class MemberBoardService {
         }
     }
 
-    @Transactional
-    public List<MemberBoardDTO> rankingList() {
-        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findTop20ByOrderByBoardLikesDesc();
-        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
-        memberBoardEntityList.forEach(memberBoardEntity -> {
-            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
-        });
-        return memberBoardDTOList;
-    }
+//    @Transactional
+//    public List<MemberBoardDTO> rankingList() {
+////        List<MemberBoardEntity> memberBoardEntityList = memberBoardRepository.findTop20ByOrderByBoardLikesDesc();
+////        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+////        memberBoardEntityList.forEach(memberBoardEntity -> {
+////            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity));
+////        });
+////        return memberBoardDTOList;
+//        LocalDateTime today = LocalDateTime.now();
+//        LocalDateTime lastWeek = today.minusWeeks(1);
+//        List<MemberBoardLikesDTO> weeklyLikesList = memberBoardLikesRepository.findByTodayBetweenLastWeek;
+//    }
 }

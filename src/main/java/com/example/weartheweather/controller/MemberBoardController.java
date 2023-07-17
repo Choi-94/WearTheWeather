@@ -5,6 +5,7 @@ import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.CommentService;
+import com.example.weartheweather.service.MemberBoardLikesService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -26,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberBoardController {
     private final MemberBoardService memberBoardService;
+    private final MemberBoardLikesService memberBoardLikesService;
     private final CommentService commentService;
 
     @GetMapping("/save")
@@ -56,9 +59,11 @@ public class MemberBoardController {
 
     @GetMapping("/rankingList")
     public String rankingList(Model model) {
-        List<MemberBoardDTO> memberBoardDTOList = memberBoardService.rankingList();
-        System.out.println("랭킹 memberBoardDTOList = " + memberBoardDTOList);
-        model.addAttribute("boardList", memberBoardDTOList);
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime lastWeek = today.minusWeeks(1);
+        List<MemberBoardLikesDTO> weeklyLikesList = memberBoardLikesService.weeklyLikesList(today, lastWeek);
+        System.out.println("랭킹 memberBoardDTOList = " + weeklyLikesList);
+        model.addAttribute("boardList", weeklyLikesList);
         return "/codiContestPages/boardRankingList";
     }
 
@@ -127,5 +132,6 @@ public class MemberBoardController {
         memberBoardService.update(memberBoardDTO, memberNickName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 }

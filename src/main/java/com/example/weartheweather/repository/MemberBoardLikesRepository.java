@@ -1,11 +1,14 @@
 package com.example.weartheweather.repository;
 
+import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.entity.MemberBoardEntity;
 import com.example.weartheweather.entity.MemberBoardLikesEntity;
 import com.example.weartheweather.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLikesEntity, Long> {
@@ -19,4 +22,7 @@ public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLik
     void deleteByMemberBoardEntityAndMemberEntity(MemberBoardEntity memberBoardEntity, MemberEntity memberEntity);
 
     MemberBoardLikesEntity findByMemberBoardEntityAndMemberEntity(MemberBoardEntity memberBoardEntity, MemberEntity memberEntity);
+
+
+    List<MemberBoardLikesEntity> findByCreatedAtBetween(LocalDateTime lastWeek, LocalDateTime today);
 }
