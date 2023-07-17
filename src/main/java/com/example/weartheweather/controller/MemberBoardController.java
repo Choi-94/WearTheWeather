@@ -5,7 +5,6 @@ import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
 import com.example.weartheweather.service.CommentService;
-import com.example.weartheweather.service.MemberBoardLikesService;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberBoardController {
     private final MemberBoardService memberBoardService;
-    private final MemberBoardLikesService memberBoardLikesService;
     private final CommentService commentService;
 
     @GetMapping("/save")
@@ -61,8 +59,7 @@ public class MemberBoardController {
     public String rankingList(Model model) {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
-        List<MemberBoardLikesDTO> weeklyLikesList = memberBoardLikesService.weeklyLikesList(today, lastWeek);
-        System.out.println("랭킹 memberBoardDTOList = " + weeklyLikesList);
+        List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
         model.addAttribute("boardList", weeklyLikesList);
         return "/codiContestPages/boardRankingList";
     }

@@ -18,7 +18,6 @@
                 <th:block th:if="${iterationStatus.index % 5 == 0}">
                     <tr>
                 </th:block>
-                <td>
                     <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${board.id}]])">
                 </td>
             </th:block>
