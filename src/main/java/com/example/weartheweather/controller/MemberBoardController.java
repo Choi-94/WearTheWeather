@@ -60,6 +60,7 @@ public class MemberBoardController {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
         List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
+        System.out.println("weeklyLikesList = " + weeklyLikesList);
         model.addAttribute("boardList", weeklyLikesList);
         return "/codiContestPages/boardRankingList";
     }

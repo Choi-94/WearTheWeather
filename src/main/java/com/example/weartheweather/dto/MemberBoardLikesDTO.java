@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class MemberBoardLikesDTO{
     private Long id;
+    private Long likeCount;
     private Long memberId;
     private Long boardId;
     private String createdAt;

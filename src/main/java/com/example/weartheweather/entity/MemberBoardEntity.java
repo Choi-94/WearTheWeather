@@ -43,6 +43,9 @@ public class MemberBoardEntity extends BaseEntity  {
     @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "memberBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardRankingEntity> boardRankingEntityList = new ArrayList<>();
+
     public static MemberBoardEntity toSaveEntity(MemberBoardDTO memberBoardDTO, MemberEntity memberEntity) {
         MemberBoardEntity memberBoardEntity = new MemberBoardEntity();
         memberBoardEntity.setMemberEntity(memberEntity);

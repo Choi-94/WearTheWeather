@@ -1,7 +1,9 @@
 package com.example.weartheweather.service;
 
+import com.example.weartheweather.dto.BoardRankingDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
+import com.example.weartheweather.dto.PopularKeywordsDTO;
 import com.example.weartheweather.entity.*;
 import com.example.weartheweather.repository.MemberBoardFileRepository;
 import com.example.weartheweather.repository.MemberBoardLikesRepository;
@@ -14,6 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +30,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -35,6 +41,7 @@ public class MemberBoardService {
     private final MemberBoardFileRepository memberBoardFileRepository;
     private final MemberBoardLikesRepository memberBoardLikesRepository;
     private final MemberRepository memberRepository;
+    private final EntityManager entityManager;
 
 
     public MemberEntity findByMemberNickName(String memberNickName) {
@@ -165,18 +172,57 @@ public class MemberBoardService {
         }
     }
 
+//    @Transactional
+//    public List<MemberBoardDTO> weeklyLikesList(LocalDateTime today, LocalDateTime lastWeek) {
+//        List<MemberBoardLikesEntity> weeklyLikesEntityList = memberBoardLikesRepository.findByCreatedAtBetween(lastWeek, today);
+//
+//        List<MemberBoardLikesDTO> weeklyLikesDTOList = new ArrayList<>();
+//        weeklyLikesEntityList.forEach(memberBoardLikesEntity -> {
+//            weeklyLikesDTOList.add(MemberBoardLikesDTO.toDTO(memberBoardLikesEntity));
+//        });
+//        System.out.println("weeklyLikesDTOList = " + weeklyLikesDTOList);
+//        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
+//        weeklyLikesDTOList.forEach(memberBoardLikesDTO -> {
+//            Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(memberBoardLikesDTO.getBoardId());
+//            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity.get()));
+//        });
+//        return memberBoardDTOList;
+//    }
+
     @Transactional
     public List<MemberBoardDTO> weeklyLikesList(LocalDateTime today, LocalDateTime lastWeek) {
         List<MemberBoardLikesEntity> weeklyLikesEntityList = memberBoardLikesRepository.findByCreatedAtBetween(lastWeek, today);
-        List<MemberBoardLikesDTO> weeklyLikesDTOList = new ArrayList<>();
-        weeklyLikesEntityList.forEach(memberBoardLikesEntity -> {
-            weeklyLikesDTOList.add(MemberBoardLikesDTO.toDTO(memberBoardLikesEntity));
-        });
+
+        Map<MemberBoardEntity, List<MemberBoardLikesEntity>> groupedLikesByBoardEntity =
+                weeklyLikesEntityList.stream()
+                        .collect(Collectors.groupingBy(MemberBoardLikesEntity::getMemberBoardEntity));
+
+        List<BoardRankingDTO> boardRankingDTOList = new ArrayList<>();
+
+        for (Map.Entry<MemberBoardEntity, List<MemberBoardLikesEntity>> entry : groupedLikesByBoardEntity.entrySet()) {
+            MemberBoardEntity memberBoardEntity = entry.getKey();
+            List<MemberBoardLikesEntity> likesList = entry.getValue();
+
+
+            BoardRankingDTO boardRankingDTO = new BoardRankingDTO();
+            boardRankingDTO.setBoardId(memberBoardEntity.getId());
+            boardRankingDTO.setLikeCount(likesList.size());
+            boardRankingDTOList.add(boardRankingDTO);
+        }
+        boardRankingDTOList = boardRankingDTOList.stream()
+                .limit(20)
+                .collect(Collectors.toList());
+
+        boardRankingDTOList.sort(Comparator.comparingInt(BoardRankingDTO::getLikeCount).reversed());
+        System.out.println("boardRankingDTOList = " + boardRankingDTOList);
         List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
-        weeklyLikesDTOList.forEach(memberBoardLikesDTO -> {
-            Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(memberBoardLikesDTO.getBoardId());
+        boardRankingDTOList.forEach(boardRankingDTO -> {
+            Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(boardRankingDTO.getBoardId());
+
             memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity.get()));
+
         });
+
         return memberBoardDTOList;
     }
 
