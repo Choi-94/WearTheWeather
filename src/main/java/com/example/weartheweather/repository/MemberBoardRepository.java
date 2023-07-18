@@ -30,5 +30,5 @@ MemberBoardRepository extends JpaRepository<MemberBoardEntity,Long> {
     List<MemberBoardEntity> findByMemberEntity(MemberEntity memberEntity);
 
 
-//    List<MemberBoardEntity> findTop20ByOrderByBoardLikesDesc();
+
 }

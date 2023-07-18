@@ -1,6 +1,7 @@
 package com.example.weartheweather.service;
 
 import com.example.weartheweather.dto.CommentDTO;
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.entity.CommentEntity;
 import com.example.weartheweather.entity.MemberBoardEntity;
 import com.example.weartheweather.entity.MemberEntity;
@@ -27,10 +28,10 @@ public class CommentService {
     @Transactional
     public List<CommentDTO> findAll(Long id) {
         MemberBoardEntity memberBoardEntity = memberBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-        List<CommentEntity> commentEntityList =commentRepository.findByMemberBoardEntityOrderByIdDesc(memberBoardEntity);
+        List<CommentEntity> commentEntityList = commentRepository.findByMemberBoardEntityOrderByIdDesc(memberBoardEntity);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         commentEntityList.forEach(commentEntity -> {
-            commentDTOList.add(CommentDTO.toDTO(commentEntity));
+            commentDTOList.add(CommentDTO.toDTOpoint(commentEntity));
         });
         return commentDTOList;
     }
@@ -45,5 +46,15 @@ public class CommentService {
     @Transactional
     public void delete(Long id, Long boardId) {
         commentRepository.deleteByIdAndMemberBoardEntityId(id, boardId);
+    }
+
+    public List<MemberDTO> findByMyPoint(Long id) {
+        List<CommentDTO> commentDTOList = this.findAll(id);
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        commentDTOList.forEach(commentDTO -> {
+            Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(commentDTO.getCommentWriter());
+            memberDTOList.add(MemberDTO.tofindAll(memberEntity.get()));
+        });
+        return memberDTOList;
     }
 }

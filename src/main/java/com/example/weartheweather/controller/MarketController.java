@@ -125,4 +125,18 @@ public class MarketController {
         return "test";
     }
 
+    @GetMapping("/update/{id}")
+    public String updateForm (@PathVariable Long id, Model model) {
+        MarketProductDTO marketProductDTO = marketProductService.findById(id);
+        model.addAttribute("market",marketProductDTO);
+        return "/marketPages/marketUpdate";
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity marketUpdate(@RequestBody MarketProductDTO marketProductDTO, HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        marketProductService.update(marketProductDTO, memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -41,7 +41,6 @@ public class MemberBoardService {
     private final MemberBoardFileRepository memberBoardFileRepository;
     private final MemberBoardLikesRepository memberBoardLikesRepository;
     private final MemberRepository memberRepository;
-    private final EntityManager entityManager;
 
 
     public MemberEntity findByMemberNickName(String memberNickName) {
@@ -171,23 +170,6 @@ public class MemberBoardService {
             res.addCookie(newCookie);
         }
     }
-
-//    @Transactional
-//    public List<MemberBoardDTO> weeklyLikesList(LocalDateTime today, LocalDateTime lastWeek) {
-//        List<MemberBoardLikesEntity> weeklyLikesEntityList = memberBoardLikesRepository.findByCreatedAtBetween(lastWeek, today);
-//
-//        List<MemberBoardLikesDTO> weeklyLikesDTOList = new ArrayList<>();
-//        weeklyLikesEntityList.forEach(memberBoardLikesEntity -> {
-//            weeklyLikesDTOList.add(MemberBoardLikesDTO.toDTO(memberBoardLikesEntity));
-//        });
-//        System.out.println("weeklyLikesDTOList = " + weeklyLikesDTOList);
-//        List<MemberBoardDTO> memberBoardDTOList = new ArrayList<>();
-//        weeklyLikesDTOList.forEach(memberBoardLikesDTO -> {
-//            Optional<MemberBoardEntity> memberBoardEntity = memberBoardRepository.findById(memberBoardLikesDTO.getBoardId());
-//            memberBoardDTOList.add(MemberBoardDTO.toDTO(memberBoardEntity.get()));
-//        });
-//        return memberBoardDTOList;
-//    }
 
     @Transactional
     public List<MemberBoardDTO> weeklyLikesList(LocalDateTime today, LocalDateTime lastWeek) {

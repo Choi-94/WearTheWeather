@@ -9,9 +9,14 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
 <div id="section">
+    <div th:if="${session.memberNickName eq ProductDTO.productWriter}">
+        <button onclick="goMarketUpdate()" style="margin-right: 10px;">수정하기</button>
+    </div>
+    <div th:unless="${session.memberNickName eq ProductDTO.productWriter}"></div>
     <div style="display: flex; align-items: flex-start;">
         <input type="hidden" id="id" th:value="${ProductDTO.id}">
-        <img id="currentImage" th:src="@{|/upload/${ProductDTO.storedFileName[0]}|}" width="500" height="500" alt="" style="margin-top: 2%;">
+        <img id="currentImage" th:src="@{|/upload/${ProductDTO.storedFileName[0]}|}" width="500" height="500" alt=""
+             style="margin-top: 2%;">
         <div style="margin-top: 20px; margin-left: 28px; font-size: 35px;">
             <p th:text="${ProductDTO.productTitle}"></p>
         </div>
@@ -22,7 +27,7 @@
         </div>
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
-    <div id="grayBox"></div>
+        <div id="grayBox"></div>
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
         <div style="margin-top: -490px; margin-left: 530px; font-size: 35px;">
@@ -47,7 +52,8 @@
         <div style="margin-top: -560px; margin-left: 530px; font-size: 35px;">
             <h5 style="display: inline-block;">거래 지역</h5>
             <i class="bi bi-geo-alt" style="display: inline-block; font-size: 25px;"></i>
-            <p th:text="${ProductDTO.transactionArea.substring(0, 6)}" style="font-size: 25px; display: inline-block;"></p>
+            <p th:text="${ProductDTO.transactionArea.substring(0, 6)}"
+               style="font-size: 25px; display: inline-block;"></p>
         </div>
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
@@ -58,8 +64,10 @@
         </div>
     </div>
     <div style="display: flex; align-items: flex-start; margin-top: 80px;">
-        <div id="detailButton" style="margin-top: -575px; margin-left: 528px; font-size: 25px; display: flex; align-items: center;">
-            <button id="likeButton" class="detailLikeButton" onclick="toggleLike3()" style="margin-right: 10px; align-items: center;">
+        <div id="detailButton"
+             style="margin-top: -575px; margin-left: 528px; font-size: 25px; display: flex; align-items: center;">
+            <button id="likeButton" class="detailLikeButton" onclick="toggleLike3()"
+                    style="margin-right: 10px; align-items: center;">
                 <div th:if="${marketLikes == null}" style="margin-left: 30px;">
                     <i id="likeIcon3" class="bi bi-heart"></i> 좋아요
                 </div>
@@ -79,26 +87,31 @@
         </div>
     </div>
 
-<div class="section3" style="height: 300px">
-    <div style=" display: inline-block; align-items: flex-start; margin-top: -50px;">
-    <h2>상품정보</h2>
-    <p th:text="${ProductDTO.productContents}" style="margin-top: 20px; margin-left: 0px; white-space: pre-line; display: inline-block; line-height: 0.95;"></p>
-        <div class="grayBox_vertical"></div>
+    <div class="section3" style="height: 300px">
+        <div style=" display: inline-block; align-items: flex-start; margin-top: -50px;">
+            <h2>상품정보</h2>
+            <p th:text="${ProductDTO.productContents}"
+               style="margin-top: 20px; margin-left: 0px; white-space: pre-line; display: inline-block; line-height: 0.95;"></p>
+            <div class="grayBox_vertical"></div>
+        </div>
     </div>
-</div>
     <div class="detail_3_left">
         <h2>판매자정보</h2>
-        <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p><br>
+        <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p>
+        <br>
         <p style="line-height: 0.95; margin-top: -35px;">판매상품</p>
         <div class="detailsButtonList">
-            <button th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'" style=""><p style="margin-left: 8px;">목록</p></button>
+            <button th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'" style=""><p
+                    style="margin-left: 8px;">목록</p></button>
         </div>
         <table style="margin-top: -70px">
             <th:block th:each="product, iterationStatus: ${marketProductList}">
                 <th:block th:if="${iterationStatus.index % 5 == 0}"></th:block>
                 <td>
-                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="100" height="100" alt="" th:onclick="productDetail([[${product.id}]])">
-                    <span th:text="${product.getFormattedPrice()}" style="display: inline-block;  loat: left; font-size: 14px;"></span>
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}"
+                         width="100" height="100" alt="" th:onclick="productDetail([[${product.id}]])">
+                    <span th:text="${product.getFormattedPrice()}"
+                          style="display: inline-block;  loat: left; font-size: 14px;"></span>
                 </td>
                 <th:block th:if="${(iterationStatus.index + 1) % 5 == 0 or iterationStatus.last}">
                 </th:block>
@@ -107,7 +120,7 @@
     </div>
     <div class="grayBox3"></div>
     <div class="section3" style="height: 250px">
-    <h2 style="margin-top: -50px">연관상품</h2>
+        <h2 style="margin-top: -50px">연관상품</h2>
 
     </div>
 </div>
@@ -117,11 +130,11 @@
 </body>
 <script th:inline="javascript">
 
-    const productDetail = (id) =>{
+    const productDetail = (id) => {
         window.location.href = "/market/" + id;
     }
 
-    const productDetailList = (id) =>{
+    const productDetailList = (id) => {
         window.location.href = "/market/list/" + id;
     }
 
@@ -143,9 +156,7 @@
         }).then(res => {
             const countLikes = res.data;
             count_likes.innerHTML = countLikes;
-        }).catch(err = {
-
-        });
+        }).catch(err = {});
     }
     const toggleLike3 = () => {
         const icon = document.getElementById("likeIcon3");
@@ -156,13 +167,18 @@
             url: "/market/findByMarketLikes/" + id,
         }).then(res => {
             icon.classList.remove("bi-heart");
-            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             count_marketLikes();
         }).catch(err => {
             icon.classList.remove("bi-heart-fill");
-            icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            icon.innerHTML = '<i class="bi bi-heart"></i>';
             count_marketLikes();
         });
+    }
+
+    const goMarketUpdate = () => {
+        const id = document.querySelector("#id").value;
+        location.href = "/market/update/" + id;
     }
 
 

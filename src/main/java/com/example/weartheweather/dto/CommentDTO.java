@@ -17,6 +17,8 @@ public class CommentDTO {
     private Long writerId;
     private String createdAt;
 
+    private int memberPoints;
+
     public static CommentDTO toDTO(CommentEntity commentEntity) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(commentEntity.getId());
@@ -25,6 +27,18 @@ public class CommentDTO {
         commentDTO.setBoardId(commentEntity.getMemberBoardEntity().getId());
         commentDTO.setWriterId(commentEntity.getMemberEntity().getId());
         commentDTO.setCreatedAt(UtilClass.dateFormat(commentEntity.getCreatedAt()));
+        return commentDTO;
+    }
+
+    public static CommentDTO toDTOpoint(CommentEntity commentEntity) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setId(commentEntity.getId());
+        commentDTO.setCommentContents(commentEntity.getCommentContents());
+        commentDTO.setCommentWriter(commentEntity.getMemberEntity().getMemberNickName());
+        commentDTO.setBoardId(commentEntity.getMemberBoardEntity().getId());
+        commentDTO.setWriterId(commentEntity.getMemberEntity().getId());
+        commentDTO.setCreatedAt(UtilClass.dateFormat(commentEntity.getCreatedAt()));
+        commentDTO.setMemberPoints(commentEntity.getMemberEntity().getMemberPoints());
         return commentDTO;
     }
 }
