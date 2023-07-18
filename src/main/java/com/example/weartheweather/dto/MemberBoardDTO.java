@@ -26,6 +26,7 @@ public class MemberBoardDTO {
     private String boardContents;
     private int boardLikes;
     private int boardHits;
+    private int memberPoints;
     private List<MultipartFile> boardFile;
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
@@ -41,6 +42,7 @@ public class MemberBoardDTO {
         memberBoardDTO.setBoardTitle(memberBoardEntity.getBoardTitle());
         memberBoardDTO.setBoardContents(memberBoardEntity.getBoardContents());
         memberBoardDTO.setBoardLikes(memberBoardEntity.getBoardLikes());
+        memberBoardDTO.setMemberPoints(memberBoardEntity.getMemberEntity().getMemberPoints());
         memberBoardDTO.setBoardHits(memberBoardEntity.getBoardHits());
         memberBoardDTO.setCreatedAt(UtilClass.dateFormat(memberBoardEntity.getCreatedAt()));
 
