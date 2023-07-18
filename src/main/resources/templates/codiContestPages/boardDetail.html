@@ -70,12 +70,10 @@
             좋아요수:
             <div th:text="${countBoardLikes}"></div>
         </div>
-        <div th:if="${session.loginEmail eq board.boardWriter}">
+        <div th:if="${session.memberNickName eq board.boardWriter}">
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
         </div>
-        <div th:unless="${session.loginEmail eq board.boardWriter}">
-
-        </div>
+        <div th:unless="${session.loginEmail eq board.boardWriter}"></div>
 
         <div class="container" id="comment-write">
             <input type="hidden" id="comment-writer" th:value="${session.memberNickName}">

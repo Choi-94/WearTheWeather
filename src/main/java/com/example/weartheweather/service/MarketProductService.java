@@ -200,4 +200,10 @@ public class MarketProductService {
             res.addCookie(newCookie);
         }
     }
+
+    public void update(MarketProductDTO marketProductDTO, String memberNickName) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntity(marketProductDTO, memberEntity);
+        marketProductRepository.save(marketProductEntity);
+    }
 }
