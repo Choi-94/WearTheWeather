@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class ChatController {
 
     @GetMapping("/chat")
-    public String getChat(HttpServletRequest request) {
+    public void getChat(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("memberNickName");
@@ -30,12 +30,11 @@ public class ChatController {
 
         log.info("@ChatController, getChat()");
 
-        return "redirect:/chat/master"; // Redirect to "/chat/master" URL
     }
 
     @GetMapping("/chat/master")
     public String enterChatAsMaster(HttpServletRequest request) {
         log.info("@ChatController, enterChatAsMaster()");
-        return "/marketPages/chat"; // Return the view name for the chat page
+        return "/chat"; // Return the view name for the chat page
     }
 }

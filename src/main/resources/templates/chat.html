@@ -1,7 +1,7 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <!-- 	style -->
-  <link href="starboot/css/chatStyle.css" rel="stylesheet" />
+  <link href="/starboot/css/chatStyle.css" rel="stylesheet" />
 
   <!-- 	bootstrap, jquery -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -31,7 +31,7 @@
 
             <!-- master status -->
             <li class="clearfix" onclick="activeToggle(this)" id="master"><img
-                    src="starboot/assets/img/user-astronaut-solid.svg" alt="master">
+                    src="/starboot/assets/img/user-astronaut-solid.svg" alt="master">
               <div class="about">
                 <div id="master" class="name">master</div>
                 <div id="master-status" class="status">
@@ -49,7 +49,7 @@
               <div class="col-lg-6">
                 <a href="javascript:void(0);" data-toggle="modal"
                    data-target="#view_info"> <img id="myImg"
-                                                  src="starboot/assets/img/reddit-alien-brands.svg"
+                                                  src="/starboot/assets/img/reddit-alien-brands.svg"
                                                   alt="me">
                 </a>
                 <div class="chat-about">
@@ -97,7 +97,7 @@
   if(myId != 'master') {
     receiverId = 'master';
   } else {
-    document.getElementById('myImg').src = "starboot/assets/img/user-astronaut-solid.svg";
+    document.getElementById('myImg').src = "/starboot/assets/img/user-astronaut-solid.svg";
   }
 
   document.querySelector("#disconn").addEventListener("click", (e) => {
@@ -109,7 +109,7 @@
     send();
   });
 
-  const websocket = new WebSocket("http://localhost:8045/chat");
+  const websocket = new WebSocket("ws://localhost:8045/ws/chat");
   websocket.onmessage = onMessage;
   websocket.onopen = onOpen;
   websocket.onclose = onClose;
@@ -320,7 +320,7 @@
       li.setAttribute('id', user);
 
       var img = document.createElement('img');
-      var src = "starboot/assets/img/reddit-alien-brands.svg";
+      var src = "/starboot/assets/img/reddit-alien-brands.svg";
       img.setAttribute('src', src);
       img.setAttribute('alt', 'guest');
 
