@@ -1,8 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="icon" type="image/x-icon" href="/starboot/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/starboot/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <div th:fragment="navMarket" class="container" id="nav">
@@ -20,12 +28,94 @@
                 <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/'}">
                     <i class="bi bi-clipboard-check">거래내역</i>
                 </a>
-                <a href="/chat">
-                    <i class="bi bi-chat-dots">웨더톡</i>
+                <a href="javascript:openDetail('/chat')" class="enter_chat"
+                   data-toggle="tooltip" data-placement="top" title="Go Live Chat!">
+                    <i class="fas fa-comments"></i>
                 </a>
+
             </li>
         </ul>
     </div>
-
+    <!-- Contact Section-->
+    <section class="page-section" id="contact">
+        <div class="container">
+            <!-- Contact Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-satellite-dish"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Contact Section Form-->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <!-- start contact form -->
+                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                            <label for="name">Full name</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                            <label for="email">Email address</label>
+                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                        </div>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                            <label for="phone">Phone number</label>
+                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                        </div>
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." data-sb-validations="required"></textarea>
+                            <label for="message">Message</label>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                        </div>
+                        <!-- Submit success message-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div id="contact__result" class="fw-bolder">Form submission successful!</div>
+                                <br />
+                                <!-- when already sent before -->
+                                <div id="contact__update__btn" style="display: none;">
+                                    <button id="contact__update__yes" type="button" onclick="contactUpdateYes()">Yes</button>
+                                    <button id="contact__update__no" type="button" onclick="contactUpdateNo()">No</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary btn-xl disabled" id="submitButton" type="button">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- enter chat -->
+        <a href="javascript:openDetail('/chat')" class="enter_chat"
+           data-toggle="tooltip" data-placement="top" title="Go Live Chat!">
+            <i class="fas fa-comments"></i>11111
+        </a>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- Core JS-->
+    <script src="/starboot/js/scripts.js"></script>
+    <script type="text/javascript">
+        function openDetail(url) {
+            var width = 768;
+            var height = 650;
+            var left = (window.screen.width - width) / 2;
+            var top = (window.screen.height - height) / 2;
+            window.open(url, 'detail', 'width=' + width +', height='+height +', left='+left +', top='+top +', location=no, status=no, scrollbar=yes');
+        }
+    </script>
 </body>
 </html>
