@@ -6,6 +6,7 @@ import com.example.weartheweather.entity.MemberBoardLikesEntity;
 import com.example.weartheweather.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,5 +25,7 @@ public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLik
     MemberBoardLikesEntity findByMemberBoardEntityAndMemberEntity(MemberBoardEntity memberBoardEntity, MemberEntity memberEntity);
 
 
+
     List<MemberBoardLikesEntity> findByCreatedAtBetween(LocalDateTime lastWeek, LocalDateTime today);
+
 }

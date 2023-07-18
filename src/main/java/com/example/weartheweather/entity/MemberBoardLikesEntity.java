@@ -13,6 +13,8 @@ public class MemberBoardLikesEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
+    private Long likeCount;
 
 
     //멤버테이블과 조인(멤버 엔티티에 @OneToMany로 연결해주세요~)
@@ -30,4 +32,5 @@ public class MemberBoardLikesEntity extends BaseEntity {
         memberBoardLikesEntity.setMemberBoardEntity(memberBoardEntity);
         return memberBoardLikesEntity;
     }
+
 }
