@@ -1,56 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
+<html lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* CSS 스타일을 추가하여 테이블을 꾸밀 수 있습니다 */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
-
+<style>
+    #section{
+        position: relative;
+        left: 300px;
+        display: flex;
+    }
+</style>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div th:replace="component/mypageNav :: mypageNav"></div>
 <div th:replace="component/infonav :: infonav"></div>
-<div>총 건수 : <span th:text="${MarketProduct.totalElements}"></span>
-<div class="container">
-    <table class="table">
+
+<div class="container" id="section" style="margin-top: 70px; height:600px">
+    <table class="myTable">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>이미지</th>
-            <th>제품이름</th>
-            <th>상품판매지역</th>
+            <div style="position: absolute; width: 1050px; height: 1px; background-color: black; top:-50px; margin-left: -60px; "> </div>
+            <th>상품이미지</th>
+            <th>상품명</th>
+            <th>판매지역</th>
             <th>작성시간</th>
             <th>조회수</th>
             <th>찜한수</th>
-            <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
+            <div style="position: absolute; width: 1050px; height: 1px; background-color: black; top:50px; margin-left: -60px;"> </div>
         </tr>
         </thead>
         <tbody>
         <tr th:each="MarketProduct: ${MarketProduct}" varStatus="loop">
-            <td th:text="${MarketProduct.id}"></td>
             <td>
+                <div style="position: absolute; width: 1000px; height: 1px; background-color: gainsboro; margin-left: 85px;"> </div>
                 <img th:src="@{|/upload/${#strings.replace(MarketProduct.storedFileName[0], '[', '').replace(']', '')}|}"
-                     style="max-width: 100px;">
+                     style="max-width: 130px;">
+                <div style="position: absolute; width: 1000px; height: 1px; background-color: gainsboro; margin-left: 85px;"> </div>
             </td>
             <td th:text="${MarketProduct.productTitle}">
             </td>
@@ -66,6 +55,8 @@
         </tr>
         </tbody>
     </table>
+</div>
+<div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${1==MarketProduct.pageable.pageNumber+1 }?'disabled'">
@@ -79,10 +70,6 @@
         </ul>
     </nav>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="component/footer :: footer"></div>
 </body>
-
 </html>

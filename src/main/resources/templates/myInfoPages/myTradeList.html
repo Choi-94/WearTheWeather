@@ -1,104 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
+<html lang="en">
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* CSS 스타일을 추가하여 테이블을 꾸밀 수 있습니다 */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
-
+<style>
+    #section{
+        position: relative;
+        left: 300px;
+        display: flex;
+    }
+</style>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div th:replace="component/mypageNav :: mypageNav"></div>
 <div th:replace="component/infonav :: infonav"></div>
-<div>총 건수 : <span th:text="${marketPaymentDTOS.totalElements}"></span>
-    <div class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>이미지</th>
-                <th>제품이름</th>
-                <th>제품 거래상태</th>
 
-                <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="marketPaymentDTOS: ${marketPaymentDTOS}" varStatus="loop">
-                <td th:text="${marketPaymentDTOS.id}"></td>
+<div class="container" id="section" style="margin-top: 70px; height:600px">
+    <table class="myTable">
+        <thead>
+        <tr>
+            <div style="position: absolute; width: 1050px; height: 1px; background-color: black; top:-50px; margin-left: -60px; "> </div>
+            <th>거래번호</th>
+            <th>거래금액</th>
+            <th>거래일시</th>
+            <th>제품 거래상태</th>
+            <div style="position: absolute; width: 1050px; height: 1px; background-color: black; top:50px; margin-left: -60px;"> </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="marketPaymentDTOS: ${marketPaymentDTOS}" varStatus="loop">
+            <td th:text="${marketPaymentDTOS.ProductTitle}"></td>
 
-                <td th:text="${marketPaymentDTOS.productId}">
-                </td>
+            <td th:text="${marketPaymentDTOS.totalAmount}">
+            </td>
 
-                <td th:text="${marketPaymentDTOS.createdAt}">
-                </td>
-                <td>
-                    <button class="btn btn-primary"
-                            th:if="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1}"
-                            th:text="'구매확정'"
-                            th:onclick="myFunction([[${marketPaymentDTOS.id}]])"></button>
+            <td th:text="${marketPaymentDTOS.createdAt}">
+            </td>
+            <td>
+                <button class="btn btn-primary"
+                        th:if="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1}"
+                        th:text="'구매확정'"
+                        th:onclick="myFunction([[${marketPaymentDTOS.id}]])"></button>
 
-                    <span th:if="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 2}"
-                          th:text="'구매완료'"></span>
+                <span th:if="${marketPaymentDTOS.buyerId == currentMember.id && marketPaymentDTOS.tradeStatus == 2}"
+                      th:text="'구매완료'"></span>
 
-                    <span th:if="${marketPaymentDTOS.sellerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1}"
-                          th:text="'거래중'"></span>
+                <span th:if="${marketPaymentDTOS.sellerId == currentMember.id && marketPaymentDTOS.tradeStatus == 1}"
+                      th:text="'거래중'"></span>
 
-                    <span th:if="${marketPaymentDTOS.sellerId == currentMember.id && marketPaymentDTOS.tradeStatus == 2}"
-                          th:text="'판매완료'"></span>
-                </td>
+                <span th:if="${marketPaymentDTOS.sellerId == currentMember.id && marketPaymentDTOS.tradeStatus == 2}"
+                      th:text="'판매완료'"></span>
+            </td>
 
-                <input type="hidden" th:value="${marketPaymentDTOS.productId}" id="productId">
-                <input type="hidden" th:value="${marketPaymentDTOS.sellerId}" id="writerId">
+            <input type="hidden" th:value="${marketPaymentDTOS.productId}" id="productId">
+            <input type="hidden" th:value="${marketPaymentDTOS.sellerId}" id="writerId">
 
-                <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
-            </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${1==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
-                    <a class="page-link" href="#"
-                       th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber-1})}" tabindex="-1"
-                       aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item" th:classappend="${i==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'"
-                    th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" href="#" th:href="@{/member/myTradeList(page=${i - 1})}" th:text="${i}">1</a>
-                </li>
-                <li class="page-item"
-                    th:classappend="${marketPaymentDTOS.totalPages==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
-                    <a class="page-link" href="#"
-                       th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber+1})}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+            <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-
-
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${1==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#"
+                   th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber-1})}" tabindex="-1"
+                   aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item" th:classappend="${i==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'"
+                th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                <a class="page-link" href="#" th:href="@{/member/myTradeList(page=${i - 1})}" th:text="${i}">1</a>
+            </li>
+            <li class="page-item"
+                th:classappend="${marketPaymentDTOS.totalPages==marketPaymentDTOS.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#"
+                   th:href="@{/member/myTradeList(page=${marketPaymentDTOS.pageable.pageNumber+1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const send_buyConfirmAlarm = () => {
@@ -147,5 +133,4 @@
 
     }
 </script>
-
 </html>
