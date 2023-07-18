@@ -40,7 +40,8 @@
             </div>
         </div>
         <div id="countLikes">
-            좋아요수: <div th:text="${countBoardLikes}"></div>
+            좋아요수:
+            <div th:text="${countBoardLikes}"></div>
         </div>
         <div th:if="${session.loginEmail eq board.boardWriter}">
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
@@ -61,7 +62,6 @@
             <div th:unless="${commentList == null}">
                 <table class="table">
                     <tr>
-                        <th>id</th>
                         <th>writer</th>
                         <th>contents</th>
                         <th>date</th>
@@ -69,8 +69,39 @@
                     </tr>
                     <tr th:each="comment: ${commentList}">
                         <input type="hidden" id="commentWriterId" th:value="${comment.writerId}">
-                        <td th:text="${comment.id}"></td>
-                        <td th:text="${comment.commentWriter}" id="commentWriter"></td>
+                        <input type="hidden" id="memberPoint" th:value="${comment.memberPoints}">
+                        <td>
+                            <div th:if="${comment.memberPoints > 6000}">
+                                <!-- Level 5 이미지 -->
+                                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                                     src="/img/point_img/Level_5.png" alt="">
+                                <span th:text="${comment.commentWriter}"></span>
+                            </div>
+                            <div th:unless="${comment.memberPoints > 6000}" th:if="${comment.memberPoints >= 4500}">
+                                <!-- Level 4 이미지 -->
+                                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                                     src="/img/point_img/Level_4.png" alt="">
+                                <span th:text="${comment.commentWriter}"></span>
+                            </div>
+                            <div th:unless="${comment.memberPoints >= 4500}" th:if="${comment.memberPoints >= 3000}">
+                                <!-- Level 3 이미지 -->
+                                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                                     src="/img/point_img/Level_3.png" alt="">
+                                <span th:text="${comment.commentWriter}"></span>
+                            </div>
+                            <div th:unless="${comment.memberPoints >= 3000}" th:if="${comment.memberPoints >= 1500}">
+                                <!-- Level 2 이미지 -->
+                                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                                     src="/img/point_img/Level_2.png" alt="">
+                                <span th:text="${comment.commentWriter}"></span>
+                            </div>
+                            <div th:unless="${comment.memberPoints >= 1500}">
+                                <!-- Level 1 이미지 -->
+                                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                                     src="/img/point_img/Level_1.png" alt="">
+                                <span th:text="${comment.commentWriter}"></span>
+                            </div>
+                        </td>
                         <td th:text="${comment.commentContents}"></td>
                         <td th:text="${comment.createdAt}"></td>
                         <td th:if="${session.memberNickName eq comment.commentWriter}">
@@ -81,7 +112,6 @@
                 </table>
             </div>
         </div>
-
 
 
     </div>
@@ -203,9 +233,7 @@
         }).then(res => {
             const countLikes = res.data;
             count_likes.innerHTML = countLikes;
-        }).catch(err = {
-
-        });
+        }).catch(err = {});
     }
 
     const add_likePoint = () => {

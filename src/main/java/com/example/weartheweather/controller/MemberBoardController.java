@@ -4,8 +4,10 @@ package com.example.weartheweather.controller;
 import com.example.weartheweather.dto.CommentDTO;
 import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.dto.MemberBoardLikesDTO;
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.service.CommentService;
 import com.example.weartheweather.service.MemberBoardService;
+import com.example.weartheweather.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,7 @@ import java.util.List;
 public class MemberBoardController {
     private final MemberBoardService memberBoardService;
     private final CommentService commentService;
+    private final MemberService memberService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -83,6 +86,7 @@ public class MemberBoardController {
         int countBoardLikes = memberBoardService.countBoardLikes(id);
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
         List<CommentDTO> commentDTOList = commentService.findAll(id);
+        System.out.println("commentDTOList = " + commentDTOList);
         if (commentDTOList.size() > 0) {
             model.addAttribute("commentList", commentDTOList);
         } else {
