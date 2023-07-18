@@ -167,6 +167,17 @@
                 <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
                     <a href="/memberBoard/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
                 </h4>
+                <div id="rankList" style="margin-top: 50px;">
+                <table>
+                    <th:block th:each="rankingList, iterationStatus: ${rankingList}">
+                        <th:block th:if="${iterationStatus.index % 5 == 0}">
+                            <tr>
+                        </th:block>
+                        <img th:src="@{|/upload/${#strings.replace(rankingList.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${rankingList.id}]])">
+                        </td>
+                    </th:block>
+                </table>
+            </div>
             </div>
     <div id="marketBox" style="height: 500px;" >
         <h1>웨더장터</h1>
