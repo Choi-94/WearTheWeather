@@ -16,36 +16,40 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 280px; border-radius: 20px; color: white; margin-left: 45px; margin-top: 30px;">
-    <div class="floating_menu"><a href="/member/mypage">회원 정보 수정</a></div>
-    <div class="floating_menu"><a href="/member/myBoardList">내가 쓴 글</a></div>
-    <div class="floating_menu"><a href="/member/myLikeList">좋아요한 글</a></div>
-    <div class="floating_menu"><a href="/member/myDibsList">찜한 상품</a></div>
-    <div class="floating_menu"><a href="/member/myTradeList">마켓거래내역</a></div>
-</div>
-<div class="container" id="section">
-    <form>
+<div th:replace="component/mypageNav :: mypageNav"></div>
+<div th:replace="component/infonav :: infonav"></div>
+
+<div class="container" id="section" style="margin-top: 70px; height:600px">
+    <h2>회원정보수정</h2>
+    <div style="position: absolute; top:100px; ">
+    <h5 style="margin-top: 40px;">이메일</h5>
+    <h5 style="margin-top: 40px;">비밀번호</h5>
+    <h5 style="margin-top: 40px;">닉네임</h5>
+    <h5 style="margin-top: 40px;">성별</h5>
+    </div>
+    <div>
+    <form style="margin-top: 130px; margin-left: -30px;">
         <input type="hidden" name="memberPoints" th:value="${member.memberPoints}">
         <input type="hidden" name="memberWeatherPay" th:value="${member.memberWeatherPay}">
         <input type="hidden" name="id" th:value="${member.id}">
-        <input type="text" name="memberEmail" class="form-control" th:value="${member.memberEmail}" readonly>
+        <input style="margin-top: 10px;" type="text" name="memberEmail" class="form-control" th:value="${member.memberEmail}" readonly>
         <input type="hidden" name="platform" th:value="${member.platform}" id="platform">
         <input type="password" name="memberPassword" class="form-control" th:value="${member.memberPassword}"
-               id="PasswordInput" style="display: block" placeholder="비밀번호수정">
+               id="PasswordInput" style="margin-top: 30px; display: block" placeholder="비밀번호수정" >
         <div>
             <input type="hidden" class="form-control" id="currentNickName" th:value="${member.memberNickName}">
-            <input type="text" class="form-control" name="memberNickName" th:value="${member.memberNickName}"
+            <input  style="margin-top: 30px;" type="text" class="form-control" name="memberNickName" th:value="${member.memberNickName}"
                    id="memberNickName" onblur="nickname()">
             <h6 id="membernicknameconfirmtext"></h6><br>
         </div>
-        <div>
-            <label>성별:</label>
+        <div style="margin-top: 0px;">
             <label><input type="radio" name="memberGender" value="male" th:checked="${member.memberGender == 'male'}">남성</label>
             <label><input type="radio" name="memberGender" value="female"
                           th:checked="${member.memberGender == 'female'}">여성</label>
         </div>
-        <input type="button" onclick="memberUpdate()" value="수정하기">
+        <input class="login_button2" style="margin-top: 100px; margin-left: -150px;" type="button" onclick="memberUpdate()" value="수정하기">
     </form>
+    </div>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>

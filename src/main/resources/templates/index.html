@@ -35,17 +35,17 @@
 <div th:replace="component/nav :: nav"></div>
 
 <div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 230px; border-radius: 30px; color: white; margin-left: 45px; margin-top: 30px;">
-    <div class="floating_menu"><a href="/member/mypage">오늘의 코디</a></div>
-    <div class="floating_menu"><a href="/member/myBoardList">실시간 랭킹</a></div>
-    <div class="floating_menu"><a href="/member/myLikeList">코디 콘테스트</a></div>
-    <div class="floating_menu"><a href="/member/myDibsList">웨더 마켓</a></div>
+    <div class="floating_menu"><a href="/adminBoard/list">오늘의 코디</a></div>
+    <div class="floating_menu"><a href="/memberBoard/rankingList">실시간 랭킹</a></div>
+    <div class="floating_menu"><a href="/memberBoard/list">코디 콘테스트</a></div>
+    <div class="floating_menu"><a href="/market/list">웨더 마켓</a></div>
     <div style="position: absolute; margin-top: -5px;">
         <img id="bannerImage" src="/img/42.png" onclick="moveToTop()">
     </div></div>
 
 
 <div class="container">
-    <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 1300px;">
+    <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 1400px;">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" style="background-color: gray"></button>
             <button type="button" data-bs-target="#demo" data-bs-slide-to="1" style="background-color: gray"></button>
@@ -392,7 +392,7 @@
     });
 
     function moveToTop() {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
+        $("html, body").animate({ scrollTop: 0 }, "fast");
     }
 </script>
 
