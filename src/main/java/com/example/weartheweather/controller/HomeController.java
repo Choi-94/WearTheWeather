@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller
@@ -39,6 +40,11 @@ public class HomeController {
 
         Page<MarketProductDTO> marketProductDTOList = marketProductService.findAll(pageable, type, q);
         model.addAttribute("marketProductList", marketProductDTOList);
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime lastWeek = today.minusWeeks(1);
+        List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
+        model.addAttribute("rankingList", weeklyLikesList);
 
         try {
             // 웹 페이지를 가져옵니다.
