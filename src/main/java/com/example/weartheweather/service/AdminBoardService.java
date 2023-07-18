@@ -197,7 +197,7 @@ public class AdminBoardService {
         Page<MarketProductDTO> marketProductDTOS = new PageImpl<>(marketProductDTOList.subList(start, end), pageable, marketProductDTOList.size());
         return marketProductDTOS;
     }
-
+    @Transactional
     public Page<MarketPaymentDTO> findByMarketPayment(String memberNickName, Pageable pageable) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberNickName(memberNickName);
         List<MarketPaymentEntity> marketPaymentEntityListAll = marketPaymentRepository.findByMemberEntityOrMemberEntity1(memberEntity.get(), memberEntity.get());

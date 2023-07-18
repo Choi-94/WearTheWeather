@@ -26,6 +26,7 @@ public class MarketPaymentDTO {
     private int tradeStatus;
     private MarketProductEntity marketProductEntity;
     private Long totalAmount;
+    private String ProductTitle;
 
     public static MarketPaymentDTO toDTO(MarketPaymentEntity marketPaymentEntity) {
         MarketPaymentDTO marketPaymentDTO = new MarketPaymentDTO();
@@ -36,6 +37,8 @@ public class MarketPaymentDTO {
         marketPaymentDTO.setCreatedAt(UtilClass.dateFormat(marketPaymentEntity.getCreatedAt()));
         marketPaymentDTO.setDeliveryLocation(marketPaymentEntity.getDeliveryLocation());
         marketPaymentDTO.setTradeStatus(marketPaymentEntity.getTradeStatus());
+        marketPaymentDTO.setProductTitle(marketPaymentEntity.getMarketProductEntity().getProductTitle());
+        marketPaymentDTO.setTotalAmount(marketPaymentEntity.getMarketProductEntity().getTotalAmount());
         return marketPaymentDTO;
     }
 
