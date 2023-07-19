@@ -139,4 +139,10 @@ public class MarketController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity marketDelete (@PathVariable Long id) {
+        marketProductService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

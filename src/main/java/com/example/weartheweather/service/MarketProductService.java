@@ -206,4 +206,8 @@ public class MarketProductService {
         MarketProductEntity marketProductEntity = MarketProductEntity.toUpdateEntity(marketProductDTO, memberEntity);
         marketProductRepository.save(marketProductEntity);
     }
+
+    public void delete(Long id) {
+        marketProductRepository.deleteById(id);
+    }
 }
