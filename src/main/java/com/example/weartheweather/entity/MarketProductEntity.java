@@ -120,4 +120,26 @@ public class MarketProductEntity extends BaseEntity {
         marketProductEntity.setFileAttached(1);
         return  marketProductEntity;
     }
+
+    public static MarketProductEntity toUpdateEntity(MarketProductDTO marketProductDTO, MemberEntity memberEntity) {
+        MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setId(marketProductDTO.getId());
+        marketProductEntity.setMemberEntity(memberEntity);
+        marketProductEntity.setProductWriter(memberEntity.getMemberNickName());
+        marketProductEntity.setProductSize(marketProductDTO.getProductSize());
+        marketProductEntity.setProductTitle(marketProductDTO.getProductTitle());
+        marketProductEntity.setTransactionArea(marketProductDTO.getTransactionArea());
+        marketProductEntity.setProductPrice(marketProductDTO.getProductPrice());
+        marketProductEntity.setTransactionFee(Math.round(marketProductDTO.getProductPrice() * 0.03));
+        marketProductEntity.setTotalAmount(Math.round(marketProductDTO.getProductPrice() * 0.03) + marketProductDTO.getProductPrice());
+        marketProductEntity.setProductContents(marketProductDTO.getProductContents());
+        marketProductEntity.setProductSeason(marketProductDTO.getProductSeason());
+        marketProductEntity.setProductWeather(marketProductDTO.getProductWeather());
+        marketProductEntity.setProductTemp(marketProductDTO.getProductTemp());
+        marketProductEntity.setProductHashtag(marketProductDTO.getProductHashtag());
+        marketProductEntity.setMarketLikes(0);
+        marketProductEntity.setProductHits(0);
+        marketProductEntity.setFileAttached(1);
+        return  marketProductEntity;
+    }
 }

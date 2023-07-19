@@ -203,7 +203,7 @@ public class MarketProductService {
 
     public void update(MarketProductDTO marketProductDTO, String memberNickName) {
         MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
-        MarketProductEntity marketProductEntity = MarketProductEntity.toSaveEntity(marketProductDTO, memberEntity);
+        MarketProductEntity marketProductEntity = MarketProductEntity.toUpdateEntity(marketProductDTO, memberEntity);
         marketProductRepository.save(marketProductEntity);
     }
 }
