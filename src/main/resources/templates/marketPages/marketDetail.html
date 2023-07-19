@@ -11,6 +11,7 @@
 <div id="section">
     <div th:if="${session.memberNickName eq ProductDTO.productWriter}">
         <button onclick="goMarketUpdate()" style="margin-right: 10px;">수정하기</button>
+        <button onclick="marketDelete()" style="margin-right: 10px;">삭제하기</button>
     </div>
     <div th:unless="${session.memberNickName eq ProductDTO.productWriter}"></div>
     <div style="display: flex; align-items: flex-start;">
@@ -179,6 +180,25 @@
     const goMarketUpdate = () => {
         const id = document.querySelector("#id").value;
         location.href = "/market/update/" + id;
+    }
+
+    const marketDelete = () => {
+        const id = document.querySelector("#id").value;
+
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            axios({
+                method: "delete",
+                url: "/market/" + id
+            }).then(res => {
+                alert('삭제가 완료되었습니다.');
+                location.href = "/market/list";
+            }).catch(err => {
+                alert('오류가 발생했습니다.');
+            })
+        } else {
+            alert('삭제가 취소되었습니다');
+        }
+
     }
 
 

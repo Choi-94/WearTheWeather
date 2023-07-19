@@ -8,9 +8,92 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="mypageNav" class="container" id="myBox" >
-    <div class="myBox">
+<div th:fragment="mypageNav" class="container" id="myBox">
+    <div class="myBox" style="color: black">
+        <!-- 회원 프로필 -->
+        <div>
+            <div th:if="${member.memberPoints > 6000}">
+                <!-- Level 5 이미지 -->
+                <img style="width: 150px; height: 150px; border-radius: 30px; float: left;"
+                     src="/img/point_img/Level_5.png" alt="">
+            </div>
+            <div th:unless="${member.memberPoints > 6000}" th:if="${member.memberPoints >= 4500}">
+                <!-- Level 4 이미지 -->
+                <img style="width: 150px; height: 150px; border-radius: 30px; float: left;"
+                     src="/img/point_img/Level_4.png" alt="">
+            </div>
+            <div th:unless="${member.memberPoints >= 4500}" th:if="${member.memberPoints >= 3000}">
+                <!-- Level 3 이미지 -->
+                <img style="width: 150px; height: 150px; border-radius: 30px; float: left;"
+                     src="/img/point_img/Level_3.png" alt="">
+            </div>
+            <div th:unless="${member.memberPoints >= 3000}" th:if="${member.memberPoints >= 1500}">
+                <!-- Level 2 이미지 -->
+                <img style="width: 150px; height: 150px; border-radius: 30px; float: left;"
+                     src="/img/point_img/Level_2.png" alt="">
+            </div>
+            <div th:unless="${member.memberPoints >= 1500}">
+                <!-- Level 1 이미지 -->
+                <img style="width: 150px; height: 150px; border-radius: 30px; float: left;"
+                     src="/img/point_img/Level_1.png" alt="">
+            </div>
+        </div>
 
+        <div>
+            <!-- 멤버 닉네임 -->
+            <h1 th:text="${member.memberNickName}"></h1>
+
+            <!-- 멤버 포인트 등급 -->
+            <div th:if="${member.memberPoints > 6000}">
+                <h5>LV.05</h5>
+            </div>
+            <div th:unless="${member.memberPoints > 6000}" th:if="${member.memberPoints >= 4500}">
+                <h5>LV.04</h5>
+            </div>
+            <div th:unless="${member.memberPoints >= 4500}" th:if="${member.memberPoints >= 3000}">
+                <h5>LV.03</h5>
+            </div>
+            <div th:unless="${member.memberPoints >= 3000}" th:if="${member.memberPoints >= 1500}">
+                <h5>LV.02</h5>
+            </div>
+            <div th:unless="${member.memberPoints >= 1500}">
+                <h5>LV.01</h5>
+            </div>
+
+            <!-- 등급안내 이미지 팝업창 작업 해야됌 -->
+            <div>
+                <span style="color: dimgray">등급안내</span>
+            </div>
+
+
+            <!-- 다음레벨까지 남은 포인트 안내 -->
+            <div th:if="${member.memberPoints > 6000}"></div>
+            <div th:unless="${member.memberPoints > 6000}" th:if="${member.memberPoints >= 4500}">
+                <h6 th:text="${member.memberNickName + '님 다음 등급인 LV.05까지 ' + (6000 - member.memberPoints) + '점 남았습니다'}"></h6>
+            </div>
+            <div th:unless="${member.memberPoints > 4500}" th:if="${member.memberPoints >= 3000}">
+                <h6 th:text="${member.memberNickName + '님 다음 등급인 LV.04까지 ' + (4500 - member.memberPoints) + '점 남았습니다'}"></h6>
+            </div>
+            <div th:unless="${member.memberPoints > 3000}" th:if="${member.memberPoints >= 1500}">
+                <h6 th:text="${member.memberNickName + '님 다음 등급인 LV.03까지 ' + (3000 - member.memberPoints) + '점 남았습니다'}"></h6>
+            </div>
+            <div th:unless="${member.memberPoints > 1500}">
+                <h6 th:text="${member.memberNickName + '님 다음 등급인 LV.02까지 ' + (1500 - member.memberPoints) + '점 남았습니다'}"></h6>
+            </div>
+
+        </div>
+
+        <div>
+            <i class="bi bi-coin"></i>
+            <h6>웨더페이</h6>
+            <h5 th:text="${member.memberWeatherPay}"></h5>
+        </div>
+
+        <div>
+            <i class="bi bi-heart-fill"></i>
+            <h6>받은 좋아요수</h6>
+            <h5 th:text="${totalLikes}"></h5>
+        </div>
 
     </div>
 </div>

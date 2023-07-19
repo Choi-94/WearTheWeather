@@ -14,6 +14,8 @@
         <input type="hidden" id="id" name="id" th:value="${market.id}">
         <input type="hidden" id="memberId" name="memberId" th:value="${market.memberId}">
         <input type="hidden" id="productWriter" name="productWriter" th:value="${market.productWriter}">
+        <input type="hidden" id="marketLikes" name="marketLikes" th:value="${market.marketLikes}">
+        <input type="hidden" id="productHits" name="productHits" th:value="${market.productHits}">
         <input type="text" id="productSize" name="productSize" th:value="${market.productSize}" onblur="sizeCheck()" class="form-control"><br>
         <h6 id="productSizeCheck"></h6>
         <button type="button" onclick="getCurrentPos()">내 위치</button>
@@ -43,7 +45,7 @@
         <label><input type="radio" name="productTemp" value="Warm" th:checked="${market.productTemp == 'Warm'}">따듯함</label>
         <label><input type="radio" name="productTemp" value="Coolness" th:checked="${market.productTemp == 'Coolness'}">선선함</label>
         <label><input type="radio" name="productTemp" value="Clod" th:checked="${market.productTemp == 'Clod'}">추움</label><br>
-        <input type="button" value="작성" onclick="marketUpdate()" class="btn btn-primary"><br>
+        <input type="button" value="수정" onclick="marketUpdate()" class="btn btn-primary"><br>
     </form>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4f00c5e6be03a9a079c25af63c69f776&autoload=false"></script>
@@ -270,12 +272,17 @@
         const transactionArea = document.querySelector("#transactionArea").value;
         const productPrice = document.querySelector("#productPrice").value;
         const productTitle = document.querySelector("#productTitle").value;
+        const marketLikes = document.querySelector("#marketLikes").value;
+        const productHits = document.querySelector("#productHits").value;
         const productContents = document.querySelector("#productContents").value;
         const productHashtag = document.querySelector("#productHashtag").value;
+        const productSeason = document.querySelector('input[name="productSeason"]').checked;
+        const productWeather = document.querySelector('input[name="productWeather"]').checked;
+        const productTemp = document.querySelector('input[name="productTemp"]').checked;
 
         axios({
             method: "put",
-            url: "/market/" + id;
+            url: "/market/" + id,
             data: {
                 id: id,
                 memberId: memberId,
@@ -285,7 +292,12 @@
                 productPrice: productPrice,
                 productTitle: productTitle,
                 productContents: productContents,
-                productHashtag: productHashtag
+                productHashtag: productHashtag,
+                productSeason: productSeason,
+                productWeather: productWeather,
+                productTemp: productTemp,
+                marketLikes: marketLikes,
+                productHits: productHits
             }
         }).then(res => {
             location.href = "/market/" + id;

@@ -26,10 +26,15 @@ public class MemberBoardLikesEntity extends BaseEntity {
     @JoinColumn(name = "board_id")
     private MemberBoardEntity memberBoardEntity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private MemberEntity writerEntity;
+
     public static MemberBoardLikesEntity toSaveEntity(MemberEntity memberEntity, MemberBoardEntity memberBoardEntity) {
         MemberBoardLikesEntity memberBoardLikesEntity = new MemberBoardLikesEntity();
         memberBoardLikesEntity.setMemberEntity(memberEntity);
         memberBoardLikesEntity.setMemberBoardEntity(memberBoardEntity);
+        memberBoardLikesEntity.setWriterEntity(memberBoardEntity.getMemberEntity());
         return memberBoardLikesEntity;
     }
 

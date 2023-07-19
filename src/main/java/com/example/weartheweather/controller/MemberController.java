@@ -1,6 +1,7 @@
 package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.MemberDTO;
+import com.example.weartheweather.service.MemberBoardLikesService;
 import com.example.weartheweather.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberBoardLikesService memberBoardLikesService;
     @GetMapping("/memberLogin")
     public String loginForm(@RequestParam(value = "redirectURI", defaultValue = "/") String redirectURI,
                             Model model) {
@@ -86,11 +89,11 @@ public class MemberController {
     @GetMapping("/mypage")
     public String mypageForm(HttpSession session, Model model){
         String value = (String) session.getAttribute("loginEmail");
-        System.out.println("value = " + value);
         MemberDTO memberDTO = memberService.findByEmail(value);
-        System.out.println("마이페이지 memberDTO = " + memberDTO);
+        Long totalLikes = memberBoardLikesService.totalLikes(value);
         if(memberDTO!=null){
             model.addAttribute("member",memberDTO);
+            model.addAttribute("totalLikes", totalLikes);
             return "/myInfoPages/myInfoUpdate";
         }else{
             return "/myInfoPages/myInfoUpdate";

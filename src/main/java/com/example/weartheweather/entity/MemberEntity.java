@@ -58,6 +58,12 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MarketPaymentEntity> marketPaymentEntityList  = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MemberBoardLikesEntity> memberBoardLikesEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writerEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<MemberBoardLikesEntity> memberBoardLikesEntityLists = new ArrayList<>();
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
 
         MemberEntity memberEntity = new MemberEntity();
