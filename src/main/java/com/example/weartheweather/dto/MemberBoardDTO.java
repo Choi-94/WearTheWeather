@@ -24,6 +24,7 @@ public class MemberBoardDTO {
     private String boardWriter;
     private String boardTitle;
     private String boardContents;
+    private String lookStyle;
     private int boardLikes;
     private int boardHits;
     private int memberPoints;
@@ -41,6 +42,7 @@ public class MemberBoardDTO {
         memberBoardDTO.setBoardWriter(memberBoardEntity.getBoardWriter());
         memberBoardDTO.setBoardTitle(memberBoardEntity.getBoardTitle());
         memberBoardDTO.setBoardContents(memberBoardEntity.getBoardContents());
+        memberBoardDTO.setLookStyle(memberBoardEntity.getLookStyle());
         memberBoardDTO.setBoardLikes(memberBoardEntity.getBoardLikes());
         memberBoardDTO.setMemberPoints(memberBoardEntity.getMemberEntity().getMemberPoints());
         memberBoardDTO.setBoardHits(memberBoardEntity.getBoardHits());

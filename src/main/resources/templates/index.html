@@ -160,27 +160,48 @@
             </div>
 
         </div>
-
-
-            <div id="rankBox" style="height: 500px;" >
-                <h1>실시간랭킹</h1>
-                <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-                    <a href="/memberBoard/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
-                </h4>
-                <div id="rankList" style="margin-top: 50px;">
+    <div id="rankBox" style="height: 930px; background-color: #f2f2f2; padding-top: 40px;">
+        <div>
+            <h1>실시간랭킹</h1>
+            <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
+                <a href="/memberBoard/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
+            </h4>
+            <div id="rankList" style="margin-top: 50px; margin-left: 0px;">
                 <table>
-                    <th:block th:each="rankingList, iterationStatus: ${rankingList}">
-                        <th:block th:if="${iterationStatus.index % 5 == 0}">
+                    <th:block th:each="ranking, iterationStatus: ${rankingList}">
+                        <th:block th:if="${iterationStatus.index % 2 == 0}">
                             <tr>
                         </th:block>
-                        <img th:src="@{|/upload/${#strings.replace(rankingList.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${rankingList.id}]])">
+                        <td style="padding-right: 150px;">
+                            <div class="image-container">
+                            <img th:src="@{|/upload/${#strings.replace(ranking.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="" th:onclick="rankDetail([[${ranking.id}]])">
+                            </div>
+                            <table style="float: right;">
+                                <tr>
+                                    <td>
+                                        <span th:text="${ranking.lookStyle}" style="margin-left: 60px; font-size: 20px;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 30px;">
+                                        <span th:text="${ranking.boardWriter}" style="margin-left: 60px; font-size: 20px;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 30px;">
+                                        <span th:text="${ranking.season}" style="margin-left: 60px; font-size: 20px;"></span>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </th:block>
                 </table>
             </div>
-            </div>
+        </div>
+    </div>
+
     <div id="marketBox" style="height: 500px;" >
-        <h1>웨더장터</h1>
+        <h1 style="margin-top: 30px;">웨더장터</h1>
         <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
         <a href="/market/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
         </h4>
@@ -404,6 +425,10 @@
 
     function moveToTop() {
         $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
+
+    const rankDetail = (id) => {
+        location.href = "/memberBoard/detail/" + id;
     }
 </script>
 

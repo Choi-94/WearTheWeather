@@ -44,6 +44,9 @@ public class HomeController {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
         List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
+        if (weeklyLikesList.size() > 6) {
+            weeklyLikesList = weeklyLikesList.subList(0, 6);
+        }
         model.addAttribute("rankingList", weeklyLikesList);
 
         try {
