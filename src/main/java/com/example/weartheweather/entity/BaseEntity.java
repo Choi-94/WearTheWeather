@@ -27,8 +27,8 @@ public class BaseEntity {
 
 
     public long calculateElapsedDays() {
-        LocalDate today = LocalDate.now();
-        long elapsedDays = ChronoUnit.DAYS.between(createdAt, today);
+        LocalDateTime now = LocalDateTime.now();
+        long elapsedDays = ChronoUnit.DAYS.between(now, createdAt);
         return elapsedDays;
     }
 }
