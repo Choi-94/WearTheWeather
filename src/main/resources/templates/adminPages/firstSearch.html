@@ -19,7 +19,8 @@
     }
 
     .search-container {
-        max-width: 500px;
+        text-align: center;
+        max-width: 800px;
         margin: 50px auto;
         padding: 20px;
         border: 1px solid #ccc;
@@ -106,14 +107,25 @@
 <!--버튼을 누르면 전부 2차검색으로 넘어감-->
 <div class="search-container">
     <div>
-        <span>카테고리 검색</span>
-        <button onclick="search_func('상의')"><i class="icon fas fa-tshirt"></i>상의</button>
-        <button onclick="search_func('하의')"><i class="icon fas fa-pants"></i>하의</button>
-        <button onclick="search_func('신발')"><i class="icon fas fa-shoe-prints"></i>신발</button>
+        <span>온도별 검색</span><br>
+        <img src="/img/search/hot_search.png" onclick="search_func('더움')">
+        <img src="/img/search/warm_search.png" onclick="search_func('따뜻함')">
+        <img src="/img/search/coolness_search.png" onclick="search_func('선선함')">
+        <img src="/img/search/cold_search.png" onclick="search_func('추움')">
     </div>
     <div>
-        <span>상황별 검색</span>
-        <img src="/image/rainsearch.jpg" onclick="search_func('비')">
+        <span>날씨별 검색</span><br>
+        <img src="/img/search/sunny_search.png" onclick="search_func('맑음')">
+        <img src="/img/search/rain_search.png" onclick="search_func('비')">
+        <img src="/img/search/cloud_search.png" onclick="search_func('흐림')">
+        <img src="/img/search/snow_search.png" onclick="search_func('눈')">
+    </div>
+    <div>
+        <span>계절별 검색</span><br>
+        <img src="/img/search/spring_search.png" onclick="search_func('봄')">
+        <img src="/img/search/summer_search.png" onclick="search_func('여름')">
+        <img src="/img/search/fall_search.png" onclick="search_func('가을')">
+        <img src="/img/search/winter_search.png" onclick="search_func('겨ㄴ')">
     </div>
 </div>
 </body>
