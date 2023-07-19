@@ -52,20 +52,20 @@
         </tr>
         </tbody>
     </table>
-    </div>
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${1==MemberBoardList.pageable.pageNumber+1 }?'disabled'">
-                    <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${MemberBoardList.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">이전</a>
-                </li>
-                <li class="page-item" th:classappend="${i==MemberBoardList.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${i - 1})}" th:text="${i}">1</a></li>
-                <li class="page-item" th:classappend="${MemberBoardList.totalPages==MemberBoardList.pageable.pageNumber+1 }?'disabled'">
-                    <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${MemberBoardList.pageable.pageNumber+1})}">다음</a>
-                </li>
-            </ul>
-        </nav>
+</div>
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${1==MemberBoardList.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${MemberBoardList.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">이전</a>
+            </li>
+            <li class="page-item" th:classappend="${i==MemberBoardList.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${i - 1})}" th:text="${i}">1</a></li>
+            <li class="page-item" th:classappend="${MemberBoardList.totalPages==MemberBoardList.pageable.pageNumber+1 }?'disabled'">
+                <a class="page-link" href="#" th:href="@{/member/myBoardList(page=${MemberBoardList.pageable.pageNumber+1})}">다음</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>

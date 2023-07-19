@@ -18,4 +18,10 @@ public class MemberBoardLikesService {
         Long totalLikes = memberBoardLikesRepository.countByWriterEntity(memberEntity);
         return totalLikes;
     }
+
+    public Long totalLikes2(String memberNickName) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(memberNickName).orElseThrow(() -> new NoSuchElementException());
+        Long totalLikes = memberBoardLikesRepository.countByWriterEntity(memberEntity);
+        return totalLikes;
+    }
 }

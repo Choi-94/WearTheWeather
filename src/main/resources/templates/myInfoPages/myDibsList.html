@@ -60,12 +60,12 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${1==MarketProduct.pageable.pageNumber+1 }?'disabled'">
-                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${MarketProduct.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+                <a class="page-link" href="#" th:href="@{/member/marketProduct(page=${MarketProduct.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">이전</a>
             </li>
             <li class="page-item" th:classappend="${i==MarketProduct.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${i - 1})}" th:text="${i}">1</a></li>
+                <a class="page-link" href="#" th:href="@{/member/marketProduct(page=${i - 1})}" th:text="${i}">1</a></li>
             <li class="page-item" th:classappend="${MarketProduct.totalPages==MarketProduct.pageable.pageNumber+1 }?'disabled'">
-                <a class="page-link" href="#" th:href="@{/member/myDibsList(page=${MarketProduct.pageable.pageNumber+1})}">Next</a>
+                <a class="page-link" href="#" th:href="@{/member/marketProduct(page=${MarketProduct.pageable.pageNumber+1})}">다음</a>
             </li>
         </ul>
     </nav>

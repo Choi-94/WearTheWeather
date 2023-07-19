@@ -2,66 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:max-width="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        /* CSS 스타일을 추가하여 테이블을 꾸밀 수 있습니다 */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
+<style>
+    #section {
+        position: relative;
+        left: 300px;
+        display: flex;
+    }
+</style>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div th:replace="component/mypageNav :: mypageNav"></div>
 <div th:replace="component/infonav :: infonav"></div>
 <div>총 건수 : <span th:text="${adminBoardLikeList.totalElements}"></span>
-<div th:each="likeList: ${adminBoardLikeList}" varStatus="loop">
+    <div class="container" id="section" style="margin-top: 70px; height:600px">
+        <div th:if="${adminBoardLikeList.isEmpty()}">
+            <h1>좋아요한 게시글이 없습니다</h1>
+        </div>
+        <div th:unless="${adminBoardLikeList.isEmpty()}">
+            <div th:each="likeList: ${adminBoardLikeList}" varStatus="loop">
+                <img th:src="@{|/upload/${likeList.storedFileName}}"
+                     style="max-width: 130px;">
+            </div>
+        </div>
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>HashTags</th>
-            <th>Season</th>
-            <th>Weather</th>
-            <th>Temp</th>
-            <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
-        </tr>
-        <tr>
-            <td th:text="${likeList.id }"></td>
-            <td>
-                <img th:src="@{|/upload/${likeList.storedFileName}}" style="max-width: 100px;">
-            </td>
-            <!-- 다른 속성도 필요에 따라 추가할 수 있습니다 -->
-        </tr>
-    </table>
-
+    </div>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${1==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
+                    <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item" th:classappend="${i==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${i - 1})}" th:text="${i}">1</a></li>
+                <li class="page-item" th:classappend="${adminBoardLikeList.totalPages==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
+                    <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${1==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
-            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
-        </li>
-        <li class="page-item" th:classappend="${i==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
-            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${i - 1})}" th:text="${i}">1</a></li>
-        <li class="page-item" th:classappend="${adminBoardLikeList.totalPages==adminBoardLikeList.pageable.pageNumber+1 }?'disabled'">
-            <a class="page-link" href="#" th:href="@{/member/myLikeList(page=${adminBoardLikeList.pageable.pageNumber+1})}">Next</a>
-        </li>
-    </ul>
-</nav>
-</div>
-
 
 
 </body>
