@@ -56,29 +56,37 @@ public class HomeController {
 
             // class="num_quot up"를 가진 요소를 찾습니다.
 //            Element day0 = doc.select(".wob_df").get(0); // day0 값 가져오기
-            Element day11 = doc.select("#dimg_9").get(0); // 날씨
-            Element day13 = doc.select("#dimg_11").get(0); // 날씨
-            Element day15 = doc.select("#dimg_13").get(0); // 날씨
-            Element day17 = doc.select("#dimg_15").get(0); // 날씨
+            Element D_day0 = doc.select("#dimg_1").get(0); // 날씨
+            Element D_day1 = doc.select("#dimg_3").get(0); // 날씨
+            Element D_day2 = doc.select("#dimg_5").get(0); // 날씨
+            Element D_day3 = doc.select("#dimg_7").get(0); // 날씨
+            Element D_day4 = doc.select("#dimg_9").get(0); // 날씨
+            Element D_day5 = doc.select("#dimg_11").get(0); // 날씨
+            Element D_day6 = doc.select("#dimg_13").get(0); // 날씨
 //            String value = day0.text().substring(0, 1); // 앞에서부터 1번째 문자열까지 추출
 //            String value1 = day0.text().substring(2, 4); // 최저온도
 //            String value2 = day0.text().substring(8, 10); // 최고온도
-            String altValue1 = day11.attr("alt");
-            String altValue2 = day13.attr("alt");
-            String altValue3 = day15.attr("alt");
-            String altValue4 = day17.attr("alt");
+
+            String D0 = D_day0.attr("alt");
+            String D1 = D_day1.attr("alt");
+            String D2 = D_day2.attr("alt");
+            String D3 = D_day3.attr("alt");
+            String D4 = D_day4.attr("alt");
+            String D5 = D_day5.attr("alt");
+            String D6 = D_day6.attr("alt");
+
 
 
 
 
             // 요소의 텍스트를 모델에 추가합니다.
-//            model.addAttribute("day0", value);
-//            model.addAttribute("day0_temp0", value1);
-//            model.addAttribute("day0_temp1", value2);
-            model.addAttribute("day11", altValue1);
-            model.addAttribute("day13", altValue2);
-            model.addAttribute("day15", altValue3);
-            model.addAttribute("day17", altValue4);
+            model.addAttribute("D0", D0);
+            model.addAttribute("D1", D1);
+            model.addAttribute("D2", D2);
+            model.addAttribute("D3", D3);
+            model.addAttribute("D4", D4);
+            model.addAttribute("D5", D5);
+            model.addAttribute("D6", D6);
 
         } catch (Exception e) {
             e.printStackTrace();
