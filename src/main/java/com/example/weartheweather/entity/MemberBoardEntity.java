@@ -25,6 +25,8 @@ public class MemberBoardEntity extends BaseEntity  {
     private String boardTitle;
     @Column(columnDefinition = "TEXT")
     private String boardContents;
+    @Column(length = 50)
+    private String lookStyle;
     @Column
     private int boardLikes;
     @Column
@@ -53,6 +55,7 @@ public class MemberBoardEntity extends BaseEntity  {
         memberBoardEntity.setBoardWriter(memberEntity.getMemberNickName());
         memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());
         memberBoardEntity.setBoardContents(memberBoardDTO.getBoardContents());
+        memberBoardEntity.setLookStyle(memberBoardDTO.getLookStyle());
         memberBoardEntity.setBoardLikes(0);
         memberBoardEntity.setBoardHits(0);
         return memberBoardEntity;
@@ -66,6 +69,7 @@ public class MemberBoardEntity extends BaseEntity  {
         memberBoardEntity.setBoardWriter(memberBoardDTO.getBoardWriter());
         memberBoardEntity.setBoardTitle(memberBoardDTO.getBoardTitle());
         memberBoardEntity.setBoardContents(memberBoardDTO.getBoardContents());
+        memberBoardEntity.setLookStyle(memberBoardDTO.getLookStyle());
         memberBoardEntity.setBoardLikes(memberBoardDTO.getBoardLikes());
         memberBoardEntity.setBoardHits(memberBoardDTO.getBoardHits());
         return memberBoardEntity;

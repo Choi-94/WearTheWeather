@@ -21,7 +21,7 @@
                     <tr>
                 </th:block>
                 <td>
-                    <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="detail([[${board.id}]])">
+                    <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="257" height="257" alt="" th:onclick="detail([[${board.id}]])">
                     <table>
                         <tr>
                             <td th:text="${board.boardWriter}"></td>
