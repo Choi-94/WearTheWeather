@@ -28,4 +28,8 @@ public interface MemberBoardLikesRepository extends JpaRepository<MemberBoardLik
 
     List<MemberBoardLikesEntity> findByCreatedAtBetween(LocalDateTime lastWeek, LocalDateTime today);
 
+
+
+    @Query(value = "select count(b) FROM MemberBoardLikesEntity b where b.writerEntity =:memberEntity")
+    Long countByWriterEntity(MemberEntity memberEntity);
 }
