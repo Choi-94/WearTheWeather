@@ -128,10 +128,16 @@ public class MemberBoardController {
         return "/codiContestPages/boardUpdate";
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/")
     public ResponseEntity update(@RequestBody MemberBoardDTO memberBoardDTO, HttpSession session) {
         String memberNickName = (String)session.getAttribute("memberNickName");
         memberBoardService.update(memberBoardDTO, memberNickName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        memberBoardService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

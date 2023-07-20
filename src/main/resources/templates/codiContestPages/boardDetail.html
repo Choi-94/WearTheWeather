@@ -70,8 +70,11 @@
             좋아요수:
             <div th:text="${countBoardLikes}"></div>
         </div>
+
+        <!-- 수정/삭제버튼 -->
         <div th:if="${session.memberNickName eq board.boardWriter}">
             <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
+            <button class="btn btn-primary" th:onclick="boardDelete([[${board.id}]])">삭제</button>
         </div>
         <div th:unless="${session.loginEmail eq board.boardWriter}"></div>
 
@@ -248,6 +251,23 @@
         location.href = "/memberBoard/update/" + id;
     }
 
+    const boardDelete = (id) => {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            axios({
+                method: "delete",
+                url: "/memberBoard/" + id
+            }).then(res => {
+                alert('삭제가 완료되었습니다.');
+                location.href = "/memberBoard/list";
+            }).catch(err => {
+                alert('오류가 발생했습니다.');
+            })
+        } else {
+            alert('삭제가 취소되었습니다');
+        }
+
+    }
+
     const count_likes = () => {
         const count_likes = document.querySelector("#countLikes");
         const id = document.querySelector("#id").value;
@@ -315,6 +335,9 @@
         });
 
     }
+
+
+
 
 
 </script>
