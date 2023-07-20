@@ -49,7 +49,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
-        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 좋아요를 눌렀습니다.");
+        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 게시글에 좋아요를 눌렀습니다.");
         alarmEntity.setMarketProductEntity(null);
         alarmEntity.setType(type);
         return alarmEntity;
@@ -62,7 +62,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
         alarmEntity.setType(type);
-        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "의 상품을" + loginMemberEntity.getMemberNickName() + "님이 배송요청했습니다.");
+        alarmEntity.setMessage("등록한 상품을" + loginMemberEntity.getMemberNickName() + "님이 배송요청했습니다.");
         alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
@@ -73,7 +73,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setLoginMemberEntity(loginMemberEntity);
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(memberBoardEntity);
-        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 " + memberBoardEntity.getBoardTitle() + "게시글에 댓글을 달았습니다.");
+        alarmEntity.setMessage(loginMemberEntity.getMemberNickName() + "님이 게시글에 댓글을 달았습니다.");
         alarmEntity.setMarketProductEntity(null);
         alarmEntity.setType(type);
         return alarmEntity;
@@ -86,7 +86,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
         alarmEntity.setType(type);
-        alarmEntity.setMessage(marketProductEntity.getProductTitle() + "의 상품을" + loginMemberEntity.getMemberNickName() + "님이 구매확정했습니다.");
+        alarmEntity.setMessage("등록한 상품을" + loginMemberEntity.getMemberNickName() + "님이 구매확정했습니다.");
         alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
