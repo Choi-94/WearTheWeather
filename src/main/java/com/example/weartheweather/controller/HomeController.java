@@ -55,7 +55,7 @@ public class HomeController {
             Document doc = Jsoup.connect(url).get();
 
             // class="num_quot up"를 가진 요소를 찾습니다.
-//            Element day0 = doc.select(".wob_df").get(0); // day0 값 가져오기
+            // 날씨 값 가져오기
             Element D_day0 = doc.select("#dimg_1").get(0); // 날씨
             Element D_day1 = doc.select("#dimg_3").get(0); // 날씨
             Element D_day2 = doc.select("#dimg_5").get(0); // 날씨
@@ -67,17 +67,13 @@ public class HomeController {
 //            String value1 = day0.text().substring(2, 4); // 최저온도
 //            String value2 = day0.text().substring(8, 10); // 최고온도
 
-            String D0 = D_day0.attr("alt");
-            String D1 = D_day1.attr("alt");
-            String D2 = D_day2.attr("alt");
-            String D3 = D_day3.attr("alt");
-            String D4 = D_day4.attr("alt");
-            String D5 = D_day5.attr("alt");
-            String D6 = D_day6.attr("alt");
-
-
-
-
+            String D0 = convertWeather(D_day0.attr("alt"));
+            String D1 = convertWeather(D_day1.attr("alt"));
+            String D2 = convertWeather(D_day2.attr("alt"));
+            String D3 = convertWeather(D_day3.attr("alt"));
+            String D4 = convertWeather(D_day4.attr("alt"));
+            String D5 = convertWeather(D_day5.attr("alt"));
+            String D6 = convertWeather(D_day6.attr("alt"));
 
             // 요소의 텍스트를 모델에 추가합니다.
             model.addAttribute("D0", D0);
@@ -88,6 +84,35 @@ public class HomeController {
             model.addAttribute("D5", D5);
             model.addAttribute("D6", D6);
 
+
+            // 요일데이터 추출
+            Element day0 = doc.select(".wob_df").get(0);
+            Element day1 = doc.select(".wob_df").get(1);
+            Element day2 = doc.select(".wob_df").get(2);
+            Element day3 = doc.select(".wob_df").get(3);
+            Element day4 = doc.select(".wob_df").get(4);
+            Element day5 = doc.select(".wob_df").get(5);
+            Element day6 = doc.select(".wob_df").get(6);
+
+
+            String  D0_0 = day0.text().substring(0, 1);
+            String  D0_1 = day1.text().substring(0, 1);
+            String  D0_2 = day2.text().substring(0, 1);
+            String  D0_3 = day3.text().substring(0, 1);
+            String  D0_4 = day4.text().substring(0, 1);
+            String  D0_5 = day5.text().substring(0, 1);
+            String  D0_6 = day6.text().substring(0, 1);
+
+
+            model.addAttribute("D0_0", D0_0);
+            model.addAttribute("D0_1", D0_1);
+            model.addAttribute("D0_2", D0_2);
+            model.addAttribute("D0_3", D0_3);
+            model.addAttribute("D0_4", D0_4);
+            model.addAttribute("D0_5", D0_5);
+            model.addAttribute("D0_6", D0_6);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,5 +121,17 @@ public class HomeController {
     }
 
 
-
+    private String convertWeather(String weather) {
+        if (weather.contains("맑음")) {
+            return "Sunny";
+        } else if (weather.contains("구름")) {
+            return "Cloudy";
+        } else if (weather.contains("소나기") || weather.contains("뇌우") || weather.contains("강우")) {
+            return "Rain";
+        } else if (weather.contains("눈")) {
+            return "Snow";
+        } else {
+            return weather; // 기타 경우에는 원래의 값을 그대로 반환
+        }
+    }
 }
