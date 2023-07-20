@@ -21,7 +21,7 @@
                     <i class="bi bi-bell fs-4"></i>
                 </button>
                 <!-- 알림수 -->
-                <div></div>
+                <div th:text="${countMyAlarm}"></div>
                 <div>
                     <ul class="dropdown-menu flex-column" id="dropdownList">
                         <li style="display: block;"></li>
@@ -61,6 +61,9 @@
 
             });
         }
+
+
+
         const findByMyAlarm = () => {
             const resultArea = document.querySelector("#dropdownList");
             resultArea.innerHTML = "";

@@ -209,4 +209,7 @@ public class MemberBoardService {
     }
 
 
+    public void delete(Long id) {
+        memberBoardRepository.deleteById(id);
+    }
 }

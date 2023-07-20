@@ -54,7 +54,6 @@ public class AlarmController {
     public ResponseEntity findByMyAlarm(HttpSession session) {
         String memberNickName = (String) session.getAttribute("memberNickName");
         List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
-        System.out.println("alarmDTOList = " + alarmDTOList);
         return new ResponseEntity<>(alarmDTOList, HttpStatus.OK);
     }
 
