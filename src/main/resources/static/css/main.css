@@ -127,7 +127,7 @@
 
 .grayBox_vertical {
     position: absolute;
-    top:796px;
+    top:820px;
     left: 50%;
     width: 3px;
     height: 300px;
@@ -146,7 +146,7 @@
 
 .grayBox3 {
     position: absolute;
-    top:1093px;
+    top:1120px;
     width: 68%;
     height: 3px;
     background-color: gainsboro;
