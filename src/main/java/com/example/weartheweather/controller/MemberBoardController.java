@@ -1,10 +1,8 @@
 package com.example.weartheweather.controller;
 
 
-import com.example.weartheweather.dto.CommentDTO;
-import com.example.weartheweather.dto.MemberBoardDTO;
-import com.example.weartheweather.dto.MemberBoardLikesDTO;
-import com.example.weartheweather.dto.MemberDTO;
+import com.example.weartheweather.dto.*;
+import com.example.weartheweather.service.AlarmService;
 import com.example.weartheweather.service.CommentService;
 import com.example.weartheweather.service.MemberBoardService;
 import com.example.weartheweather.service.MemberService;
@@ -30,10 +28,21 @@ import java.util.List;
 public class MemberBoardController {
     private final MemberBoardService memberBoardService;
     private final CommentService commentService;
-    private final MemberService memberService;
+    private final AlarmService alarmService;
+
+    public int countMyAlarm (HttpSession session) {
+        String memberNickName = (String)session.getAttribute("memberNickName");
+        List<AlarmDTO> alarmDTOList = alarmService.findByMyAlarm(memberNickName);
+        int countAlarm = 0;
+        if (alarmDTOList.size() != 0) {
+            countAlarm = alarmDTOList.size();
+        } return countAlarm;
+    }
 
     @GetMapping("/save")
-    public String saveForm() {
+    public String saveForm(HttpSession session, Model model) {
+        int countMyAlarm = this.countMyAlarm(session);
+        model.addAttribute("countMyAlarm", countMyAlarm);
         return "/codiContestPages/boardSave";
     }
 
@@ -45,8 +54,10 @@ public class MemberBoardController {
     }
 
     @GetMapping("/list")
-    public String findAll(Model model, @PageableDefault(size = 15)Pageable pageable,@RequestParam(value = "type", required = false, defaultValue = "") String type,
+    public String findAll(HttpSession session, Model model, @PageableDefault(size = 15)Pageable pageable,@RequestParam(value = "type", required = false, defaultValue = "") String type,
                           @RequestParam(value = "q", required = false, defaultValue = "") String q) {
+        int countMyAlarm = this.countMyAlarm(session);
+        model.addAttribute("countMyAlarm", countMyAlarm);
         Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
         int startPage = Math.max(1,memberBoardDTOList.getPageable().getPageNumber()-4);
         int endPage = Math.min(memberBoardDTOList.getTotalPages(), memberBoardDTOList.getPageable().getPageNumber()+4);
@@ -59,11 +70,12 @@ public class MemberBoardController {
     }
 
     @GetMapping("/rankingList")
-    public String rankingList(Model model) {
+    public String rankingList(HttpSession session, Model model) {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
+        int countMyAlarm = this.countMyAlarm(session);
+        model.addAttribute("countMyAlarm", countMyAlarm);
         List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
-        System.out.println("weeklyLikesList = " + weeklyLikesList);
         model.addAttribute("boardList", weeklyLikesList);
         return "/codiContestPages/boardRankingList";
     }
@@ -73,6 +85,10 @@ public class MemberBoardController {
                            HttpServletRequest req, HttpServletResponse res) {
         memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
+
+        int countMyAlarm = this.countMyAlarm(session);
+            model.addAttribute("countMyAlarm", countMyAlarm);
+
         String boardLikes = "";
         if(memberNickName!=null){
             MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
@@ -86,7 +102,7 @@ public class MemberBoardController {
         int countBoardLikes = memberBoardService.countBoardLikes(id);
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
         List<CommentDTO> commentDTOList = commentService.findAll(id);
-        System.out.println("commentDTOList = " + commentDTOList);
+
         if (commentDTOList.size() > 0) {
             model.addAttribute("commentList", commentDTOList);
         } else {
@@ -122,7 +138,9 @@ public class MemberBoardController {
 
 
     @GetMapping("/update/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
+    public String updateForm(@PathVariable Long id,HttpSession session, Model model) {
+        int countMyAlarm = this.countMyAlarm(session);
+        model.addAttribute("countMyAlarm", countMyAlarm);
         MemberBoardDTO memberBoardDTO = memberBoardService.findById(id);
         model.addAttribute("board", memberBoardDTO);
         return "/codiContestPages/boardUpdate";
