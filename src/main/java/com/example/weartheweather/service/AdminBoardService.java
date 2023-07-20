@@ -272,18 +272,61 @@ public class AdminBoardService {
         return popularKeywordsDTOList;
     }
     @Transactional
-    public List<AdminBoardDTO> searchBoardList(String q,int tall) {
+    public List<AdminBoardDTO> searchBoardList(String q,int tall,String gender) {
         List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
         List<AdminBoardDTO> result = new ArrayList<>();
-
+        System.out.println("톨값확인1" + tall + "젠더값확인1" + gender);
+        int tolerance = 5;
         adminBoardEntityList.forEach(adminBoardEntity -> {
             AdminBoardDTO adminBoardDTO = AdminBoardDTO.Search(adminBoardEntity);
-            if(tall==0){
-                if(adminBoardDTO.getTotalTags().contains(q)){
+            if (tall != 0 && !gender.trim().equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance && adminBoardDTO.getGender().contains(gender.trim())) {
+                    System.out.println("gender1"+gender.trim());
                     result.add(adminBoardDTO);
                 }
-            }else{
-                if(adminBoardDTO.getTotalTags().contains(q) && adminBoardDTO.getHeight()==tall){
+            } else if (tall == 0 && gender != "") {
+                if (adminBoardDTO.getTotalTags().contains(q) && adminBoardDTO.getGender().contains(gender.trim())) {
+                    System.out.println("gender2"+gender.trim());
+                    result.add(adminBoardDTO);
+                }
+            } else if (tall != 0 && gender.trim().equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance) {
+                    System.out.println("gender3"+gender.trim());
+                    result.add(adminBoardDTO);
+                }
+            } else {
+                if (adminBoardDTO.getTotalTags().contains(q)) {
+                    System.out.println("gender4"+gender.trim());
+                    result.add(adminBoardDTO);
+                }
+
+            }
+
+        });
+        return result;
+    }
+    @Transactional
+    public List<AdminBoardDTO> secondSearchBoardList(String q, int tall, String gender) {
+        List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
+        List<AdminBoardDTO> result = new ArrayList<>();
+        System.out.println("톨값확인" + tall + "젠더값확인" + gender);
+        int tolerance = 5;
+        adminBoardEntityList.forEach(adminBoardEntity -> {
+            AdminBoardDTO adminBoardDTO = AdminBoardDTO.Search(adminBoardEntity);
+            if (tall != 0 && !gender.equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance && adminBoardDTO.getGender().contains(gender)) {
+                    result.add(adminBoardDTO);
+                }
+            } else if (tall == 0 && !gender.equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && adminBoardDTO.getGender().contains(gender)) {
+                    result.add(adminBoardDTO);
+                }
+            } else if (tall != 0 && gender.equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance) {
+                    result.add(adminBoardDTO);
+                }
+            } else {
+                if (adminBoardDTO.getTotalTags().contains(q)) {
                     result.add(adminBoardDTO);
                 }
             }
@@ -291,5 +334,6 @@ public class AdminBoardService {
         });
         return result;
     }
+
 }
 

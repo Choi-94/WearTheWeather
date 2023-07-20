@@ -60,7 +60,7 @@ public class MarketPaymentService {
         MarketPaymentEntity marketPaymentEntity = marketPaymentRepository.findByMemberEntityAndMarketProductEntity(memberEntity, marketProductEntity);
         return MarketPaymentDTO.toDTO(marketPaymentEntity);
     }
-
+@Transactional
     public void buyConfirm(Long paymentId, String adminId) {
         Optional<MarketPaymentEntity> marketPaymentEntity = marketPaymentRepository.findById(paymentId);
         System.out.println("marketPaymentEntity = " + marketPaymentEntity.get());

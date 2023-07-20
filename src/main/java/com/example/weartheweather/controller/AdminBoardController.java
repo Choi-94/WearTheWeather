@@ -115,10 +115,10 @@ public class AdminBoardController {
 
     }
     @GetMapping("/secondSearch")
-    public String secondSearchForm(Model model,@RequestParam("q")String q ,@RequestParam(value = "tall", defaultValue = "0")int tall){
+    public String secondSearchForm(Model model,@RequestParam("q")String q ,@RequestParam(value = "tall", defaultValue = "0")int tall, @RequestParam(value = "gender" ,defaultValue = "")String gender){
         //q값해당하는 adminboardList 가져오기
-        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q,tall);
-        System.out.println("서치리스트 = " + adminBoardDTOList);
+        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q,tall,gender);
+        System.out.println("서치리스트1 = " + adminBoardDTOList +"서치1 tall"+tall);
         model.addAttribute("qSearchList",adminBoardDTOList);
 
 
@@ -126,16 +126,16 @@ public class AdminBoardController {
         return "/adminPages/secondSearch";
     }
     @PostMapping("/secondSearch")
-    public ResponseEntity SecondSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO,Model model,@RequestParam("q")String q ,@RequestParam(value = "tall", defaultValue = "0")int tall){
+    public ResponseEntity SecondSearch(@ModelAttribute PopularKeywordsDTO popularKeywordsDTO,Model model){
         //q값해당하는 adminboardList 가져오기
-        System.out.println("tall값 확인"+tall);
-        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.searchBoardList(q,tall);
-        System.out.println("서치리스트 = " + adminBoardDTOList);
+        System.out.println("dto값 확인"+popularKeywordsDTO);
+        List<AdminBoardDTO> adminBoardDTOList = adminBoardService.secondSearchBoardList(popularKeywordsDTO.getKeyword(),popularKeywordsDTO.getTall(),popularKeywordsDTO.getGender());
+        System.out.println("서치리스트2 = " + adminBoardDTOList);
         adminBoardService.popularSave(popularKeywordsDTO);
         model.addAttribute("qSearchList",adminBoardDTOList);
 
 
-        model.addAttribute("q",q);
+        model.addAttribute("q",popularKeywordsDTO.getKeyword());
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

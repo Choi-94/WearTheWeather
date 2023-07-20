@@ -18,8 +18,14 @@
 </nav>
 <div class="container mt-5">
     <div class="form-group">
+      <li>
         <label for="heightRange">키(cm): </label>
-        <input type="range" class="form-range" id="heightRange" name="height" min="140" max="200" step="1" onchange="showHeight(this.value)" style="width: 360px;">
+        <input type="range" class="form-range" value="0" id="heightRange" name="height"  min="0" max="200" step="1" onchange="showHeight(this.value)" style="width: 360px;">
+      </li>
+      <li>
+        <button type="button" id="남" class="togglem-btn btn btn-secondary" value="남">남</button>
+        <button type="button" id="여" class="togglew-btn btn btn-secondary" value="여">여</button>
+      </li>
     </div>
     <p id="heightValue" class="mt-3"></p>
 </div>
@@ -117,22 +123,118 @@
 </div>
 </body>
 <script th:inline="javascript">
+  let genderm = '';
+  let genderw = '';
+  let resultm = true;
+  let resultw = true;
+
+  $(document).ready(function() {
+    // 버튼 클래스의 클릭 이벤트 리스너를 등록합니다.
+    $('.togglem-btn').click(function () {
+      const menvalue = $('#남').val(); // 현재 버튼의 value 값을 가져옵니다.
+
+      console.log(menvalue);
+
+
+      if (resultm) {
+        if ($(this).attr('id') === '남') {
+          $(this).val("남");
+          genderm = '남';
+          $(this).removeClass("btn-secondary");
+          $(this).addClass("btn-primary");
+        }
+        console.log(111111)
+        resultm = false;
+      } else {
+        if (menvalue == '') {
+
+          // 빈 문자열이라면 (아직 선택되지 않은 상태라면)
+          // 해당 버튼의 value 값을 원래 값으로 설정합니다.
+          if ($(this).attr('id') === '남') {
+            $(this).val("남");
+            genderm = '남';
+            $(this).removeClass("btn-secondary");
+            $(this).addClass("btn-primary");
+          }
+
+
+        } else {
+          $(this).val(""); // value 값을 비웁니다.
+          $(this).removeClass("btn-primary");
+          $(this).addClass("btn-secondary");
+          genderm = '';
+
+        }
+      }
+    });
+      // 버튼 클래스의 클릭 이벤트 리스너를 등록합니다.
+      $('.togglew-btn').click(function () {
+        const womanvalue =  $('#여').val(); // 현재 버튼의 value 값을 가져옵니다.
+
+        console.log(womanvalue);
+
+
+        if (resultw) {
+          if ($(this).attr('id') === '여') {
+            $(this).val("여");
+            genderw = '여';
+            $(this).removeClass("btn-secondary");
+            $(this).addClass("btn-primary");
+          }
+          console.log(111111)
+          resultw = false;
+        } else {
+          if (womanvalue == '') {
+
+            // 빈 문자열이라면 (아직 선택되지 않은 상태라면)
+            // 해당 버튼의 value 값을 원래 값으로 설정합니다.
+            if ($(this).attr('id') === '여') {
+              $(this).val("여");
+              genderw = '여';
+              $(this).removeClass("btn-secondary");
+              $(this).addClass("btn-primary");
+            }
+
+
+          } else {
+            $(this).val(""); // value 값을 비웁니다.
+            $(this).removeClass("btn-primary");
+            $(this).addClass("btn-secondary");
+            genderw = '';
+
+          }
+        }
+        // 빈 문자열이 아니라면 (이미 선택된 상태라면)
+
+        // if (currentValue !== "") {
+        //   $(this).val(""); // value 값을 비웁니다.
+        //   gender = '';
+        // }
+      });
+
+  });
   const search_func = (q) => {
-    console.log(q)
+    console.log(q);
+
     if(!q){
       q = document.querySelector('input[name="totalTags"]').value;
       console.log(q)
     }
       const tall = document.querySelector('input[name="height"]').value;
 
+    console.log("gender"+genderm+genderw);
+
+
     $.ajax({
       type:"post",
-      uri:"/adminBoard/secondSearch?q="+q+"&tall="+tall,
+      uri:"/adminBoard/secondSearch?q="+q+"&tall="+tall+"&gender="+genderm+genderw,
       data:{
         keyword: q,
+        gender: genderw+genderm,
+        tall: tall
 
       }, success: function (res){
-        location.href = "/adminBoard/secondSearch?q=" + q + "&tall="+tall;
+        location.href = "/adminBoard/secondSearch?q=" + q + "&tall="+tall+"&gender="+genderm+genderw;
       },error:function (res){
         alert("찾을 수 없습니다")
       }
