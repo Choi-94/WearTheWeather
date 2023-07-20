@@ -6,17 +6,21 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Karla:ital@1&display=swap" rel="stylesheet">
 </head>
 <style>
-    .popular-keywords-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        max-width: 500px;
-    }
+
+    /*.popular-keywords-container {*/
+    /*    display: flex;*/
+    /*    flex-wrap: wrap;*/
+    /*    gap: 10px;*/
+    /*    padding: 10px;*/
+    /*    border: 1px solid #ccc;*/
+    /*    border-radius: 5px;*/
+    /*    max-width: 500px;*/
+    /*}*/
 
     .search-container {
         text-align: center;
@@ -48,10 +52,18 @@
     }
     /* 스팬 태그 스타일 */
     span {
-        font-size: 18px;
-        font-weight: bold;
-    }
 
+        font-family: 'Karla', sans-serif;
+    }
+    .container mt-4 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        align-items: stretch;
+        border-radius: 5px;
+        max-width: 500px;
+    }
     /* 버튼 스타일 */
     button {
         padding: 8px 16px;
@@ -69,10 +81,9 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 
-<nav class="navbar bg-light">
+<nav class="navbar bg-light" style="max-width: 1000px; margin-left: 20%;">
     <div class="container-fluid">
-
-            <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search" style="width: 70%; margin-left: 16%">
             <button class="btn btn-outline-success" onclick="search_func()">Search</button>
 
     </div>
@@ -95,7 +106,8 @@
             <div class="popular-keywords-container">
                 <h4>인기 검색어</h4>
                 <ul class="list-group">
-                    <li th:each="popularKeyword: ${popularKeywordsDTOList}" varStatus="loop" class="list-group-item">
+                    <li th:each="popularKeyword, loop : ${popularKeywordsDTOList}" class="list-group-item">
+                        <span th:text="(${loop.index + 1})+'위'"></span>
                         <span class="popular-keyword" th:text="${popularKeyword.keyword}"></span>
                     </li>
                 </ul>
@@ -103,6 +115,7 @@
         </div>
     </div>
 </div>
+
 
 <!--버튼을 누르면 전부 2차검색으로 넘어감-->
 <div class="search-container">
@@ -125,7 +138,7 @@
         <img src="/img/search/spring_search.png" onclick="search_func('봄')">
         <img src="/img/search/summer_search.png" onclick="search_func('여름')">
         <img src="/img/search/fall_search.png" onclick="search_func('가을')">
-        <img src="/img/search/winter_search.png" onclick="search_func('겨ㄴ')">
+        <img src="/img/search/winter_search.png" onclick="search_func('겨울')">
     </div>
 </div>
 </body>
