@@ -225,6 +225,7 @@
 .day-button {
     background: none; /* 배경색을 투명하게 설정 */
     border: none; /* 외곽선 제거 */
+    z-index: 1;
 }
 
 .day-img {
