@@ -78,7 +78,7 @@ public class HomeController {
             String D5 = convertWeather(D_day5.attr("alt"));
             String D6 = convertWeather(D_day6.attr("alt"));
 
-          
+            System.out.println("D6 = " + D6);
 
             //각 값을 가져오기 도영
             List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeather(D0);

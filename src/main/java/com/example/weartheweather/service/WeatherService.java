@@ -6,6 +6,7 @@ import com.example.weartheweather.repository.AdminBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,6 +16,7 @@ import java.util.NoSuchElementException;
 public class WeatherService {
     private final AdminBoardRepository adminBoardRepository;
 
+    @Transactional
     public List<AdminBoardDTO> findWeather(String day) {
        List<AdminBoardEntity> adminBoardEntityList =  adminBoardRepository.findAll();
 
@@ -24,7 +26,7 @@ public class WeatherService {
        });
        List<AdminBoardDTO> adminBoardDTOList1 = new ArrayList<>();
        adminBoardDTOList.forEach(adminBoardDTO -> {
-          if(adminBoardDTO.getSeason().contains(day)){
+          if(adminBoardDTO.getWeather().contains(day)){
               adminBoardDTOList1.add(adminBoardDTO);
           }
        });
