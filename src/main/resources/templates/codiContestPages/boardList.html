@@ -42,34 +42,34 @@
 
 </div>
     <div class="bottom_menu" style=" display: flex; margin-top: 45px;">
-    <div class="menu search" style="margin-left: 990px;">
-        <select name="type" id="type">
-            <option value="writer">작성자</option>
-            <option value="title">제목</option>
+    <div class="menu search" style="margin-left: 830px;">
+        <select style="font-size: 20px; margin-right: 10px;" name="type" id="type">
+            <option style="font-size: 20px; margin-right: 10px" value="writer">작성자</option>
+            <option style="font-size: 20px;" value="title">제목</option>
         </select>
-        <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block;">
-        <i class="bi bi-search" onclick="search_func()"></i>
+        <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block; font-size: 20px;">
+        <i class="bi bi-search"  style="font-size: 20px; margin-left: 10px;" onclick="search_func()"></i>
     </div>
         <div style="margin-left: -1285px;">
-<button onclick="save()" style="background-color: #558BCF;  color: white;
-    width: 100px; height: 40px; border-radius: 10px;">글작성하기</button>
+
         </div>
-        <div style="margin-left: 470px;">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">이전</a>
-                </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
-                    <a class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
-                </li>
-                <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">다음</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="d-flex align-items-center" style="margin-left: 520px; margin-bottom: 50px;">
+            <button onclick="save()" style="background-color: #558BCF;  color: white; margin-left: -490px;
+    width: auto; height: 40px; border: none; border-radius: 5px; font-size: 20px; padding: 10px;"><p style="margin-top: -5px;">글작성하기</p></button>
+            <nav style="margin-left: 400px;" aria-label="Page navigation example" class="mr-3">
+                <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">이전</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">다음</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </div>
     <div style="height: 50px;"></div>
 
 </div>

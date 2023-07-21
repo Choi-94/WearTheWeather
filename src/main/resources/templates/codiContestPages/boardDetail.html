@@ -11,24 +11,20 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div id="section">
-    <a href="/memberBoard/save">저장하기</a>
-    <div class="text-center">
-        <img th:src="@{|/upload/${board.storedFileName}}"
-             alt="" style="max-width: 100%; height: auto">
-    </div>
+<div class="container">
     <div>
         <input type="hidden" id="id" th:value="${board.id}">
         <input type="hidden" id="writerId" th:value="${board.writerId}">
-        <div>
+
+        <div style="position: absolute; top:250px; left: 900px;">
             <div th:if="${board.memberPoints > 6000}">
                 <!-- Level 5 이미지 -->
-                <img style="width: 100px; height: 100px; border-radius: 30px; float: left;"
+                <img style="width: 30px; height: 30px; border-radius: 30px; float: left;"
                      src="/img/point_img/Level_5.png" alt="">
             </div>
             <div th:unless="${board.memberPoints > 6000}" th:if="${board.memberPoints >= 4500}">
                 <!-- Level 4 이미지 -->
-                <img style="width: 100px; height: 100px; border-radius: 30px; float: left;"
+                <img style="width: 30px; height: 30px; border-radius: 30px; float: left;"
                      src="/img/point_img/Level_4.png" alt="">
             </div>
             <div th:unless="${board.memberPoints >= 4500}" th:if="${board.memberPoints >= 3000}">
@@ -47,18 +43,19 @@
                      src="/img/point_img/Level_1.png" alt="">
             </div>
         </div>
-        <div>
+
+        <div style="position: absolute; top:270px; left:1020px;">
             <h3 th:text="${board.boardTitle}"></h3>
         </div>
-        <div>
+        <div style="position: absolute; top:310px; left: 1020px;">
             <h6 th:text="${board.boardWriter + ' | ' + board.boardHits + ' | ' + board.createdAt}"></h6>
         </div>
         <div th:each="fileName: ${board.storedFileName}">
-            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+            <img th:src="@{|/upload/${fileName}}" width="550" height="600" alt="">
         </div>
-        <div th:text="${board.boardContents}"></div>
+        <div style="position: absolute; top: 365px; left: 920px;" th:text="${board.boardContents}"></div>
 
-        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
+        <div style="position: absolute; top:850px;left: 430px;" id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
             <div th:if="${boardLikes.isEmpty()}">
                 <i id="likeIcon2" class="bi bi-heart"></i> 좋아요
             </div>
@@ -66,35 +63,28 @@
                 <i id="likeIcon2" class="bi bi-heart-fill"></i> 좋아요
             </div>
         </div>
-        <div id="countLikes">
-            좋아요수:
-            <div th:text="${countBoardLikes}"></div>
+        <div style="position: absolute; top:850px; " id="countLikes">
+            <div style="font-size: 23px;" th:text="'좋아요  '+${countBoardLikes}+'개'"></div>
         </div>
 
         <!-- 수정/삭제버튼 -->
         <div th:if="${session.memberNickName eq board.boardWriter}">
-            <button class="btn btn-primary" th:onclick="update([[${board.id}]])">수정</button>
-            <button class="btn btn-primary" th:onclick="boardDelete([[${board.id}]])">삭제</button>
+            <button style="position: absolute; top:850px; left: 730px; background-color: #558BCF" class="btn btn-primary"  th:onclick="update([[${board.id}]])">수정</button>
+            <button style="position: absolute; top:850px; left: 800px; background-color: #558BCF" class="btn btn-primary" th:onclick="boardDelete([[${board.id}]])">삭제</button>
         </div>
         <div th:unless="${session.loginEmail eq board.boardWriter}"></div>
 
-        <div class="container" id="comment-write">
+        <div class="container" id="comment-write" style="position: absolute; top:850px; left: 900px;">
             <input type="hidden" id="comment-writer" th:value="${session.memberNickName}">
-            <input type="text" id="comment-contents" placeholder="내용">
-            <button onclick="comment_write()">댓글작성</button>
+            <input style="width: 400px; border-radius: 10px;  border: solid 2px gainsboro;" type="text" id="comment-contents" placeholder="댓글 내용을 작성해주세요">
+            <button style="border-radius: 10px; background-color: #558BCF; color: white; border: solid 3px #f8f9fa;" onclick="comment_write()">댓글작성</button>
         </div>
-        <div class="container" id="comment-list">
+        <div class="container" id="comment-list" style="position:absolute; top: 550px; left: 900px; width: 700px;">
             <div th:if="${commentList == null}">
                 <p>작성된 댓글이 없습니다.</p>
             </div>
             <div th:unless="${commentList == null}">
                 <table class="table">
-                    <tr>
-                        <th>writer</th>
-                        <th>contents</th>
-                        <th>date</th>
-                        <th></th>
-                    </tr>
                     <tr th:each="comment: ${commentList}">
                         <input type="hidden" id="commentWriterId" th:value="${comment.writerId}">
                         <input type="hidden" id="memberPoint" th:value="${comment.memberPoints}">
@@ -127,11 +117,14 @@
                                 <!-- Level 1 이미지 -->
                                 <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
                                      src="/img/point_img/Level_1.png" alt="">
-                                <span th:text="${comment.commentWriter}"></span>
                             </div>
+
+                                <span>
+                                 <span th:text="${comment.commentWriter}"></span>
+<span th:text="${comment.createdAt.substring(0, 10)}"></span>
+                                    </span>
                         </td>
                         <td th:text="${comment.commentContents}"></td>
-                        <td th:text="${comment.createdAt}"></td>
                         <td th:if="${session.memberNickName eq comment.commentWriter}">
                             <i class="bi bi-x" th:onclick="comment_delete([[${comment.id}]])"></i>
                         </td>
@@ -144,6 +137,8 @@
 
     </div>
 </div>
+</div>
+<div style="height: 100px; width: 500px; background-color: white"></div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
@@ -162,9 +157,9 @@
             output += `
             <tr>
                 <td>${commentList[i].id}</td>
-                <td>${commentList[i].commentWriter}</td>
+                <td>${commentList[i].commentWriter | commentList[i].createdAt}</td>
                 <td>${commentList[i].commentContents}</td>
-                <td>${commentList[i].createdAt}</td>
+
                 <td>
                     <i class="bi bi-x" th:onclick="comment_delete(${commentList[i].id})"></i>
                 </td>
