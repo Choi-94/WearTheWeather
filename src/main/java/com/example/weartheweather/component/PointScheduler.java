@@ -1,11 +1,12 @@
 package com.example.weartheweather.component;
 
 import com.example.weartheweather.dto.MemberBoardDTO;
-import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.entity.MemberEntity;
 import com.example.weartheweather.repository.MemberRepository;
 import com.example.weartheweather.service.MemberBoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Component
+@EnableScheduling
 @RequiredArgsConstructor
+@Slf4j
 public class PointScheduler {
     private final MemberRepository memberRepository;
     private final MemberBoardService memberBoardService;

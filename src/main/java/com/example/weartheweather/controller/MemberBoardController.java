@@ -40,9 +40,8 @@ public class MemberBoardController {
     }
 
     @GetMapping("/save")
-    public String saveForm(HttpSession session, Model model) {
-        int countMyAlarm = this.countMyAlarm(session);
-        model.addAttribute("countMyAlarm", countMyAlarm);
+    public String saveForm() {
+
         return "/codiContestPages/boardSave";
     }
 
@@ -54,10 +53,8 @@ public class MemberBoardController {
     }
 
     @GetMapping("/list")
-    public String findAll(HttpSession session, Model model, @PageableDefault(size = 15)Pageable pageable,@RequestParam(value = "type", required = false, defaultValue = "") String type,
+    public String findAll(Model model, @PageableDefault(size = 15)Pageable pageable,@RequestParam(value = "type", required = false, defaultValue = "") String type,
                           @RequestParam(value = "q", required = false, defaultValue = "") String q) {
-        int countMyAlarm = this.countMyAlarm(session);
-        model.addAttribute("countMyAlarm", countMyAlarm);
         Page<MemberBoardDTO> memberBoardDTOList = memberBoardService.findAll(pageable,type,q);
         int startPage = Math.max(1,memberBoardDTOList.getPageable().getPageNumber()-4);
         int endPage = Math.min(memberBoardDTOList.getTotalPages(), memberBoardDTOList.getPageable().getPageNumber()+4);
@@ -70,11 +67,9 @@ public class MemberBoardController {
     }
 
     @GetMapping("/rankingList")
-    public String rankingList(HttpSession session, Model model) {
+    public String rankingList(Model model) {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastWeek = today.minusWeeks(1);
-        int countMyAlarm = this.countMyAlarm(session);
-        model.addAttribute("countMyAlarm", countMyAlarm);
         List<MemberBoardDTO> weeklyLikesList = memberBoardService.weeklyLikesList(today, lastWeek);
         model.addAttribute("boardList", weeklyLikesList);
         return "/codiContestPages/boardRankingList";
@@ -85,10 +80,6 @@ public class MemberBoardController {
                            HttpServletRequest req, HttpServletResponse res) {
         memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
-
-        int countMyAlarm = this.countMyAlarm(session);
-            model.addAttribute("countMyAlarm", countMyAlarm);
-
         String boardLikes = "";
         if(memberNickName!=null){
             MemberBoardLikesDTO memberBoardLikesDTO = memberBoardService.findByBoardLikes(memberNickName, id);
