@@ -302,4 +302,8 @@
     width: 700px;
 }
 
+.search-container img{
+    width: 150px;
+    height: 150px;
+}
 /*.pageTitle {position: fixed; left: 0; top: 0; width: 100%; height: 52px; line-height: 52px; color: #fff; text-align: center; background: #111;}*/

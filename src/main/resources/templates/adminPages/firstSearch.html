@@ -10,82 +10,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Karla:ital@1&display=swap" rel="stylesheet">
 </head>
-<style>
-
-    /*.popular-keywords-container {*/
-    /*    display: flex;*/
-    /*    flex-wrap: wrap;*/
-    /*    gap: 10px;*/
-    /*    padding: 10px;*/
-    /*    border: 1px solid #ccc;*/
-    /*    border-radius: 5px;*/
-    /*    max-width: 500px;*/
-    /*}*/
-
-    .search-container {
-        text-align: center;
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 아이콘 스타일 (Font Awesome 사용) */
-    .icon {
-        margin-right: 5px;
-    }
-    .popular-keyword {
-        background-color: #f2f2f2;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
-    img{
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        filter: brightness(0.7);
-        cursor: pointer;
-    }
-    /* 스팬 태그 스타일 */
-    span {
-
-        font-family: 'Karla', sans-serif;
-    }
-    .container mt-4 {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px;
-        align-items: stretch;
-        border-radius: 5px;
-        max-width: 500px;
-    }
-    /* 버튼 스타일 */
-    button {
-        padding: 8px 16px;
-        margin: 5px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-</style>
-
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 
-<nav class="navbar bg-light" style="max-width: 1000px; margin-left: 20%;">
+<div class="container">
+<nav class="navbar bg-light" style="max-width: 1296px;">
     <div class="container-fluid">
-            <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search" style="width: 70%; margin-left: 16%">
-            <button class="btn btn-outline-success" onclick="search_func()">Search</button>
-
+            <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search" style="width: 45%; margin-left: 20%">
+        <button style="position: absolute; left: 860px; color: #558BCF" class="btn btn-outline-success"
+                onmouseover="this.style.backgroundColor='#558BCF'; this.style.color='white'"
+                onmouseout="this.style.backgroundColor=''; this.style.color='#558BCF'"
+                onclick="search_func()">검색</button>
     </div>
 </nav>
 
@@ -118,7 +54,7 @@
 
 
 <!--버튼을 누르면 전부 2차검색으로 넘어감-->
-<div class="search-container">
+<div class="search-container" style="margin-left: 10px; margin-top: 50px;">
     <div>
         <span>온도별 검색</span><br>
         <img src="/img/search/hot_search.png" onclick="search_func('더움')">
@@ -141,6 +77,9 @@
         <img src="/img/search/winter_search.png" onclick="search_func('겨울')">
     </div>
 </div>
+</div>
+<div style="background-color: white; width: 300px; height: 40px;"></div>
+<div th:replace="component/footer :: footer"></div>
 </body>
 <script>
     const search_func = (q) => {

@@ -7,99 +7,51 @@
 </head>
 
 <body>
+<div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 230px; border-radius: 30px; color: white; margin-left: 45px; margin-top: 30px;">
+    <div class="floating_menu"><a href="/adminBoard/save">관리글 작성</a></div>
+    <div class="floating_menu"><a href="/admin/boardList">관리자 목록</a></div>
+    <div style="position: absolute; margin-top: -5px;">
+        <img style="margin-top: 100px;" id="bannerImage" src="/img/42.png" onclick="moveToTop()">
+    </div>
+</div>
+<div class="container">
+
 
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<h1>실시간 날씨 정보</h1>
-<h5>(1분마다 자동 업데이트)</h5>
-<div id="weatherResult"></div>
+<div id="section" style="height: 350px;">
+
+</div>
 <div th:replace="component/adminnav :: nav"></div>
+</div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
-    $(function() {
-        // Check if we can access the Geolocation API
-        if (navigator.geolocation) {
-            // Regularly get location information
-            var id = navigator.geolocation.watchPosition(
-                function(pos) {
-                    $('#latitude').html(pos.coords.latitude); // 위도
-                    $('#longitude').html(pos.coords.longitude); // 경도
-                });
+    const floatPosition = parseInt($(".sideBanner").css('top'))
 
-            // Stop monitoring with button click
-            $('#btnStop').click(function() {
-                navigator.geolocation.clearWatch(id);
-            });
+    // scroll 인식
+    $(window).scroll(function() {
+
+        // 현재 스크롤 위치
+        const currentTop = $(window).scrollTop();
+        const bannerTop = currentTop + floatPosition + "px";
+
+        // 이미지 변경
+        if (currentTop > 0) {
+            $("#bannerImage").attr("src", "/img/43.png");
         } else {
-            alert("이 브라우저에서는 Geolocation을 지원하지 않습니다.")
+            $("#bannerImage").attr("src", "/img/42.png");
         }
+
+        // 이동 애니메이션
+        $(".sideBanner").stop().animate({
+            "top" : bannerTop
+        }, 500);
 
     });
+
+    function moveToTop() {
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
 </script>
-<script>
-    const API_KEY = '9d1cf1fe0889f04622c00ea6dbe6c73d';
-
-    function displayWeather(temperature, weather) {
-        const resultElement = document.getElementById("weatherResult");
-        resultElement.innerHTML = `온도: ${temperature}°C, 날씨: ${weather}`;
-
-        const weatherIconElement = document.createElement("img");
-        weatherIconElement.classList.add("weather-icon");
-        weatherIconElement.style.width = "100px"; // 가로 크기 설정
-        weatherIconElement.style.height = "100px"; // 세로 크기 설정
-        const iconFileName = getIconFileName(weather);
-        weatherIconElement.src = `/img/${iconFileName}`;
-
-        resultElement.appendChild(weatherIconElement);
-    }
-
-    function getIconFileName(weather) {
-        const weatherIcons = {
-            "Clear": "Clear4.png",
-            "Clouds": "Clouds4.png",
-            "Rain": "Rain4.png",
-            "Snow": "Snow4.png"
-        };
-
-        const weatherKey = Object.keys(weatherIcons).find(key => weather.includes(key));
-
-        return weatherIcons[weatherKey];
-    }
-
-    function getWeather() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-
-                fetch(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
-                )
-                    .then(response => response.json())
-                    .then(data => {
-                        const temperature = data.main.temp; // 온도
-                        const weather = data.weather[0].main; // 날씨 조건
-
-                        displayWeather(temperature, weather);
-                    })
-                    .catch(error => {
-                        alert("날씨 정보를 가져오는 중에 오류가 발생했습니다.");
-                    });
-            }, () => {
-                alert("위치 정보를 찾을 수 없습니다. 날씨 정보를 제공할 수 없습니다.");
-            });
-        } else {
-            alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
-        }
-    }
-
-    // 정해진 간격으로 실시간으로 날씨 정보 업데이트
-    setInterval(getWeather, 60000); // 1분마다 업데이트
-
-    // 페이지 로드 시 초기 날씨 정보 출력
-    window.onload = getWeather;
-</script>
-
-
 </html>
