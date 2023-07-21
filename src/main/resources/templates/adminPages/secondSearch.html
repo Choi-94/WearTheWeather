@@ -230,7 +230,8 @@
       uri:"/adminBoard/secondSearch?q="+q+"&tall="+tall+"&gender="+genderm+genderw,
       data:{
         keyword: q,
-        gender: genderw+genderm,
+        genderw: genderw,
+        genderm: genderm,
         tall: tall
 
       }, success: function (res){

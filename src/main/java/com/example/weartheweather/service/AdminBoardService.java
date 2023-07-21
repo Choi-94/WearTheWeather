@@ -313,22 +313,27 @@ public class AdminBoardService {
         int tolerance = 5;
         adminBoardEntityList.forEach(adminBoardEntity -> {
             AdminBoardDTO adminBoardDTO = AdminBoardDTO.Search(adminBoardEntity);
-            if (tall != 0 && !gender.equals("")) {
-                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance && adminBoardDTO.getGender().contains(gender)) {
+            if (tall != 0 && !gender.trim().equals("")) {
+                if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance && adminBoardDTO.getGender().contains(gender.trim())) {
+                    System.out.println("gender1"+gender.trim());
                     result.add(adminBoardDTO);
                 }
-            } else if (tall == 0 && !gender.equals("")) {
-                if (adminBoardDTO.getTotalTags().contains(q) && adminBoardDTO.getGender().contains(gender)) {
+            } else if (tall == 0 && gender != "") {
+                if (adminBoardDTO.getTotalTags().contains(q) && adminBoardDTO.getGender().contains(gender.trim())) {
+                    System.out.println("gender2"+gender.trim());
                     result.add(adminBoardDTO);
                 }
-            } else if (tall != 0 && gender.equals("")) {
+            } else if (tall != 0 && gender.trim().equals("")) {
                 if (adminBoardDTO.getTotalTags().contains(q) && Math.abs(adminBoardDTO.getHeight() - tall) <= tolerance) {
+                    System.out.println("gender3"+gender.trim());
                     result.add(adminBoardDTO);
                 }
             } else {
                 if (adminBoardDTO.getTotalTags().contains(q)) {
+                    System.out.println("gender4"+gender.trim());
                     result.add(adminBoardDTO);
                 }
+
             }
 
         });

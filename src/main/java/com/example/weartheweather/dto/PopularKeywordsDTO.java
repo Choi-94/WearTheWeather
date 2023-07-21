@@ -10,7 +10,8 @@ import lombok.ToString;
 public class PopularKeywordsDTO {
     private Long id;
     private String keyword;
-    private String gender;
+    private String genderw;
+    private String genderm;
     private Long count;
     private int tall;
 }
