@@ -18,6 +18,7 @@ public class WeatherService {
 
     @Transactional
     public List<AdminBoardDTO> findWeather(String day) {
+        System.out.println("day = " + day.toLowerCase());
        List<AdminBoardEntity> adminBoardEntityList =  adminBoardRepository.findAll();
 
        List<AdminBoardDTO> adminBoardDTOList = new ArrayList<>();
