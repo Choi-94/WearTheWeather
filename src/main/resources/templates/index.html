@@ -34,6 +34,14 @@
 <p th:text="${D4}"></p>
 <p th:text="${D5}"></p>
 <p th:text="${D6}"></p>
+<input type="hidden" th:value="${D0}" id="D0">
+<input type="hidden" th:value="${D1}" id="D1">
+<input type="hidden" th:value="${D2}" id="D2">
+<input type="hidden" th:value="${D3}" id="D3">
+<input type="hidden" th:value="${D4}" id="D4">
+<input type="hidden" th:value="${D5}" id="D5">
+<input type="hidden" th:value="${D6}" id="D6">
+
 
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
@@ -178,6 +186,9 @@
                 </th:block>
             </table>
         </div>
+        <div id="test">
+
+        </div>
 
 
     </div>
@@ -267,6 +278,50 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
+
+    ///////////
+    // function changeList(){
+    //     const weatherDiv = document.getElementById("test");
+    //     const d0 = document.getElementById("D0");
+    //     const d1 = document.getElementById("D1");
+    //     const d2 = document.getElementById("D2");
+    //     const d3 = document.getElementById("D3");
+    //     const d4 = document.getElementById("D4");
+    //     const d5 = document.getElementById("D5");
+    //     const d6 = document.getElementById("D6");
+    //
+    //     axios({
+    //         method: "post",
+    //         url: "/weather",
+    //         data:{
+    //
+    //         }
+    //     })
+
+        //
+        //     axios({
+        //         method: "get",
+        //         url: "/adminBoard/findByBoardLikes/" + id
+        //     }).then(res => {
+        //         icon.classList.remove("bi-heart");
+        //         icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+        //         // location.href = "/adminBoard/detail/" + id;
+        //         count_adminLikes();
+        //     }).catch(err => {
+        //
+        //         icon.classList.remove("bi-heart-fill");
+        //         icon.innerHTML =  '<i class="bi bi-heart"></i>';
+        //         count_adminLikes();
+        //     });
+        // }
+
+    }
+
+
+
+
+    ///////////
+
     const allButtons = document.getElementsByClassName('day-button');
 
     // 월요일 버튼의 이미지를 1.png로 변경

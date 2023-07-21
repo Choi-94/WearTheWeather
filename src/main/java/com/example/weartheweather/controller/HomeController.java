@@ -7,6 +7,7 @@ import com.example.weartheweather.dto.MemberBoardDTO;
 import com.example.weartheweather.service.AdminBoardService;
 import com.example.weartheweather.service.MarketProductService;
 import com.example.weartheweather.service.MemberBoardService;
+import com.example.weartheweather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,6 +28,8 @@ public class HomeController {
     private final MarketProductService marketProductService;
     private final MemberBoardService memberBoardService;
     private final AdminBoardService adminBoardService;
+    private final WeatherService weatherService;
+
 
     @GetMapping("/")
     public String findByDetailList(Model model, @PageableDefault(size = 15) Pageable pageable, @RequestParam(value = "type", required = false, defaultValue = "") String type,
@@ -75,14 +78,33 @@ public class HomeController {
             String D5 = convertWeather(D_day5.attr("alt"));
             String D6 = convertWeather(D_day6.attr("alt"));
 
+          
+
+            //각 값을 가져오기 도영
+            List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeather(D0);
+            List<AdminBoardDTO> adminBoardDTOSd1 = weatherService.findWeather(D1);
+            List<AdminBoardDTO> adminBoardDTOSd2 = weatherService.findWeather(D2);
+            List<AdminBoardDTO> adminBoardDTOSd3 = weatherService.findWeather(D3);
+            List<AdminBoardDTO> adminBoardDTOSd4 = weatherService.findWeather(D4);
+            List<AdminBoardDTO> adminBoardDTOSd5 = weatherService.findWeather(D5);
+            List<AdminBoardDTO> adminBoardDTOSd6 = weatherService.findWeather(D6);
             // 요소의 텍스트를 모델에 추가합니다.
-            model.addAttribute("D0", D0);
-            model.addAttribute("D1", D1);
-            model.addAttribute("D2", D2);
-            model.addAttribute("D3", D3);
-            model.addAttribute("D4", D4);
-            model.addAttribute("D5", D5);
-            model.addAttribute("D6", D6);
+            model.addAttribute("D0", adminBoardDTOSd0);
+            model.addAttribute("D1", adminBoardDTOSd1);
+            model.addAttribute("D2", adminBoardDTOSd2);
+            model.addAttribute("D3", adminBoardDTOSd3);
+            model.addAttribute("D4", adminBoardDTOSd4);
+            model.addAttribute("D5", adminBoardDTOSd5);
+            model.addAttribute("D6", adminBoardDTOSd6);
+
+
+            System.out.println("adminBoardDTOSd0 = " + adminBoardDTOSd0);
+            System.out.println("adminBoardDTOSd1 = " + adminBoardDTOSd1);
+            System.out.println("adminBoardDTOSd2 = " + adminBoardDTOSd2);
+            System.out.println("adminBoardDTOSd3 = " + adminBoardDTOSd3);
+            System.out.println("adminBoardDTOSd4 = " + adminBoardDTOSd4);
+            System.out.println("adminBoardDTOSd5 = " + adminBoardDTOSd5);
+
 
 
             // 요일데이터 추출
@@ -123,13 +145,13 @@ public class HomeController {
 
     private String convertWeather(String weather) {
         if (weather.contains("맑음")) {
-            return "Sunny";
+            return "맑음";
         } else if (weather.contains("구름")) {
-            return "Cloudy";
+            return "흐림";
         } else if (weather.contains("소나기") || weather.contains("뇌우") || weather.contains("강우")) {
-            return "Rain";
+            return "비";
         } else if (weather.contains("눈")) {
-            return "Snow";
+            return "눈";
         } else {
             return weather; // 기타 경우에는 원래의 값을 그대로 반환
         }
