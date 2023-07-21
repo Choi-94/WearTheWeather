@@ -35,7 +35,7 @@
             <p th:text="${ProductDTO.productHits}" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-clock" style="display: inline-block; font-size: 25px;"></i>
             <p th:text="${ProductDTO.createdAt}" style="font-size: 25px; display: inline-block;"></p>
-            <div style="font-size: 20px; margin-top: -60px; margin-left: 560px" th:if="${session.memberNickName eq ProductDTO.productWriter}">
+            <div style="font-size: 20px; margin-top: -50px; margin-left: 560px" th:if="${session.memberNickName eq ProductDTO.productWriter}">
                 <button onclick="goMarketUpdate()" style="margin-right: 10px;">수정하기</button>
                 <button onclick="marketDelete()" style="margin-right: 10px;">삭제하기</button>
             </div>
@@ -98,7 +98,7 @@
             <div class="grayBox_vertical"></div>
         </div>
     </div>
-    <div class="detail_3_left" style="margin-top: 30px">
+    <div class="detail_3_left" style="margin-top: 10px">
         <h2>판매자정보</h2>
         <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p>
         <br>
@@ -121,8 +121,8 @@
         </table>
     </div>
     <div class="grayBox3"></div>
-    <div class="section3" style="height: 250px">
-        <h2 style="margin-top: -50px">연관상품</h2>
+    <div class="section3" style="height: 300px">
+        <h2 style="margin-top:  20px">연관상품</h2>
 
     </div>
 </div>
