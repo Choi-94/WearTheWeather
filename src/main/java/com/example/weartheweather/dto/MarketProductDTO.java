@@ -37,7 +37,7 @@ public class MarketProductDTO {
     private int marketLikes;
     private int productHits;
     private String createdAt;
-
+    private Long calculateElapsedDays;
     private List<MultipartFile> productImage;
     private int fileAttached;
     private List<String> originalFileName = new ArrayList<>();
@@ -62,6 +62,7 @@ public class MarketProductDTO {
         marketProductDTO.setProductHits(marketProductEntity.getProductHits());
         marketProductDTO.setMemberId(marketProductEntity.getMemberEntity().getId());
         marketProductDTO.setCreatedAt(UtilClass.dateFormat(marketProductEntity.getCreatedAt()));
+        marketProductDTO.setCalculateElapsedDays(marketProductEntity.calculateElapsedDays());
         if (marketProductEntity.getFileAttached() == 1) {
             marketProductDTO.setFileAttached(1);
             List<String> originalFileNameList = new ArrayList<>();

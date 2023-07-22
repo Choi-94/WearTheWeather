@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -16,6 +18,7 @@ public class CommentDTO {
     private Long boardId;
     private Long writerId;
     private String createdAt;
+    private Long calculateElapsedDays;
 
     private int memberPoints;
 
@@ -27,6 +30,8 @@ public class CommentDTO {
         commentDTO.setBoardId(commentEntity.getMemberBoardEntity().getId());
         commentDTO.setWriterId(commentEntity.getMemberEntity().getId());
         commentDTO.setCreatedAt(UtilClass.dateFormat(commentEntity.getCreatedAt()));
+        commentDTO.setCalculateElapsedDays(commentEntity.calculateElapsedDays());
+
         return commentDTO;
     }
 
@@ -39,6 +44,7 @@ public class CommentDTO {
         commentDTO.setWriterId(commentEntity.getMemberEntity().getId());
         commentDTO.setCreatedAt(UtilClass.dateFormat(commentEntity.getCreatedAt()));
         commentDTO.setMemberPoints(commentEntity.getMemberEntity().getMemberPoints());
+        commentDTO.setCalculateElapsedDays(commentEntity.calculateElapsedDays());
         return commentDTO;
     }
 }

@@ -129,7 +129,13 @@
 
                             <span>
                                  <span th:text="${comment.commentWriter}"></span>
-<span th:text="${comment.createdAt.substring(0, 10)}"></span>
+                                <div th:if="${comment.calculateElapsedDays == 0}">
+                                    <span>오늘</span>
+                                </div>
+                                <div th:unless="${comment.calculateElapsedDays == 0}">
+                                    <span th:text="${comment.calculateElapsedDays} + '일 전'"></span>
+                                </div>
+
                                     </span>
                         </td>
                         <td th:text="${comment.commentContents}"></td>
@@ -150,6 +156,7 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
+
 
     const comment_list = (commentList) => {
         const resultArea = document.querySelector("#comment-list");

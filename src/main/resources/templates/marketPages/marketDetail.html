@@ -35,7 +35,8 @@
             <p th:text="${ProductDTO.productHits}" style="font-size: 25px; display: inline-block;"></p>
             <i class="bi bi-clock" style="display: inline-block; font-size: 25px;"></i>
             <p th:text="${ProductDTO.createdAt}" style="font-size: 25px; display: inline-block;"></p>
-            <div style="font-size: 20px; margin-top: -50px; margin-left: 560px" th:if="${session.memberNickName eq ProductDTO.productWriter}">
+            <div style="font-size: 20px; margin-top: -50px; margin-left: 560px"
+                 th:if="${session.memberNickName eq ProductDTO.productWriter}">
                 <button onclick="goMarketUpdate()" style="margin-right: 10px;">수정하기</button>
                 <button onclick="marketDelete()" style="margin-right: 10px;">삭제하기</button>
             </div>
@@ -93,6 +94,15 @@
     <div class="section3" style="height: 300px">
         <div style=" display: inline-block; align-items: flex-start; margin-top: -50px;">
             <h2>상품정보</h2>
+
+            <!-- 오늘기준 작성한 날 -->
+            <div th:if="${ProductDTO.calculateElapsedDays == 0}">
+                <p>오늘</p>
+            </div>
+            <div th:unless="${ProductDTO.calculateElapsedDays == 0}">
+                <p th:text="${ProductDTO.calculateElapsedDays} + '일 전'"></p>
+            </div>
+
             <p th:text="${ProductDTO.productContents}"
                style="margin-top: 20px; margin-left: 0px; white-space: pre-line; display: inline-block; line-height: 0.95;"></p>
             <div class="grayBox_vertical"></div>
@@ -103,7 +113,8 @@
         <p th:text="닉네임+'&nbsp;'+ ': ' + '&nbsp;&nbsp;' + ${ProductDTO.productWriter}" style="line-height: 0.95;"></p>
         <br>
         <p style="line-height: 0.95; margin-top: -35px; margin-bottom: 10px;">판매상품</p>
-        <h4 th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'" style="cursor: pointer;  margin-left: 530px;">
+        <h4 th:attr="onclick='productDetailList(\'' + ${ProductDTO.id} + '\')'"
+            style="cursor: pointer;  margin-left: 530px;">
             <p style="margin-left: 8px; font-size: 20px;">더 보기</p>
         </h4>
         <table style="margin-top: -155px">
@@ -214,7 +225,7 @@
         const height = 650;
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
-        window.open(url, 'detail', 'width=' + width +', height='+height +', left='+left +', top='+top +', location=no, status=no, scrollbar=yes');
+        window.open(url, 'detail', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', location=no, status=no, scrollbar=yes');
     }
 </script>
 </html>
