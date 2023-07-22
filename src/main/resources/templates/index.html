@@ -169,32 +169,11 @@
 
 
         </div>
-        <div id="adminList" style="margin-top: 45px;">
-            <table>
-                <th:block th:each="adminBoard, iterationStatus: ${adminBoardDTOList}" th:if="${adminBoard.weather == D0}">
-                    <th:block th:if="${iterationStatus.index % 5 == 0}">
-                        <tr>
-                    </th:block>
-                    <td th:if="${iterationStatus.index < 5}">
-                        <img th:src="@{|/upload/${#strings.replace(adminBoard.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="adminDetail([[${adminBoard.id}]])">
-                    </td>
-                    <td th:if="${iterationStatus.index >= 5}" th:unless="${(iterationStatus.index - 5) % 5 == 0}" style="display: none;">
-                        <img th:src="@{|/upload/${#strings.replace(adminBoard.storedFileName, '[', '').replace(']', '')}|}" width="259" height="259" alt="" th:onclick="adminDetail([[${adminBoard.id}]])">
-                    </td>
-                    <th:block th:if="${iterationStatus.index % 5 == 4 || iterationStatus.last}">
-                        </tr>
-                    </th:block>
-                    <th:block th:if="${iterationStatus.index == 4 && adminBoardDTOList.size() > 5}">
-                    </th:block>
-                </th:block>
-            </table>
-        </div>
-        <div id="test">
-
-        </div>
 
 
-    </div>
+
+
+
     <div id="rankBox" style="height: 930px; background-color: #f2f2f2; padding-top: 40px;">
         <div>
             <h1>실시간랭킹</h1>
@@ -323,6 +302,7 @@
     }
     function toggleButton(day) {
         const weatherDiv = document.getElementById("weather-list");
+
         $.ajax({
             method:"post",
             url:"/weekWeather",
@@ -337,9 +317,12 @@
                     const weatherItem = res[i];
                     console.log("제발.."+weatherItem);
                     const storedFileName = weatherItem.storedFileName[0];
-                    var imgTag = $('<img>').attr('src', '/upload/' + storedFileName.replace('[', '').replace(']', ''));
+                    const imgTag = $('<img>').attr('src', '/upload/' + storedFileName.replace('[', '').replace(']', ''));
                     imgTag.css('max-width', '130px');
                     weatherDiv.appendChild(imgTag);
+                }
+                if(res.length===0){
+                    weatherDiv.innerHTML="이미지없음";
                 }
             },error:function (){
                 alert("주간날씨에 맞는 리스트 x");
@@ -455,9 +438,9 @@
     window.onload = getWeather;
 
 
-    const productDetail = (id) =>{
-        window.location.href = "/market/" + id;
-    }
+    // const productDetail = (id) =>{
+    //     window.location.href = "/market/" + id;
+    // }
 
 </script>
 <script>
@@ -488,12 +471,12 @@
         $("html, body").animate({ scrollTop: 0 }, "fast");
     }
 
-    const rankDetail = (id) => {
-        location.href = "/memberBoard/detail/" + id;
-    }
-    const adminDetail = (id) => {
-        location.href = "/admin/detail/" + id;
-    }
+    // const rankDetail = (id) => {
+    //     location.href = "/memberBoard/detail/" + id;
+    // }
+    // const adminDetail = (id) => {
+    //     location.href = "/admin/detail/" + id;
+    // }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
