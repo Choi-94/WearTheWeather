@@ -123,45 +123,49 @@
         </div>
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
-            <button id="${D0}" class="day-button" onclick="toggleButton('${D0}')">
+            <button id="Day0" class="day-button" th:value="${D0}" onclick="toggleButton(this.value)">
                 <img id="D0-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D0-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D1}" class="day-button" onclick="toggleButton('${D1}')">
+            <button id="Day1" class="day-button" th:value="${D1}" onclick="toggleButton(this.value)">
                 <img id="D1-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D1-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D2}" class="day-button" onclick="toggleButton('${D2}')">
+            <button id="Day2" class="day-button" th:value="${D2}" onclick="toggleButton(this.value)">
                 <img id="D2-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D2-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D3}" class="day-button" onclick="toggleButton('${D3}')">
+            <button id="Day3" class="day-button" th:value="${D3}" onclick="toggleButton(this.value)">
                 <img id="D3-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D3-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D4}" class="day-button" onclick="toggleButton('${D4}')">
+            <button id="Day4" class="day-button" th:value="${D4}" onclick="toggleButton(this.value)">
                 <img id="D4-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D4-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D5}" class="day-button" onclick="toggleButton('${D5}')">
+            <button id="Day5" class="day-button" th:value="${D5}" onclick="toggleButton(this.value)">
                 <img id="D5-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D5-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="${D6}" class="day-button" onclick="toggleButton('${D6}')">
+            <button id="Day6" class="day-button" th:value="${D6}" onclick="toggleButton(this.value)">
                 <img id="D6-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D6-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
+
+
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
                 <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
-            <div id="weather-info"></div>
+            <div id="weather-list">
+
+            </div>
 
 
 
@@ -279,48 +283,6 @@
 </body>
 <script>
 
-    ///////////
-    // function changeList(){
-    //     const weatherDiv = document.getElementById("test");
-    //     const d0 = document.getElementById("D0");
-    //     const d1 = document.getElementById("D1");
-    //     const d2 = document.getElementById("D2");
-    //     const d3 = document.getElementById("D3");
-    //     const d4 = document.getElementById("D4");
-    //     const d5 = document.getElementById("D5");
-    //     const d6 = document.getElementById("D6");
-    //
-    //     axios({
-    //         method: "post",
-    //         url: "/weather",
-    //         data:{
-    //
-    //         }
-    //     })
-
-        //
-        //     axios({
-        //         method: "get",
-        //         url: "/adminBoard/findByBoardLikes/" + id
-        //     }).then(res => {
-        //         icon.classList.remove("bi-heart");
-        //         icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
-        //         // location.href = "/adminBoard/detail/" + id;
-        //         count_adminLikes();
-        //     }).catch(err => {
-        //
-        //         icon.classList.remove("bi-heart-fill");
-        //         icon.innerHTML =  '<i class="bi bi-heart"></i>';
-        //         count_adminLikes();
-        //     });
-        // }
-
-    }
-
-
-
-
-    ///////////
 
     const allButtons = document.getElementsByClassName('day-button');
 
@@ -337,6 +299,29 @@
     }
 
 
+    // Loop through all buttons and attach the click event
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].addEventListener('click', function () {
+            weatherbutton(this.id);
+        });
+    }
+    function weatherbutton(day){
+        // 클릭된 버튼의 이미지를 1.png로 변경
+        const clickedButton = document.getElementById(day);
+        const images = clickedButton.getElementsByClassName('day-img');
+        images[0].style.display = 'none';
+        images[1].style.display = 'block';
+
+        // 나머지 버튼들의 이미지를 0.png로 변경
+        const allButtons = document.getElementsByClassName('day-button');
+        for (let i = 0; i < allButtons.length; i++) {
+            if (allButtons[i].id !== day) {
+                const otherImages = allButtons[i].getElementsByClassName('day-img');
+                otherImages[0].style.display = 'block';
+                otherImages[1].style.display = 'none';
+            }
+        }
+    }
     function toggleButton(day) {
         console.log("클릭된 D0 값:", day);
         // 클릭된 버튼의 이미지를 1.png로 변경
@@ -354,6 +339,18 @@
                 otherImages[1].style.display = 'none';
             }
         }
+        $.ajax({
+            method:"post",
+            url:"/weekWeather",
+            data:{
+                day: day
+            },success:function (res){
+
+            },error:function (){
+                alert("주간날씨에 맞는 리스트 x");
+            }
+
+        });
     }
 
 </script>
