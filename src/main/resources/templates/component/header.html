@@ -29,11 +29,12 @@
         <script th:inline="javascript">
             const unArea = document.getElementById("un-area");
             const loginArea = document.getElementById("login-area");
-            const memberNickName = [[${session.loginEmail}]];
+            const memberEmail = [[${session.loginEmail}]];
+            const memberNickName = [[${session.memberNickName}]];
             const adminEmail = "gkdudquf@naver.com";
             if(memberNickName == null){
                 unArea.innerHTML =  "<a href='/member/memberLogin' style='margin-left:200px; '>로그인</a>"
-            }else if (memberNickName == adminEmail){
+            }else if (memberEmail == adminEmail){
                 loginArea.innerHTML = "<a href='/admin/index'>"+ "관리자페이지</a>"+"<a href='/member/logout'>" +
                     "logout</a>";
             }else {
