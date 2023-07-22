@@ -164,9 +164,10 @@
                 <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
             <div id="weather-list">
-
+                <ul id="weather-items">
+                    <!-- Weather items will be dynamically added here -->
+                </ul>
             </div>
-
 
 
         </div>
@@ -323,29 +324,26 @@
         }
     }
     function toggleButton(day) {
-        console.log("클릭된 D0 값:", day);
-        // 클릭된 버튼의 이미지를 1.png로 변경
-        const clickedButton = document.getElementById(day);
-        const images = clickedButton.getElementsByClassName('day-img');
-        images[0].style.display = 'none';
-        images[1].style.display = 'block';
-
-        // 나머지 버튼들의 이미지를 0.png로 변경
-        const allButtons = document.getElementsByClassName('day-button');
-        for (let i = 0; i < allButtons.length; i++) {
-            if (allButtons[i].id !== day) {
-                const otherImages = allButtons[i].getElementsByClassName('day-img');
-                otherImages[0].style.display = 'block';
-                otherImages[1].style.display = 'none';
-            }
-        }
+        const weatherDiv = document.getElementById("weather-list");
         $.ajax({
             method:"post",
             url:"/weekWeather",
             data:{
                 day: day
             },success:function (res){
+                console.log("res확인용1"+res);
+                // Clear the existing weather items in the weatherDiv
+                const weatherItemsContainer = document.getElementById("weather-items");
+                weatherItemsContainer.innerHTML = "";
 
+                // Display only the first five items from the received list
+                for (let i = 0; i < Math.min(5, res.length); i++) {
+                    console.log("res확인용2"+res[i]);
+                    const weatherItem = res[i];
+                    const listItem = document.createElement("li");
+                    listItem.textContent = weatherItem.weather; // Assuming "weather" is the property containing weather data
+                    weatherItemsContainer.appendChild(listItem);
+                }
             },error:function (){
                 alert("주간날씨에 맞는 리스트 x");
             }
