@@ -164,9 +164,7 @@
                 <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
             <div id="weather-list">
-                <ul id="weather-items">
-                    <!-- Weather items will be dynamically added here -->
-                </ul>
+
             </div>
 
 
@@ -331,18 +329,17 @@
             data:{
                 day: day
             },success:function (res){
-                console.log("res확인용1"+res);
-                // Clear the existing weather items in the weatherDiv
-                const weatherItemsContainer = document.getElementById("weather-items");
-                weatherItemsContainer.innerHTML = "";
+
 
                 // Display only the first five items from the received list
                 for (let i = 0; i < Math.min(5, res.length); i++) {
-                    console.log("res확인용2"+res[i]);
+
                     const weatherItem = res[i];
-                    const listItem = document.createElement("li");
-                    listItem.textContent = weatherItem.weather; // Assuming "weather" is the property containing weather data
-                    weatherItemsContainer.appendChild(listItem);
+                    console.log("제발.."+weatherItem);
+                    const storedFileName = weatherItem.storedFileName[0];
+                    var imgTag = $('<img>').attr('src', '/upload/' + storedFileName.replace('[', '').replace(']', ''));
+                    imgTag.css('max-width', '130px');
+                    weatherDiv.appendChild(imgTag);
                 }
             },error:function (){
                 alert("주간날씨에 맞는 리스트 x");

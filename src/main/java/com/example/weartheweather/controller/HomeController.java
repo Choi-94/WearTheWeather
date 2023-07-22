@@ -156,6 +156,7 @@ public class HomeController {
     public ResponseEntity getWeekWeather(@RequestParam("day") String day){
         System.out.println("아작스day = " + day);
         List<AdminBoardDTO> adminBoardDTOList = weatherService.findWeather(day);
+        System.out.println("adminBoardDTOList111 = " + adminBoardDTOList);
         return new ResponseEntity(adminBoardDTOList,HttpStatus.OK);
     }
 }
