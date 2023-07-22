@@ -55,7 +55,8 @@
         </div>
         <div style="position: absolute; top: 365px; left: 920px;" th:text="${board.boardContents}"></div>
 
-        <div style="position: absolute; top:850px;left: 430px;" id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike2()">
+        <div style="position: absolute; top:850px;left: 430px;" id="likeButton" class="btn btn-outline-secondary"
+             onclick="toggleLike2()">
             <div th:if="${boardLikes.isEmpty()}">
                 <i id="likeIcon2" class="bi bi-heart"></i> 좋아요
             </div>
@@ -69,15 +70,22 @@
 
         <!-- 수정/삭제버튼 -->
         <div th:if="${session.memberNickName eq board.boardWriter}">
-            <button style="position: absolute; top:850px; left: 730px; background-color: #558BCF" class="btn btn-primary"  th:onclick="update([[${board.id}]])">수정</button>
-            <button style="position: absolute; top:850px; left: 800px; background-color: #558BCF" class="btn btn-primary" th:onclick="boardDelete([[${board.id}]])">삭제</button>
+            <button style="position: absolute; top:850px; left: 730px; background-color: #558BCF"
+                    class="btn btn-primary" th:onclick="update([[${board.id}]])">수정
+            </button>
+            <button style="position: absolute; top:850px; left: 800px; background-color: #558BCF"
+                    class="btn btn-primary" th:onclick="boardDelete([[${board.id}]])">삭제
+            </button>
         </div>
         <div th:unless="${session.loginEmail eq board.boardWriter}"></div>
 
         <div class="container" id="comment-write" style="position: absolute; top:850px; left: 900px;">
             <input type="hidden" id="comment-writer" th:value="${session.memberNickName}">
-            <input style="width: 400px; border-radius: 10px;  border: solid 2px gainsboro;" type="text" id="comment-contents" placeholder="댓글 내용을 작성해주세요">
-            <button style="border-radius: 10px; background-color: #558BCF; color: white; border: solid 3px #f8f9fa;" onclick="comment_write()">댓글작성</button>
+            <input style="width: 400px; border-radius: 10px;  border: solid 2px gainsboro;" type="text"
+                   id="comment-contents" placeholder="댓글 내용을 작성해주세요">
+            <button style="border-radius: 10px; background-color: #558BCF; color: white; border: solid 3px #f8f9fa;"
+                    onclick="comment_write()">댓글작성
+            </button>
         </div>
         <div class="container" id="comment-list" style="position:absolute; top: 550px; left: 900px; width: 700px;">
             <div th:if="${commentList == null}">
@@ -119,7 +127,7 @@
                                      src="/img/point_img/Level_1.png" alt="">
                             </div>
 
-                                <span>
+                            <span>
                                  <span th:text="${comment.commentWriter}"></span>
 <span th:text="${comment.createdAt.substring(0, 10)}"></span>
                                     </span>
@@ -330,9 +338,6 @@
         });
 
     }
-
-
-
 
 
 </script>

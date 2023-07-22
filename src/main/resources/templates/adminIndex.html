@@ -15,14 +15,20 @@
     </div>
 </div>
 <div class="container">
-
-
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div id="section" style="height: 350px;">
-
-</div>
+<div id="section" style="height: 350px;"></div>
 <div th:replace="component/adminnav :: nav"></div>
+</div>
+
+<div class="container">
+
+웨더페이: <div th:text="${admin.memberWeatherPay}"></div>
+
+
+
+
+
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>

@@ -29,13 +29,19 @@
         <script th:inline="javascript">
             const unArea = document.getElementById("un-area");
             const loginArea = document.getElementById("login-area");
+            const memberEmail = [[${session.loginEmail}]];
             const memberNickName = [[${session.memberNickName}]];
-            if(memberNickName==null){
+            const adminEmail = "gkdudquf@naver.com";
+            if(memberNickName == null){
                 unArea.innerHTML =  "<a href='/member/memberLogin' style='margin-left:200px; '>로그인</a>"
-            }else{
+            }else if (memberEmail == adminEmail){
+                loginArea.innerHTML = "<a href='/admin/index'>"+ "관리자페이지</a>"+"<a href='/member/logout'>" +
+                    "logout</a>";
+            }else {
                 loginArea.innerHTML = "<a href='/member/mypage'>"+ memberNickName + "님 환영합니다!</a>"+"<a href='/member/logout'>" +
                     "logout</a>";
             }
+
         </script>
     </div>
 

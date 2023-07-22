@@ -2,7 +2,9 @@ package com.example.weartheweather.controller;
 
 import com.example.weartheweather.dto.AdminBoardDTO;
 import com.example.weartheweather.dto.AdminBoardLikesDTO;
+import com.example.weartheweather.dto.MemberDTO;
 import com.example.weartheweather.service.AdminBoardService;
+import com.example.weartheweather.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,13 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminHomeController {
     private final AdminBoardService adminBoardService;
+    private final MemberService memberService;
+
     @GetMapping("/index")
-    public String adminindex(){
+    public String adminindex(HttpSession session, Model model){
+        String adminEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO adminDTO = memberService.findByEmail(adminEmail);
+        model.addAttribute("admin", adminDTO);
         return "adminIndex";
     }
 

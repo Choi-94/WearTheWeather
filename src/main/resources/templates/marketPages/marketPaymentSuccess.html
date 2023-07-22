@@ -13,7 +13,7 @@
 <div style="border: 2px solid gainsboro; position: absolute; top: 500px; left: 20px; width: 600px; height: 430px; border-radius: 10px; ">
 <div style="margin-left: 20px; margin-top: 20px; font-size: 25px;">
   <div th:text="'결제제수단 : 카카오페이(카드)'"></div>
-  <div th:text="'결제금액 : '+${marketProduct.getFormattedPrice()}"></div>
+  <div th:text="'결제금액 : '+${marketProduct.getTotalAmount2()}"></div>
   <div class="successLine"></div>
   <div style="margin-top: 20px;"></div>
   <div th:text="'주문시간 : '+${marketPay.getCreatedAt()}"></div>
