@@ -10,24 +10,33 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<nav class="navbar bg-light">
-  <div class="container-fluid">
-      <input class="form-control me-2" name="totalTags" type="search" placeholder="Search" aria-label="Search" th:value="${q}">
-      <button class="btn btn-outline-success" onclick="search_func()">Search</button>
-  </div>
-</nav>
+<div class="container">
+  <nav style="max-width: 1296px; margin-top: 40px;">
+    <div class="container-fluid">
+      <input class="form-control me-2" name="totalTags" type="search" placeholder="" aria-label="Search" style="width: 30%; margin-left: 40%">
+      <button style="position: absolute; left: 1220px; top:280px;   color: #558BCF" class="btn btn-outline-success"
+              onmouseover="this.style.backgroundColor='#558BCF'; this.style.color='white'"
+              onmouseout="this.style.backgroundColor=''; this.style.color='#558BCF'"
+              onclick="search_func()">검색</button>
+    </div>
+  </nav>
 <div class="container mt-5">
     <div class="form-group">
-      <li>
-        <label for="heightRange">키(cm): </label>
-        <input type="range" class="form-range" value="0" id="heightRange" name="height"  min="0" max="200" step="1" onchange="showHeight(this.value)" style="width: 360px;">
+      <li style="list-style-type: none;">
+        <input type="range" class="form-range" value="0" id="heightRange" name="height"  min="0" max="200" step="1" onchange="showHeight(this.value)" style="position: absolute; top:290px; left: 430px; width: 360px; list-style-type: none; color: #558BCF">
       </li>
-      <li>
-        <button type="button" id="남" class="togglem-btn btn btn-secondary" value="남">남</button>
-        <button type="button" id="여" class="togglew-btn btn btn-secondary" value="여">여</button>
+      <li style="list-style-type: none;">
+        <button style="position: absolute; top:280px; " type="button" id="남" class="togglem-btn btn btn-secondary"
+                onmouseover="this.style.backgroundColor='#558BCF'; this.style.color='white'"
+                onmouseout="this.style.backgroundColor=''; this.style.color=''"
+                value="남">남</button>
+        <button style="position: absolute; top:280px; left: 360px; " type="button" id="여" class="togglew-btn btn btn-secondary"
+                onmouseover="this.style.backgroundColor='#558BCF'; this.style.color='white'"
+                onmouseout="this.style.backgroundColor=''; this.style.color=''"
+                value="여">여</button>
       </li>
     </div>
-    <p id="heightValue" class="mt-3"></p>
+    <p style="position: absolute; top:268px; left: 1150px; font-size: 18px;" id="heightValue" class="mt-3"></p>
 </div>
 
 <div id="section">
@@ -121,6 +130,7 @@
 
 
 </div>
+</div>
 </body>
 <script th:inline="javascript">
   let genderm = '';
@@ -132,6 +142,7 @@
     // 버튼 클래스의 클릭 이벤트 리스너를 등록합니다.
     $('.togglem-btn').click(function () {
       const menvalue = $('#남').val(); // 현재 버튼의 value 값을 가져옵니다.
+
 
       console.log(menvalue);
 
