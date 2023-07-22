@@ -54,6 +54,7 @@ public class MarketPaymentService {
     }
 
 
+    @Transactional
     public MarketPaymentDTO findByProductId(Long productId, String memberNickName) {
         MemberEntity memberEntity = memberBoardService.findByMemberNickName(memberNickName);
         MarketProductEntity marketProductEntity = this.marketProductEntityFindById(productId);

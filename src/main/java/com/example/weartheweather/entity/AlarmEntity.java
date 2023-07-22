@@ -20,12 +20,10 @@ public class AlarmEntity extends BaseEntity {
 
     @Column(length = 50)
     private String message;
-
     @Column(length = 50)
     private String type;
     @Column
     private int isReadFlag;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private MemberEntity writerMemberEntity;
@@ -62,7 +60,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
         alarmEntity.setType(type);
-        alarmEntity.setMessage("등록한 상품을" + loginMemberEntity.getMemberNickName() + "님이 배송요청했습니다.");
+        alarmEntity.setMessage("등록한 상품을 " + loginMemberEntity.getMemberNickName() + "님이 배송요청했습니다.");
         alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
@@ -86,7 +84,7 @@ public class AlarmEntity extends BaseEntity {
         alarmEntity.setWriterMemberEntity(writerMemberEntity);
         alarmEntity.setMemberBoardEntity(null);
         alarmEntity.setType(type);
-        alarmEntity.setMessage("등록한 상품을" + loginMemberEntity.getMemberNickName() + "님이 구매확정했습니다.");
+        alarmEntity.setMessage("등록한 상품을 " + loginMemberEntity.getMemberNickName() + "님이 구매확정했습니다.");
         alarmEntity.setMarketProductEntity(marketProductEntity);
         return alarmEntity;
     }
