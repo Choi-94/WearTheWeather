@@ -37,7 +37,7 @@ public class MarketProductDTO {
     private int marketLikes;
     private int productHits;
     private String createdAt;
-    private Long calculateElapsedDays;
+    private String calculateElapsedDays;
     private List<MultipartFile> productImage;
     private int fileAttached;
     private List<String> originalFileName = new ArrayList<>();
@@ -81,12 +81,12 @@ public class MarketProductDTO {
 
     }
 
-        public String getFormattedPrice() {
-            DecimalFormat decimalFormat = new DecimalFormat("#,###");
-            return decimalFormat.format(this.productPrice) + "원";
-        }
+    public String getFormattedPrice() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(this.productPrice) + "원";
+    }
 
-        public String getTransactionFee() {
+    public String getTransactionFee() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         double transactionFee = this.productPrice * 0.03;
         return "+" + decimalFormat.format(transactionFee) + "원";
@@ -101,6 +101,6 @@ public class MarketProductDTO {
 
 
 
-    }
+}
 
 

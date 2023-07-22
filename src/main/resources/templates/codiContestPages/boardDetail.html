@@ -129,14 +129,8 @@
 
                             <span>
                                  <span th:text="${comment.commentWriter}"></span>
-                                <div th:if="${comment.calculateElapsedDays == 0}">
-                                    <span>오늘</span>
-                                </div>
-                                <div th:unless="${comment.calculateElapsedDays == 0}">
-                                    <span th:text="${comment.calculateElapsedDays} + '일 전'"></span>
-                                </div>
-
-                                    </span>
+                                <div th:text="${comment.calculateElapsedDays}"></div>
+                            </span>
                         </td>
                         <td th:text="${comment.commentContents}"></td>
                         <td th:if="${session.memberNickName eq comment.commentWriter}">
@@ -156,91 +150,6 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-
-
-    const comment_list = (commentList) => {
-        const resultArea = document.querySelector("#comment-list");
-        let output = "        <table class=\"table\">\n" +
-            "            <tr>\n" +
-            "                <th>id</th>\n" +
-            "                <th>writer</th>\n" +
-            "                <th>contents</th>\n" +
-            "                <th>date</th>\n" +
-            "                <th></th>\n" +
-            "            </tr>";
-        for (let i in commentList) {
-            output += `
-            <tr>
-                <td>${commentList[i].id}</td>
-                <td>${commentList[i].commentWriter | commentList[i].createdAt}</td>
-                <td>${commentList[i].commentContents}</td>
-
-                <td>
-                    <i class="bi bi-x" th:onclick="comment_delete(${commentList[i].id})"></i>
-                </td>
-            </tr>`;
-        }
-
-
-        output += "</table>";
-        resultArea.innerHTML = output;
-    }
-
-    const send_commentAlarm = () => {
-        const boardId = document.querySelector("#id").value;
-        const writerId = document.querySelector("#writerId").value;
-        console.log(boardId);
-        axios({
-            method: "post",
-            url: "/alarm/commentAlarm",
-            data: {
-                boardId: boardId,
-                writerId: writerId
-            }
-        }).then(res => {
-
-        }).catch(err => {
-
-        });
-
-    }
-
-    const add_commentPoint = () => {
-        const writerId = document.querySelector("#commentWriterId").value;
-
-        axios({
-            method: "get",
-            url: "/member/addCommentPoint/" + writerId
-        }).then(res => {
-
-        }).catch(err => {
-
-        })
-    }
-    const comment_write = () => {
-        const writer = document.querySelector("#comment-writer").value;
-        const contents = document.querySelector("#comment-contents").value;
-        const boardId = [[${board.id}]];
-        axios({
-            method: "post",
-            url: "/comment/save",
-            data: {
-                commentWriter: writer,
-                commentContents: contents,
-                boardId: boardId
-            }
-        }).then(res => {
-            console.log("res", res);
-            console.log("댓글 목록", res.data);
-            document.querySelector("#comment-contents").value = "";
-            send_commentAlarm();
-            add_commentPoint();
-            location.href = "/memberBoard/detail/" + boardId;
-        }).catch(err => {
-            console.log("err", err);
-        });
-    }
-
     const comment_delete = (commentId) => {
         const id = commentId;
         const boardId = [[${board.id}]];
@@ -277,6 +186,108 @@
         }
 
     }
+
+    const comment_list = (commentList) => {
+        const resultArea = document.querySelector("#comment-list");
+        let loginNickName = [[${session.memberNickName}]];
+
+        let output = "        <table class=\"table\">\n";
+
+        for (let i in commentList) {
+            let memberPoints = commentList[i].memberPoints;
+            let imgSrc = "";
+
+            // 회원 등급에 따라 이미지 경로를 설정
+            if (memberPoints > 6000) {
+                imgSrc = "/img/point_img/Level_5.png";
+            } else if (memberPoints >= 4500) {
+                imgSrc = "/img/point_img/Level_4.png";
+            } else if (memberPoints >= 3000) {
+                imgSrc = "/img/point_img/Level_3.png";
+            } else if (memberPoints >= 1500) {
+                imgSrc = "/img/point_img/Level_2.png";
+            } else {
+                imgSrc = "/img/point_img/Level_1.png";
+            }
+
+            let writerNickName = commentList[i].commentWriter;
+            output += `
+            <tr>
+                <td>
+                <img style="width: 50px; height: 50px; border-radius: 30px; float: left; margin-right: 10px;"
+                         src="${imgSrc}" alt="">
+                <span>${commentList[i].commentWriter}</span>
+                <div>
+                <span>${commentList[i].calculateElapsedDays}</span>
+                </div>
+                </td>
+                <td>${commentList[i].commentContents}</td>
+                <td>
+                    ${writerNickName == loginNickName ? `<i class="bi bi-x" data-id="${commentList[i].id}" onClick="comment_delete(${commentList[i].id})"></i>` : ""}
+                </td>
+            </tr>`;
+        }
+
+
+        output += "</table>";
+        resultArea.innerHTML = output;
+    }
+
+    const send_commentAlarm = () => {
+        const boardId = document.querySelector("#id").value;
+        const writerId = document.querySelector("#writerId").value;
+        console.log(boardId);
+        axios({
+            method: "post",
+            url: "/alarm/commentAlarm",
+            data: {
+                boardId: boardId,
+                writerId: writerId
+            }
+        }).then(res => {
+
+        }).catch(err => {
+
+        });
+
+    }
+
+    const add_commentPoint = (writerId) => {
+        axios({
+            method: "get",
+            url: "/member/addCommentPoint/" + writerId
+        }).then(res => {
+
+        }).catch(err => {
+
+        })
+    }
+    const comment_write = () => {
+        const writer = document.querySelector("#comment-writer").value;
+        const contents = document.querySelector("#comment-contents").value;
+        const boardId = [[${board.id}]];
+        axios({
+            method: "post",
+            url: "/comment/save",
+            data: {
+                commentWriter: writer,
+                commentContents: contents,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res", res);
+            console.log("댓글 목록", res.data);
+            document.querySelector("#comment-contents").value = "";
+            send_commentAlarm();
+            add_commentPoint(res.data.id);
+            comment_list(res.data);
+            // location.href = "/memberBoard/detail/" + boardId;
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
+
+
 
     const count_likes = () => {
         const count_likes = document.querySelector("#countLikes");
