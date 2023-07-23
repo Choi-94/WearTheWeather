@@ -26,9 +26,15 @@ public class BaseEntity {
 
 
 
-    public long calculateElapsedDays() {
-        LocalDateTime now = LocalDateTime.now();
-        long elapsedDays = ChronoUnit.DAYS.between(now, createdAt);
-        return elapsedDays;
+    public String calculateElapsedDays() {
+        LocalDate today = LocalDate.now();
+        long elapsedDays = ChronoUnit.DAYS.between(createdAt.toLocalDate(), today);
+        if (elapsedDays == 0) {
+            return "오늘";
+        } else if (elapsedDays == 1) {
+            return "어제";
+        } else {
+            return elapsedDays + "일 전";
+        }
     }
 }

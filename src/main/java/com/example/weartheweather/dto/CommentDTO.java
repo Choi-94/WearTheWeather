@@ -18,7 +18,7 @@ public class CommentDTO {
     private Long boardId;
     private Long writerId;
     private String createdAt;
-    private Long calculateElapsedDays;
+    private String calculateElapsedDays;
 
     private int memberPoints;
 

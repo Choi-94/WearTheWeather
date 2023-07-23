@@ -96,12 +96,7 @@
             <h2>상품정보</h2>
 
             <!-- 오늘기준 작성한 날 -->
-            <div th:if="${ProductDTO.calculateElapsedDays == 0}">
-                <p>오늘</p>
-            </div>
-            <div th:unless="${ProductDTO.calculateElapsedDays == 0}">
-                <p th:text="${ProductDTO.calculateElapsedDays} + '일 전'"></p>
-            </div>
+            <div th:text="${ProductDTO.calculateElapsedDays}"></div>
 
             <p th:text="${ProductDTO.productContents}"
                style="margin-top: 20px; margin-left: 0px; white-space: pre-line; display: inline-block; line-height: 0.95;"></p>
