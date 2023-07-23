@@ -27,13 +27,7 @@
 <body>
 
 <!--오늘부터 +6일까지 날씨 데이터-->
-<p th:text="${D0}"></p>
-<p th:text="${D1}"></p>
-<p th:text="${D2}"></p>
-<p th:text="${D3}"></p>
-<p th:text="${D4}"></p>
-<p th:text="${D5}"></p>
-<p th:text="${D6}"></p>
+
 <input type="hidden" th:value="${D0}" id="D0">
 <input type="hidden" th:value="${D1}" id="D1">
 <input type="hidden" th:value="${D2}" id="D2">
@@ -46,7 +40,8 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 
-<div class="sideBanner" style="background-color: #558BCF; width: 200px; height: 230px; border-radius: 30px; color: white; margin-left: 45px; margin-top: 30px;">
+<div class="sideBanner"
+     style="background-color: #558BCF; width: 200px; height: 230px; border-radius: 30px; color: white; margin-left: 45px; margin-top: 30px;">
     <div class="floating_menu"><a href="/adminBoard/list">오늘의 코디</a></div>
     <div class="floating_menu"><a href="/memberBoard/rankingList">실시간 랭킹</a></div>
     <div class="floating_menu"><a href="/memberBoard/list">코디 콘테스트</a></div>
@@ -56,10 +51,12 @@
     </div>
 </div>
 
-<div class="sideBanner2" style="position: fixed; bottom: 0; left: calc(100% - 150px); background-color: ghostwhite; width: 120px; height: 120px; border-radius: 30px; color: white;">
+<div class="sideBanner2"
+     style="position: fixed; bottom: 0; left: calc(100% - 150px); background-color: ghostwhite; width: 120px; height: 120px; border-radius: 30px; color: white;">
     <div style="position: absolute; margin-top: -5px;">
-        <img style="width: 100px; height: 100px; margin-top: 15px; margin-left: 10px;" src="/img/chat/chat.png"  class="enter_chat"
-             data-toggle="tooltip" data-placement="top"  onclick="chatStart('/chat')">
+        <img style="width: 100px; height: 100px; margin-top: 15px; margin-left: 10px;" src="/img/chat/chat.png"
+             class="enter_chat"
+             data-toggle="tooltip" data-placement="top" onclick="chatStart('/chat')">
     </div>
 </div>
 
@@ -67,7 +64,8 @@
 <div class="container">
     <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 1296px;">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" style="background-color: gray"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"
+                    style="background-color: gray"></button>
             <button type="button" data-bs-target="#demo" data-bs-slide-to="1" style="background-color: gray"></button>
             <button type="button" data-bs-target="#demo" data-bs-slide-to="2" style="background-color: gray"></button>
         </div>
@@ -123,7 +121,7 @@
         </div>
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
-            <button id="Day0" class="day-button" th:value="${D0}"  name="D0D" onclick="toggleButton(name)">
+            <button id="Day0" class="day-button" th:value="${D0}" name="D0D" onclick="toggleButton(name)">
                 <img id="D0-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D0-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
@@ -133,17 +131,17 @@
                 <img id="D1-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day2" class="day-button" th:value="${D2}" name="D2D"onclick="toggleButton(name)">
+            <button id="Day2" class="day-button" th:value="${D2}" name="D2D" onclick="toggleButton(name)">
                 <img id="D2-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D2-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day3" class="day-button" th:value="${D3}" name="D3D"onclick="toggleButton(name)">
+            <button id="Day3" class="day-button" th:value="${D3}" name="D3D" onclick="toggleButton(name)">
                 <img id="D3-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D3-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day4" class="day-button" th:value="${D4}" name="D4D"onclick="toggleButton(name)">
+            <button id="Day4" class="day-button" th:value="${D4}" name="D4D" onclick="toggleButton(name)">
                 <img id="D4-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D4-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
@@ -159,50 +157,68 @@
             </button>
 
 
-
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-                <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
+                <a href="/adminBoard/list" class="more-link"
+                   style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
-            <div class="day-div">
-            <div th:each="D0: ${D0}" varStatus="loop" style="display: block" id="D0D">
-                <img th:src="@{|/upload/${#strings.replace(D0.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            <div>
+                <div class="day-div" style="display: block" id="D0D">
+                    <div th:each="D0: ${D0}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D0.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
+                <div class="day-div" style="display: none"  id="D1D">
+                    <div th:each="D1: ${D1}" varStatus="loop">
+                    <img th:src="@{|/upload/${#strings.replace(D1.storedFileName[0], '[', '').replace(']', '')}|}"
+                         width="230" height="230" alt="">
+                </div>
 
-            </div>
-            <div th:each="D1: ${D1}" varStatus="loop" style="display: none" id="D1D">
-                <img th:src="@{|/upload/${#strings.replace(D1.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
-            <div th:each="D2: ${D2}" varStatus="loop" style="display: none" id="D2D">
-                <img th:src="@{|/upload/${#strings.replace(D2.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
-            <div th:each="D3: ${D3}" varStatus="loop" style="display: none" id="D3D">
-                <img th:src="@{|/upload/${#strings.replace(D3.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
-            <div th:each="D4: ${D4}" varStatus="loop" style="display: none" id="D4D">
-                <img th:src="@{|/upload/${#strings.replace(D4.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
-            <div th:each="D5: ${D5}" varStatus="loop" style="display: none" id="D5D">
-            <img th:src="@{|/upload/${#strings.replace(D5.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
-            <div th:each="D6: ${D6}" varStatus="loop" style="display: none" id="D6D">
-                <img th:src="@{|/upload/${#strings.replace(D6.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
-            </div>
+                <div class="day-div" style="display: none" id="D2D">
+                    <div th:each="D2: ${D2}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D2.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
+                <div class="day-div" style="display: none" id="D3D">
+                    <div th:each="D3: ${D3}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D3.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
+                <div class="day-div" style="display: none" id="D4D">
+                    <div th:each="D4: ${D4}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D4.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
+                <div class="day-div" style="display: none" id="D5D">
+                    <div th:each="D5: ${D5}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D5.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
+                <div class="day-div" style="display: none" id="D6D">
+                    <div th:each="D6: ${D6}" varStatus="loop">
+                        <img th:src="@{|/upload/${#strings.replace(D6.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="230" height="230" alt="">
+                    </div>
+                </div>
             </div>
 
 
         </div>
 
 
-        </div>
-
-
-
+    </div>
 
 
     <div id="rankBox" style="height: 930px; background-color: #f2f2f2; padding-top: 40px;">
         <div>
             <h1>실시간랭킹</h1>
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-                <a href="/memberBoard/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
+                <a href="/memberBoard/list" class="more-link"
+                   style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
             </h4>
             <div id="rankList" style="margin-top: 50px; margin-left: 0px;">
                 <table>
@@ -212,22 +228,26 @@
                         </th:block>
                         <td style="padding-right: 150px;">
                             <div class="image-container">
-                                <img th:src="@{|/upload/${#strings.replace(ranking.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="" th:onclick="rankDetail([[${ranking.id}]])">
+                                <img th:src="@{|/upload/${#strings.replace(ranking.storedFileName[0], '[', '').replace(']', '')}|}"
+                                     width="230" height="230" alt="" th:onclick="rankDetail([[${ranking.id}]])">
                             </div>
                             <table style="float: right;">
                                 <tr>
                                     <td>
-                                        <span th:text="${ranking.lookStyle}" style="margin-left: 60px; font-size: 20px;"></span>
+                                        <span th:text="${ranking.lookStyle}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-top: 30px;">
-                                        <span th:text="${ranking.boardWriter}" style="margin-left: 60px; font-size: 20px;"></span>
+                                        <span th:text="${ranking.boardWriter}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-top: 30px;">
-                                        <span th:text="${ranking.season}" style="margin-left: 60px; font-size: 20px;"></span>
+                                        <span th:text="${ranking.season}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
                                     </td>
                                 </tr>
                             </table>
@@ -238,10 +258,11 @@
         </div>
     </div>
 
-    <div id="marketBox" style="height: 500px;" >
+    <div id="marketBox" style="height: 500px;">
         <h1 style="margin-top: 30px;">웨더장터</h1>
         <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-            <a href="/market/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
+            <a href="/market/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기
+                ></a>
         </h4>
 
         <div id="marketList" style="margin-top: 50px;">
@@ -251,22 +272,28 @@
                         <th:block th:if="${iterationStatus.index < 5}">
                             <td th:class="${iterationStatus.index == 0}">
                                 <div class="image-container" style="margin-right: 15px;">
-                                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" style="width: 245px; height: 245px;   " alt="" th:onclick="productDetail([[${product.id}]])">
+                                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}"
+                                         style="width: 245px; height: 245px;   " alt=""
+                                         th:onclick="productDetail([[${product.id}]])">
                                 </div>
                                 <table>
                                     <tr>
-                                        <td th:text="${product.productTitle}" style=" margin-left: 2px; font-size: 20px"></td>
+                                        <td th:text="${product.productTitle}"
+                                            style=" margin-left: 2px; font-size: 20px"></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span th:text="${product.getFormattedPrice()}" style="display: inline-block;  loat: left; font-size: 20px;"></span>
+                                            <span th:text="${product.getFormattedPrice()}"
+                                                  style="display: inline-block;  loat: left; font-size: 20px;"></span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <div style="background-color: gainsboro; width: 245px; height: 2px; margin-top: 10px"></div>
-                                            <span><i class="bi bi-geo-alt" style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
-                                            <span th:text="${product.transactionArea.substring(0, 6)}" style="display: inline-block; font-size: 15px"></span>
+                                            <span><i class="bi bi-geo-alt"
+                                                     style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
+                                            <span th:text="${product.transactionArea.substring(0, 6)}"
+                                                  style="display: inline-block; font-size: 15px"></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -307,7 +334,8 @@
             weatherbutton(this.id);
         });
     }
-    function weatherbutton(day){
+
+    function weatherbutton(day) {
         // 클릭된 버튼의 이미지를 1.png로 변경
         const clickedButton = document.getElementById(day);
         const images = clickedButton.getElementsByClassName('day-img');
@@ -316,6 +344,7 @@
 
         // 나머지 버튼들의 이미지를 0.png로 변경
         const allButtons = document.getElementsByClassName('day-button');
+        console.log('allbu' + allButtons.length);
         for (let i = 0; i < allButtons.length; i++) {
             if (allButtons[i].id !== day) {
                 const otherImages = allButtons[i].getElementsByClassName('day-img');
@@ -324,19 +353,24 @@
             }
         }
     }
+
     function toggleButton(day) {
-        const dayDivs = document.getElementsByClassName("day-div");
+        console.log(day)
+        const dayDivs = document.getElementsByClassName('day-div');
+        console.log(dayDivs.length);
         // Loop through all the buttons to hide the images
-        for (let i = 0; i < dayDivs.length; i++) {
+        for (let i = 0; i<dayDivs.length; i++) {
+
             dayDivs[i].style.display = "none";
 
             // Hide the div containing images
 
         }
-            // If the clicked button matches the current button in the loop, show its corresponding div
-            const targerDiv = document.getElementById(day)
-            if(targerDiv){
-                targerDiv.style.display = "block";
+        // If the clicked button matches the current button in the loop, show its corresponding div
+        const targetDiv = document.getElementById(day);
+        console.log("targ" + targetDiv);
+        if (targetDiv) {
+            targetDiv.style.display = "block";
 
         }
     }
@@ -345,18 +379,18 @@
 
 <script>
 
-    $(function() {
+    $(function () {
         // Check if we can access the Geolocation API
         if (navigator.geolocation) {
             // Regularly get location information
             const id = navigator.geolocation.watchPosition(
-                function(pos) {
+                function (pos) {
                     $('#latitude').html(pos.coords.latitude); // 위도
                     $('#longitude').html(pos.coords.longitude); // 경도
                 });
 
             // Stop monitoring with button click
-            $('#btnStop').click(function() {
+            $('#btnStop').click(function () {
                 navigator.geolocation.clearWatch(id);
             });
         } else {
@@ -441,6 +475,7 @@
             alert("이 브라우저에서는 Geolocation을 지원하지 않습니다. 날씨 정보를 제공할 수 없습니다.");
         }
     }
+
     // 정해진 간격으로 실시간으로 날씨 정보 업데이트
     setInterval(getWeather, 60000); // 1분마다 업데이트
 
@@ -457,7 +492,7 @@
     const floatPosition = parseInt($(".sideBanner").css('top'))
 
     // scroll 인식
-    $(window).scroll(function() {
+    $(window).scroll(function () {
 
         // 현재 스크롤 위치
         const currentTop = $(window).scrollTop();
@@ -472,13 +507,13 @@
 
         // 이동 애니메이션
         $(".sideBanner").stop().animate({
-            "top" : bannerTop
+            "top": bannerTop
         }, 500);
 
     });
 
     function moveToTop() {
-        $("html, body").animate({ scrollTop: 0 }, "fast");
+        $("html, body").animate({scrollTop: 0}, "fast");
     }
 
     // const rankDetail = (id) => {
@@ -496,7 +531,7 @@
     function chatStart(url) {
         const width = 500;
         const height = 550;
-        const left = window.innerWidth - width +3000; // Consider 20px margin from the right edge
+        const left = window.innerWidth - width + 3000; // Consider 20px margin from the right edge
         const top = window.innerHeight - height // Consider 20px margin from the bottom edge
         window.open(
             url,
@@ -505,8 +540,6 @@
         );
     }
 </script>
-
-
 
 
 </html>
