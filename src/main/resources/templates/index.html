@@ -107,7 +107,18 @@
             </div>
 
         </div>
-
+        <!--오늘부터 +6일까지 요일 데이터-->
+        <div style="position: relative;">
+            <div style="white-space: nowrap; position: absolute; margin-top: 47px; margin-left: 5px; font-size: 25px; color: white; z-index: 2;">
+                <p th:text="${D0_0}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
+                <p th:text="${D0_1}" style="display: inline; margin-right: 38px; pointer-events: none;"></p>
+                <p th:text="${D0_2}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
+                <p th:text="${D0_3}" style="display: inline; margin-right: 37px; pointer-events: none;"></p>
+                <p th:text="${D0_4}" style="display: inline; margin-right: 37px; pointer-events: none;"></p>
+                <p th:text="${D0_5}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
+                <p th:text="${D0_6}" style="display: inline; pointer-events: none;"></p>
+            </div>
+        </div>
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
             <button id="Day0" class="day-button" th:value="${D0}" name="D0D" onclick="toggleButton(name)">
@@ -152,45 +163,51 @@
             </h4>
             <div>
                 <div class="day-div" style="display: block" id="D0D">
-                    <div th:each="D0: ${D0}" varStatus="loop">
-                        <img th:src="@{|/upload/${D0.storedFileName}}"
+                    <div th:each="D0,iterationStatus: ${D0}" varStatus="loop">
+                        <img th:src="@{|/upload/${D0.storedFileName}}" th:onclck="adminDetail([[${D0.id}]])"
                              width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D1D">
-                    <div th:each="D1: ${D1}" varStatus="loop">
-                        <img th:src="@{|/upload/${D1.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D1,iterationStatus: ${D1}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D1.storedFileName}}" th:onclck="adminDetail([[${D1.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D2D">
-                    <div th:each="D2: ${D2}" varStatus="loop">
-                        <img th:src="@{|/upload/${D2.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D2,iterationStatus: ${D2}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D2.storedFileName}}" th:onclck="adminDetail([[${D2.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D3D">
-                    <div th:each="D3: ${D3}" varStatus="loop">
-                        <img th:src="@{|/upload/${D3.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D3,iterationStatus: ${D3}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D3.storedFileName}}" th:onclck="adminDetail([[${D3.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D4D">
-                    <div th:each="D4: ${D4}" varStatus="loop">
-                        <img th:src="@{|/upload/${D4.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D4,iterationStatus: ${D4}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D4.storedFileName}}" th:onclck="adminDetail([[${D4.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D5D">
-                    <div th:each="D5: ${D5}" varStatus="loop">
-                        <img th:src="@{|/upload/${D5.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D5,iterationStatus: ${D5}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D5.storedFileName}}" th:onclck="adminDetail([[${D5.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D6D">
-                    <div th:each="D6: ${D6}" varStatus="loop">
-                        <img th:src="@{|/upload/${D6.storedFileName}}"
-                             width="230" height="230" alt="">
+                    <div th:each="D6,iterationStatus: ${D6}" varStatus="loop">
+                        <th:block th:if="${iterationStatus.index < 5}">
+                            <img th:src="@{|/upload/${D6.storedFileName}}" th:onclck="adminDetail([[${D6.id}]])"
+                                 width="230" height="230" alt="">
                     </div>
                 </div>
             </div>
@@ -510,9 +527,9 @@
     // const rankDetail = (id) => {
     //     location.href = "/memberBoard/detail/" + id;
     // }
-    // const adminDetail = (id) => {
-    //     location.href = "/admin/detail/" + id;
-    // }
+    const adminDetail = (id) => {
+        location.href = "/admin/detail/" + id;
+    }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
