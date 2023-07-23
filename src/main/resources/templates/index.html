@@ -123,37 +123,37 @@
         </div>
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
-            <button id="Day0" class="day-button" th:value="${D0}" onclick="toggleButton(this.value)">
+            <button id="Day0" class="day-button" th:value="${D0}"  name="D0D" onclick="toggleButton(name)">
                 <img id="D0-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D0-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day1" class="day-button" th:value="${D1}" onclick="toggleButton(this.value)">
+            <button id="Day1" class="day-button" th:value="${D1}" name="D1D" onclick="toggleButton(name)">
                 <img id="D1-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D1-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day2" class="day-button" th:value="${D2}" onclick="toggleButton(this.value)">
+            <button id="Day2" class="day-button" th:value="${D2}" name="D2D"onclick="toggleButton(name)">
                 <img id="D2-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D2-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day3" class="day-button" th:value="${D3}" onclick="toggleButton(this.value)">
+            <button id="Day3" class="day-button" th:value="${D3}" name="D3D"onclick="toggleButton(name)">
                 <img id="D3-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D3-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day4" class="day-button" th:value="${D4}" onclick="toggleButton(this.value)">
+            <button id="Day4" class="day-button" th:value="${D4}" name="D4D"onclick="toggleButton(name)">
                 <img id="D4-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D4-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day5" class="day-button" th:value="${D5}" onclick="toggleButton(this.value)">
+            <button id="Day5" class="day-button" th:value="${D5}" name="D5D" onclick="toggleButton(name)">
                 <img id="D5-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D5-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
 
-            <button id="Day6" class="day-button" th:value="${D6}" onclick="toggleButton(this.value)">
+            <button id="Day6" class="day-button" th:value="${D6}" name="D6D" onclick="toggleButton(name)">
                 <img id="D6-img-0" class="day-img" src="/img/week/week_0.png">
                 <img id="D6-img-1" class="day-img" src="/img/week/week_1.png">
             </button>
@@ -163,9 +163,33 @@
             <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
                 <a href="/adminBoard/list" class="more-link" style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
-            <div id="weather-list">
+            <div class="day-div">
+            <div th:each="D0: ${D0}" varStatus="loop" style="display: block" id="D0D">
+                <img th:src="@{|/upload/${#strings.replace(D0.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
 
             </div>
+            <div th:each="D1: ${D1}" varStatus="loop" style="display: none" id="D1D">
+                <img th:src="@{|/upload/${#strings.replace(D1.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            <div th:each="D2: ${D2}" varStatus="loop" style="display: none" id="D2D">
+                <img th:src="@{|/upload/${#strings.replace(D2.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            <div th:each="D3: ${D3}" varStatus="loop" style="display: none" id="D3D">
+                <img th:src="@{|/upload/${#strings.replace(D3.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            <div th:each="D4: ${D4}" varStatus="loop" style="display: none" id="D4D">
+                <img th:src="@{|/upload/${#strings.replace(D4.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            <div th:each="D5: ${D5}" varStatus="loop" style="display: none" id="D5D">
+            <img th:src="@{|/upload/${#strings.replace(D5.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            <div th:each="D6: ${D6}" varStatus="loop" style="display: none" id="D6D">
+                <img th:src="@{|/upload/${#strings.replace(D6.storedFileName[0], '[', '').replace(']', '')}|}" width="230" height="230" alt="">
+            </div>
+            </div>
+
+
+        </div>
 
 
         </div>
@@ -301,34 +325,20 @@
         }
     }
     function toggleButton(day) {
-        const weatherDiv = document.getElementById("weather-list");
+        const dayDivs = document.getElementsByClassName("day-div");
+        // Loop through all the buttons to hide the images
+        for (let i = 0; i < dayDivs.length; i++) {
+            dayDivs[i].style.display = "none";
 
-        $.ajax({
-            method:"post",
-            url:"/weekWeather",
-            data:{
-                day: day
-            },success:function (res){
+            // Hide the div containing images
 
 
-                // Display only the first five items from the received list
-                for (let i = 0; i < Math.min(5, res.length); i++) {
-
-                    const weatherItem = res[i];
-                    console.log("제발.."+weatherItem);
-                    const storedFileName = weatherItem.storedFileName[0];
-                    const imgTag = $('<img>').attr('src', '/upload/' + storedFileName.replace('[', '').replace(']', ''));
-                    imgTag.css('max-width', '130px');
-                    weatherDiv.appendChild(imgTag);
-                }
-                if(res.length===0){
-                    weatherDiv.innerHTML="이미지없음";
-                }
-            },error:function (){
-                alert("주간날씨에 맞는 리스트 x");
+            // If the clicked button matches the current button in the loop, show its corresponding div
+            const targerDiv = document.getElementById(day)
+            if(targerDiv){
+                targerDiv.style.display = "block";
             }
-
-        });
+        }
     }
 
 </script>

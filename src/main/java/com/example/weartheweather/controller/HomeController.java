@@ -82,22 +82,22 @@ public class HomeController {
 
             System.out.println("D6 = " + D6);
 
-            //각 값을 가져오기 도영
-//            List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeather(D0);
-//            List<AdminBoardDTO> adminBoardDTOSd1 = weatherService.findWeather(D1);
-//            List<AdminBoardDTO> adminBoardDTOSd2 = weatherService.findWeather(D2);
-//            List<AdminBoardDTO> adminBoardDTOSd3 = weatherService.findWeather(D3);
-//            List<AdminBoardDTO> adminBoardDTOSd4 = weatherService.findWeather(D4);
-//            List<AdminBoardDTO> adminBoardDTOSd5 = weatherService.findWeather(D5);
-//            List<AdminBoardDTO> adminBoardDTOSd6 = weatherService.findWeather(D6);
+//            각 값을 가져오기 도영
+            List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeather(D0);
+            List<AdminBoardDTO> adminBoardDTOSd1 = weatherService.findWeather(D1);
+            List<AdminBoardDTO> adminBoardDTOSd2 = weatherService.findWeather(D2);
+            List<AdminBoardDTO> adminBoardDTOSd3 = weatherService.findWeather(D3);
+            List<AdminBoardDTO> adminBoardDTOSd4 = weatherService.findWeather(D4);
+            List<AdminBoardDTO> adminBoardDTOSd5 = weatherService.findWeather(D5);
+            List<AdminBoardDTO> adminBoardDTOSd6 = weatherService.findWeather(D6);
             // 요소의 텍스트를 모델에 추가합니다.
-            model.addAttribute("D0", D0);
-            model.addAttribute("D1", D1);
-            model.addAttribute("D2", D2);
-            model.addAttribute("D3", D3);
-            model.addAttribute("D4", D4);
-            model.addAttribute("D5", D5);
-            model.addAttribute("D6", D6);
+            model.addAttribute("D0", adminBoardDTOSd0);
+            model.addAttribute("D1", adminBoardDTOSd1);
+            model.addAttribute("D2", adminBoardDTOSd2);
+            model.addAttribute("D3", adminBoardDTOSd3);
+            model.addAttribute("D4", adminBoardDTOSd4);
+            model.addAttribute("D5", adminBoardDTOSd5);
+            model.addAttribute("D6", adminBoardDTOSd6);
 
 
 

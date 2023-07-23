@@ -27,10 +27,12 @@ public class WeatherService {
        });
        List<AdminBoardDTO> adminBoardDTOList1 = new ArrayList<>();
        adminBoardDTOList.forEach(adminBoardDTO -> {
-          if(adminBoardDTO.getWeather().contains(day)){
+          if(adminBoardDTO.getWeather().contains(day)) {
               adminBoardDTOList1.add(adminBoardDTO);
+
           }
        });
+
        return adminBoardDTOList1;
     }
 
