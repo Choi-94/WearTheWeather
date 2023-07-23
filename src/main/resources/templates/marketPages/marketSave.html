@@ -7,7 +7,7 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
-<div id="section">
+<div class="container">
     <form action="/market/save" method="post" enctype="multipart/form-data" id="myform">
         <input type="text" id="NickName" style="display: none">
         <input type="file" name="productImage" class="form-control" multiple><br>
@@ -15,7 +15,6 @@
         <input type="text" name="productSize" class="form-control" placeholder="상품 판매페이지에 적혀있는 사이즈 또는 제품 라벨 사이즈를 입력해주세요"
         onblur="sizeCheck()"><br>
         <h6 id="productSizeCheck"></h6>
-        <button type="button" onclick="getCurrentPos()">내 위치</button>
         <input type="button" onclick="searchLocation()" value="주소찾기"><br>
         <input type="text" id="sample6_postcode" placeholder="우편번호" style="display: none">
         <input type="text" id="transactionArea" name="transactionArea" class="form-control" placeholder="주소" onblur="transactionAreaCheck()" ><br>
@@ -32,9 +31,10 @@
         <textarea name="productHashtag" cols="1" rows="1" class="form-control"
                   placeholder="연관태그를 입력해주세요 (최대 5개)"></textarea><br>
 
-        <label for="seasonsRange" class="form-label">착용 계절을 선택해주세요.</label>
-        <input type="range" class="form-range" id="seasonsRange" name="productSeason" min="1" max="4" step="1" onchange="showSeason(this.value)">
-        <p id="seasonDisplay"></p>
+        <label><input type="radio" name="productSeason" value="Spring">봄</label>
+        <label><input type="radio" name="productSeason" value="Summer">여름</label>
+        <label><input type="radio" name="productSeason" value="Fall">가을</label>
+        <label><input type="radio" name="productSeason" value="Winter">겨울</label><br>
         <label><input type="radio" name="productWeather" value="Sunny">맑음</label>
         <label><input type="radio" name="productWeather" value="Cloudy">흐림</label>
         <label><input type="radio" name="productWeather" value="Rain">비</label>
@@ -242,42 +242,4 @@
 
 </script>
 
-<script>
-    function showSeason(value) {
-        let view;
-        let season;
-        switch (value) {
-            case '1':
-                view = '봄';
-                season = 'Spring';
-                document.getElementById("productSeason").value = "봄";
-                break;
-            case '2':
-                view = '여름';
-                season = 'Summer';
-                document.getElementById("productSeason").value = "여름";
-                break;
-            case '3':
-                view = '가을';
-                season = 'Fall';
-                document.getElementById("productSeason").value = "가을";
-                break;
-            case '4':
-                view = '겨울';
-                season = 'Winter';
-                document.getElementById("productSeason").value = "겨울";
-                break;
-            default:
-                view = '알 수 없음';
-                season = '';
-        }
-        document.getElementById('seasonDisplay').innerHTML = view + '에 이 제품을 착용하기에 좋습니다.';
-        document.getElementById("seasonDisplay").style.color = "green";
-
-        // 여기서 데이터베이스에 저장하는 로직을 추가하면 됩니다.
-
-    }
-
-
-</script>
 </html>

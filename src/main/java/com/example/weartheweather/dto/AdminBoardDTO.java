@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 @Getter
 @Setter
@@ -91,5 +92,20 @@ public class AdminBoardDTO {
         +adminBoardEntity.getBottomDetail()+adminBoardEntity.getEtc()+adminBoardEntity.getEtcDetail()+adminBoardEntity.getTop()+adminBoardEntity.getTopDetail());
 
         return adminBoardDTO;
+    }
+
+    public String getFormattedTopPrice() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(this.topPrice) + "원";
+    }
+
+    public String getFormattedBottomPrice() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(this.bottomPrice) + "원";
+    }
+
+    public String getFormattedETCPrice() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(this.etcPrice) + "원";
     }
 }
