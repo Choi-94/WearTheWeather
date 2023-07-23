@@ -107,18 +107,7 @@
             </div>
 
         </div>
-        <!--오늘부터 +6일까지 요일 데이터-->
-        <div style="position: relative;">
-            <div style="white-space: nowrap; position: absolute; margin-top: 47px; margin-left: 5px; font-size: 25px; color: white; z-index: 2;">
-                <p th:text="${D0_0}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
-                <p th:text="${D0_1}" style="display: inline; margin-right: 38px; pointer-events: none;"></p>
-                <p th:text="${D0_2}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
-                <p th:text="${D0_3}" style="display: inline; margin-right: 37px; pointer-events: none;"></p>
-                <p th:text="${D0_4}" style="display: inline; margin-right: 37px; pointer-events: none;"></p>
-                <p th:text="${D0_5}" style="display: inline; margin-right: 36px; pointer-events: none;"></p>
-                <p th:text="${D0_6}" style="display: inline; pointer-events: none;"></p>
-            </div>
-        </div>
+
 
         <div id="day-buttons" style="margin-left: -15px; margin-top: 40px;">
             <button id="Day0" class="day-button" th:value="${D0}" name="D0D" onclick="toggleButton(name)">
