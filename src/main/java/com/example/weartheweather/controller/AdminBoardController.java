@@ -53,6 +53,8 @@ public class AdminBoardController {
         String boardLikes = "";
         if (adminBoardLikesDTO != null) {
             boardLikes = "bi-heart-fill";
+        } else {
+            boardLikes = null;
         }
         int countBoardLikes = adminBoardService.countBoardLikes(id);
         AdminBoardDTO adminBoardDTO = adminBoardService.findById(id);
