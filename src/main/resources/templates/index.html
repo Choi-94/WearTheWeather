@@ -164,28 +164,28 @@
             <div>
                 <div class="day-div" style="display: block" id="D0D">
                     <div th:each="D0,iterationStatus: ${D0}" varStatus="loop">
-                        <img th:src="@{|/upload/${D0.storedFileName}}" th:onclck="adminDetail([[${D0.id}]])"
+                        <img th:src="@{|/upload/${D0.storedFileName}}" th:onclick="adminDetail([[${D0.id}]])"
                              width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D1D">
                     <div th:each="D1,iterationStatus: ${D1}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D1.storedFileName}}" th:onclck="adminDetail([[${D1.id}]])"
+                            <img th:src="@{|/upload/${D1.storedFileName}}" th:onclick="adminDetail([[${D1.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D2D">
                     <div th:each="D2,iterationStatus: ${D2}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D2.storedFileName}}" th:onclck="adminDetail([[${D2.id}]])"
+                            <img th:src="@{|/upload/${D2.storedFileName}}" th:onclick="adminDetail([[${D2.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D3D">
                     <div th:each="D3,iterationStatus: ${D3}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D3.storedFileName}}" th:onclck="adminDetail([[${D3.id}]])"
+                            <img th:src="@{|/upload/${D3.storedFileName}}" th:onclick="adminDetail([[${D3.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
@@ -491,9 +491,9 @@
     window.onload = getWeather;
 
 
-    // const productDetail = (id) =>{
-    //     window.location.href = "/market/" + id;
-    // }
+    const productDetail = (id) =>{
+        window.location.href = "/market/" + id;
+    }
 
 </script>
 <script>

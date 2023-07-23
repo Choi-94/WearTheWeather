@@ -64,8 +64,8 @@
                 <i id="likeIcon2" class="bi bi-heart-fill"></i> 좋아요
             </div>
         </div>
-        <div style="position: absolute; top:850px; " id="countLikes">
-            <div style="font-size: 23px;" th:text="'좋아요  '+${countBoardLikes}+'개'"></div>
+        <div style="position: absolute; top:850px;">
+            <div  id="countLikes" th:text="'좋아요  '+${countBoardLikes}+'개'" style="font-size: 23px;"></div>
         </div>
 
         <!-- 수정/삭제버튼 -->
@@ -298,7 +298,7 @@
             url: "/memberBoard/countLikes/" + id
         }).then(res => {
             const countLikes = res.data;
-            count_likes.innerHTML = countLikes;
+            count_likes.innerHTML = "좋아요 " + countLikes + "개";
         }).catch(err = {});
     }
 

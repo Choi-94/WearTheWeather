@@ -16,7 +16,6 @@ public class AdminBoardLikesDTO{
     private Long id;
     private Long memberId;
     private Long boardId;
-    private AdminBoardEntity adminBoardEntity;
     private String createdAt;
 
     public static  AdminBoardLikesDTO toDTO(AdminBoardLikesEntity adminBoardLikesEntity) {

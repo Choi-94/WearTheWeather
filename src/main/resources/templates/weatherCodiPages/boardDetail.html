@@ -17,7 +17,7 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div class="container">
-    <div >
+    <div>
         <img th:src="@{|/upload/${board.storedFileName}}"
              alt="" style=" width: 550px; height: 600px">
     </div>
@@ -25,43 +25,44 @@
         <input type="hidden" id="id" th:value="${board.id}">
 
         <div style="position: absolute; left: 900px; top: 280px; font-size: 23px;">
-        <h1 style="margin-bottom: 40px;">착용 제품 정보</h1>
-        <div>
-            <p th:text="${'상의 정보 : '+board.top}"></p>
-            <p th:text="${board.topDetail}"></p>
-            <p th:text="'₩' + ${board.getFormattedTopPrice()}"></p>
-        </div>
-        <div style="margin-top: 40px;">
-            <p th:text="${'하의 정보 : '+board.bottom}"></p>
-            <p th:text="${board.bottomDetail}"></p>
-            <p th:text="${board.getFormattedBottomPrice()}"></p>
-        </div>
-        <div style="margin-top: 40px;">
-            <p th:text="${board.etc+' 정보'}"></p>
-            <p th:text="${board.etcDetail}"></p>
-            <p th:text="${board.getFormattedETCPrice()}"></p>
-        </div>
+            <h1 style="margin-bottom: 40px;">착용 제품 정보</h1>
+            <div>
+                <p th:text="${'상의 정보 : '+board.top}"></p>
+                <p th:text="${board.topDetail}"></p>
+                <p th:text="'₩' + ${board.getFormattedTopPrice()}"></p>
+            </div>
+            <div style="margin-top: 40px;">
+                <p th:text="${'하의 정보 : '+board.bottom}"></p>
+                <p th:text="${board.bottomDetail}"></p>
+                <p th:text="${board.getFormattedBottomPrice()}"></p>
+            </div>
+            <div style="margin-top: 40px;">
+                <p th:text="${board.etc+' 정보'}"></p>
+                <p th:text="${board.etcDetail}"></p>
+                <p th:text="${board.getFormattedETCPrice()}"></p>
+            </div>
         </div>
 
-        <div id="countLikes" style="margin-top: 50px; font-size: 20px;">
+        <div  style="margin-top: 50px; font-size: 20px;">
             <div>
                 <p style="position: absolute; top:850px; left: 300px;">조회수 :</p>
                 <span style="position: absolute; top:850px; left: 385px;" th:text="${board.boardHits}"></span>
+            </div>
+            <p style="position: absolute; top:850px; left: 420px;">좋아요 수 :</p>
+            <span id="countLikes" style="position: absolute; top:850px; left: 525px;" th:text="${countBoardLikes}"></span>
+        </div>
+            <div style="position: absolute; top:850px; left: 770px;" id="likeButton" class="btn btn-outline-secondary"
+                 onclick="toggleLike()">
+                <div th:if="${boardLikes == null}">
+                    <i id="likeIcon" class="bi bi-heart"></i> 좋아요
                 </div>
-                <p style="position: absolute; top:850px; left: 420px;">좋아요 수 :</p>
-                <span style="position: absolute; top:850px; left: 525px;" th:text="${countBoardLikes}"></span>
-
-                <div style="position: absolute; top:850px; left: 770px;" id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
-                    <div th:if="${boardLikes.isEmpty()}">
-                        <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
-                    </div>
-                    <div th:unless="${boardLikes.isEmpty()}">
-                        <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
-                    </div>
+                <div th:unless="${boardLikes == null}">
+                    <i id="likeIcon" class="bi bi-heart-fill"></i> 좋아요
                 </div>
             </div>
-        </div>
+
     </div>
+</div>
 </div>
 <div style="background-color: white; height: 40px;"></div>
 <div th:replace="component/footer :: footer"></div>
@@ -81,9 +82,7 @@
         }).then(res => {
             const countLikes = res.data;
             count_likes.innerHTML = countLikes;
-        }).catch(err = {
-
-        });
+        }).catch(err = {});
     }
 
     // 좋아요 버튼을 클릭할 때마다 아이콘과 텍스트를 변경하는 함수를 작성합니다.
@@ -96,13 +95,12 @@
             url: "/adminBoard/findByBoardLikes/" + id
         }).then(res => {
             icon.classList.remove("bi-heart");
-            icon.innerHTML =  '<i class="bi bi-heart-fill"></i>';
+            icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
             // location.href = "/adminBoard/detail/" + id;
             count_adminLikes();
         }).catch(err => {
-
             icon.classList.remove("bi-heart-fill");
-            icon.innerHTML =  '<i class="bi bi-heart"></i>';
+            icon.innerHTML = '<i class="bi bi-heart"></i>';
             count_adminLikes();
         });
     }
