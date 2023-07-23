@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 @RequiredArgsConstructor
@@ -75,21 +76,27 @@ public class HomeController {
             String D0 = convertWeather(D_day0.attr("alt"));
             String D1 = convertWeather(D_day1.attr("alt"));
             String D2 = convertWeather(D_day2.attr("alt"));
+            System.out.println("D2 = " + D2);
             String D3 = convertWeather(D_day3.attr("alt"));
+            System.out.println("D3 = " + D3);
             String D4 = convertWeather(D_day4.attr("alt"));
+            System.out.println("D4 = " + D4);
             String D5 = convertWeather(D_day5.attr("alt"));
             String D6 = convertWeather(D_day6.attr("alt"));
 
             System.out.println("D6 = " + D6);
+            System.out.println("D5 = " + D5);
 
 //            각 값을 가져오기 도영
-            List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeather(D0);
-            List<AdminBoardDTO> adminBoardDTOSd1 = weatherService.findWeather(D1);
-            List<AdminBoardDTO> adminBoardDTOSd2 = weatherService.findWeather(D2);
-            List<AdminBoardDTO> adminBoardDTOSd3 = weatherService.findWeather(D3);
-            List<AdminBoardDTO> adminBoardDTOSd4 = weatherService.findWeather(D4);
-            List<AdminBoardDTO> adminBoardDTOSd5 = weatherService.findWeather(D5);
-            List<AdminBoardDTO> adminBoardDTOSd6 = weatherService.findWeather(D6);
+            List<AdminBoardDTO> adminBoardDTOSd0 = weatherService.findWeatherD0(D0);
+            System.out.println("adminBoardDTOSd0 = " + adminBoardDTOSd0);
+            List<AdminBoardDTO> adminBoardDTOSd1 = weatherService.findWeatherD1(D1);
+            List<AdminBoardDTO> adminBoardDTOSd2 = weatherService.findWeatherD2(D2);
+            List<AdminBoardDTO> adminBoardDTOSd3 = weatherService.findWeatherD3(D3);
+            List<AdminBoardDTO> adminBoardDTOSd4 = weatherService.findWeatherD4(D4);
+            System.out.println("adminBoardDTOSd4 = " + adminBoardDTOSd4);
+            List<AdminBoardDTO> adminBoardDTOSd5 = weatherService.findWeatherD5(D5);
+            List<AdminBoardDTO> adminBoardDTOSd6 = weatherService.findWeatherD6(D6);
             // 요소의 텍스트를 모델에 추가합니다.
             model.addAttribute("D0", adminBoardDTOSd0);
             model.addAttribute("D1", adminBoardDTOSd1);
@@ -152,11 +159,5 @@ public class HomeController {
         }
     }
 
-    @PostMapping("/weekWeather")
-    public ResponseEntity getWeekWeather(@RequestParam("day") String day){
-        System.out.println("아작스day = " + day);
-        List<AdminBoardDTO> adminBoardDTOList = weatherService.findWeather(day);
-        System.out.println("adminBoardDTOList111 = " + adminBoardDTOList);
-        return new ResponseEntity(adminBoardDTOList,HttpStatus.OK);
-    }
+
 }
