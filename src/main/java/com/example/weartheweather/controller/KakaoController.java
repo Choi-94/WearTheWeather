@@ -109,18 +109,13 @@ public class KakaoController {
         catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("카카오아이디(번호)"+kakaoProfile.getId());
-        System.out.println("카카오이메일"+kakaoProfile.kakao_account.getEmail());
-        System.out.println("성별"+kakaoProfile.kakao_account.getGender());
-        System.out.println("닉네임"+kakaoProfile.properties.nickname);
+
         UUID garbage = UUID.randomUUID();
-        System.out.println("garbage = " + garbage);
 
         String memberEmail = kakaoProfile.kakao_account.getEmail();
         String memberPassword = String.valueOf(garbage);
         String memberGender = kakaoProfile.kakao_account.getGender();
         String memberNickName = kakaoProfile.properties.nickname;
-
 
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMemberEmail(memberEmail);
