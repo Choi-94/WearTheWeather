@@ -12,71 +12,80 @@
 <div th:replace="component/nav :: nav"></div>
 <div class="container">
 
-<div id="section">
+    <div id="section">
 
-    <div  id="memberBoard-list">
-        <table>
-            <th:block th:each="board, iterationStatus: ${boardList}">
-                <th:block th:if="${iterationStatus.index % 5 == 0}">
-                    <tr>
+        <div id="memberBoard-list">
+            <table>
+                <th:block th:each="board, iterationStatus: ${boardList}">
+                    <th:block th:if="${iterationStatus.index % 5 == 0}">
+                        <tr>
+                    </th:block>
+                    <td>
+                        <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}"
+                             width="257" height="257" alt="" th:onclick="detail([[${board.id}]])">
+                        <table>
+                            <tr>
+                                <td th:text="${board.boardWriter}"></td>
+                            </tr>
+                            <tr>
+                                <td i class="bi bi-eye" th:text="${board.boardHits}"></td>
+                                <br>
+                                <td i class="bi bi-heart-fill" th:text="${board.boardLikes}"></td>
+                            </tr>
+                        </table>
+                    </td>
                 </th:block>
-                <td>
-                    <img th:src="@{|/upload/${#strings.replace(board.storedFileName[0], '[', '').replace(']', '')}|}" width="257" height="257" alt="" th:onclick="detail([[${board.id}]])">
-                    <table>
-                        <tr>
-                            <td th:text="${board.boardWriter}"></td>
-                        </tr>
-                        <tr>
-                            <td i class="bi bi-eye"  th:text="${board.boardHits}"></td> <br>
-                            <td i class="bi bi-heart-fill" th:text="${board.boardLikes}"></td>
-                        </tr>
-                    </table>
-                </td>
-            </th:block>
-        </table>
+            </table>
 
+
+        </div>
 
 
     </div>
-
-
-</div>
     <div class="bottom_menu" style=" display: flex; margin-top: 45px;">
-    <div class="menu search" style="margin-left: 830px;">
-        <select style="font-size: 20px; margin-right: 10px;" name="type" id="type">
-            <option style="font-size: 20px; margin-right: 10px" value="writer">작성자</option>
-            <option style="font-size: 20px;" value="title">제목</option>
-        </select>
-        <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block; font-size: 20px;">
-        <i class="bi bi-search"  style="font-size: 20px; margin-left: 10px;" onclick="search_func()"></i>
-    </div>
+        <div class="menu search" style="margin-left: 830px;">
+            <select style="font-size: 20px; margin-right: 10px;" name="type" id="type">
+                <option style="font-size: 20px; margin-right: 10px" value="writer">작성자</option>
+                <option style="font-size: 20px;" value="title">제목</option>
+            </select>
+            <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block; font-size: 20px;">
+            <i class="bi bi-search" style="font-size: 20px; margin-left: 10px;" onclick="search_func()"></i>
+        </div>
         <div style="margin-left: -1285px;">
 
         </div>
         <div class="d-flex align-items-center" style="margin-left: 520px; margin-bottom: 50px;">
             <div th:if="${session.loginEmail != 'gkdudquf@naver.com'}">
-            <button onclick="save()" style="background-color: #558BCF;  color: white; margin-left: -490px;
-    width: auto; height: 40px; border: none; border-radius: 5px; font-size: 20px; padding: 10px;"><p style="margin-top: -5px;">글작성하기</p></button>
+                <button onclick="save()" style="background-color: #558BCF;  color: white; margin-left: -490px;
+    width: auto; height: 40px; border: none; border-radius: 5px; font-size: 20px; padding: 10px;"><p
+                        style="margin-top: -5px;">글작성하기</p></button>
             </div>
             <div th:unless="${session.loginEmail != 'gkdudquf@naver.com'}"></div>
             <nav aria-label="Page navigation example" class="mr-3">
                 <ul class="pagination justify-content-center mb-0">
                     <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
-                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">이전</a>
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#"
+                           th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}"
+                           tabindex="-1" aria-disabled="true">이전</a>
                     </li>
-                    <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
-                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                        th:classappend="${i==boardList.pageable.pageNumber+1} ? 'disabled'">
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#"
+                           th:if="${i > 0}" th:href="@{/memberBoard/list(page=${i - 1}, type=${type}, q=${q})}"
+                           th:text="${i}"></a>
                     </li>
-                    <li class="page-item" th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
-                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">다음</a>
+                    <li class="page-item"
+                        th:classappend="${boardList.totalPages == boardList.pageable.pageNumber+1 || boardList.getTotalElements() == 0} ? 'disabled'">
+                        <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#"
+                           th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber+1}, type=${type}, q=${q})}">다음</a>
                     </li>
                 </ul>
             </nav>
         </div>
-    <div style="height: 50px;"></div>
+        <div style="height: 50px;"></div>
 
-</div>
-<div th:replace="component/footer :: footer"></div>
+    </div>
+    <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
     const detail = (id) => {
@@ -95,5 +104,5 @@
     const save = () => {
         location.href = "/memberBoard/save";
     }
-    </script>
+</script>
 </html>

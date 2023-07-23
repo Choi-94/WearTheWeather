@@ -11,65 +11,87 @@
 <div th:replace="component/navMarket :: navMarket"></div>
 
 <div id="section">
-    <div  id="product-list">
+    <div id="product-list">
         <table>
             <th:block th:each="product, iterationStatus: ${marketProductList}">
                 <th:block th:if="${iterationStatus.index % 5 == 0}">
                     <tr>
                 </th:block>
                 <td>
-                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}" width="258" height="258" alt="" th:onclick="productDetail([[${product.id}]])">
+                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}"
+                         width="258" height="258" alt="" th:onclick="productDetail([[${product.id}]])">
                     <table>
                         <tr>
                             <td th:text="${product.productTitle}" style=" margin-left: 2px; font-size: 20px"></td>
                         </tr>
                         <tr>
                             <td>
-                                <span th:text="${product.getFormattedPrice()}" style="display: inline-block;  loat: left; font-size: 20px;"></span>
+                                <span th:text="${product.getFormattedPrice()}"
+                                      style="display: inline-block;  loat: left; font-size: 20px;"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div style="background-color: gainsboro; width: 245px; height: 2px; margin-top: 10px"></div>
-                                <span><i class="bi bi-geo-alt" style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
-                                <span th:text="${product.transactionArea.substring(0, 6)}" style="display: inline-block; font-size: 15px"></span>
+                                <span><i class="bi bi-geo-alt"
+                                         style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
+                                <span th:text="${product.transactionArea.substring(0, 6)}"
+                                      style="display: inline-block; font-size: 15px"></span>
                             </td>
                         </tr>
                     </table>
                 </td>
             </th:block>
         </table>
-        <div class="d-flex align-items-center" style="margin-left: 550px; margin-bottom: 50px;">
-            <nav aria-label="Page navigation example" class="mr-3">
-                <ul class="pagination justify-content-center mb-0">
-                    <li class="page-item" th:classappend="${marketProductList.pageable.pageNumber == 0} ? 'disabled'">
-                        <a style="background-color: #558BCF; font-size: 20px; width: 80px; height: 40px; " class="page-link" href="#" th:href="@{/market/list(page=${marketProductList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true"><p style="margin-top: -10px;">이전</p></a>
-                    </li>
-                    <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==marketProductList.pageable.pageNumber+1} ? 'disabled'">
-                        <a style="background-color: #558BCF; font-size: 20px; height: 40px; " class="page-link" href="#" th:if="${i > 0}" th:href="@{/market/list(page=${i - 1}, type=${type}, q=${q})}" th:text="${i}"></a>
-                    </li>
-                    <li class="page-item" th:classappend="${marketProductList.totalPages == marketProductList.pageable.pageNumber+1 || marketProductList.getTotalElements() == 0} ? 'disabled'">
-                        <a style="background-color: #558BCF; font-size: 20px; width: 80px; height: 40px; " class="page-link" href="#" th:href="@{/market/list(page=${marketProductList.pageable.pageNumber+1}, type=${type}, q=${q})}"><p style="margin-top: -10px;">다음</p></a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="menu search d-flex align-items-center" style="margin-left: 120px;">
-                <select name="type" id="type" class="mr-2" style="font-size: 22px;">
-                    <option value="writer">작성자</option>
-                    <option value="title">제목</option>
-                </select>
-                <input type="text" placeholder="검색어를 입력하세요" id="q" style="display: inline-block; margin-right: 10px; font-size: 20px;" class="mr-2">
-                <i class="bi bi-search" onclick="search_func()"></i>
-            </div>
-        </div>
-
     </div>
 </div>
+<div class="bottom_menu" style=" display: flex; margin-top: 20px;">
+    <div class="menu search d-flex align-items-center" style="margin-left: 120px;">
+        <select name="type" id="type" class="mr-2" style="font-size: 22px;">
+            <option value="writer">작성자</option>
+            <option value="title">제목</option>
+        </select>
+        <input type="text" placeholder="검색어를 입력하세요" id="q"
+               style="display: inline-block; margin-right: 10px; font-size: 20px;" class="mr-2">
+        <i class="bi bi-search" onclick="search_func()"></i>
+    </div>
+
+    <div class="d-flex align-items-center" style=" margin-bottom: 50px;">
+        <nav aria-label="Page navigation example" class="mr-3">
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item"
+                    th:classappend="${marketProductList.pageable.pageNumber == 0} ? 'disabled'">
+                    <a style="background-color: #558BCF; font-size: 20px; "
+                       class="page-link" href="#"
+                       th:href="@{/market/list(page=${marketProductList.pageable.pageNumber-1}, type=${type}, q=${q})}"
+                       tabindex="-1" aria-disabled="true">이전</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                    th:classappend="${i==marketProductList.pageable.pageNumber+1} ? 'disabled'">
+                    <a style="background-color: #558BCF; font-size: 20px;" class="page-link" href="#"
+                       th:if="${i > 0}" th:href="@{/market/list(page=${i - 1}, type=${type}, q=${q})}"
+                       th:text="${i}"></a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${marketProductList.totalPages == marketProductList.pageable.pageNumber+1 || marketProductList.getTotalElements() == 0} ? 'disabled'">
+                    <a style="background-color: #558BCF; font-size: 20px; "
+                       class="page-link" href="#"
+                       th:href="@{/market/list(page=${marketProductList.pageable.pageNumber+1}, type=${type}, q=${q})}">
+                        다음</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+    <div style="height: 50px;"></div>
+</div>
+
+
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
 
-    const productDetail = (id) =>{
+    const productDetail = (id) => {
         window.location.href = "/market/" + id;
     }
 
