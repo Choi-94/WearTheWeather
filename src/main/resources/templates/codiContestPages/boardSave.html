@@ -6,19 +6,71 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        input {
+            width: 100%;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .custom-file-upload img {
+            width: 20px; /* 이미지의 가로 크기를 조정할 수 있습니다 */
+            height: 20px; /* 이미지의 세로 크기를 조정할 수 있습니다 */
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        #boardFile {
+            display: none;
+        }
+        .custom-file-upload {
+            background-color: transparent;
+            border: none; /* 선택적으로 테두리도 제거할 수 있습니다 */
+        }
+        .content {
+            margin-right: 20px;
+            width: 400px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div class="container">
-<div id="section">
-    <form action="/memberBoard/save" method="post" enctype="multipart/form-data" onblur="fileCheck()" id="myform">
-        <input type="file" name="boardFile" multiple> <br>
+
+    <form action="/memberBoard/save" method="post" enctype="multipart/form-data" id="myform">
+        <div style="background-color: white; height: 40px;"></div>
+        <h3 style="margin-bottom: 30px;">스타일 첨부</h3>
+        <label for="boardFile" class="custom-file-upload">
+            <img style="margin-left: -20px; width: 200px; height: 200px; z-index: 1;" src="/img/file.PNG">
+        </label>
+        <div id="imagePreview" style="float: right; width: 200px; height: 200px; position: absolute; left: 301px; top:340px;"></div>
+
+        <h6 style="margin-top: 50px;">* 상품 이미지는 640x640에 최적화 되어 있습니다.<br>
+            - 상품 이미지는 PC에서는 1:1, 모바일에서는 1:1.23 비율로 보여집니다.<br>
+            - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
+            - 이미지를 클릭할 경우 원본 이미지를 확인할 수 있습니다.<br>
+            - 이미지를 클릭 후 이동하여 등록순서를 변경할 수 있습니다.<br>
+            - 큰 이미지일 경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br>
+            최대 지원 사이즈인 640 X 640으로 리사이즈 해서 올려주세요.(개당 이미지 최대 10M)</h6>
+        <input type="file" name="boardFile" id="boardFile" class="form-control" multiple>
+
+        <h3 style="margin-top: 50px;">제목</h3> <input type="text" name="boardTitle" class="form-control" placeholder="좋아요를 많이 받을만한 제목을 생각해보세요"> <br>
+        <h3>스타일</h3> <input type="text" name="lookStyle"  class="form-control" placeholder="2가지 이상 예(#모던룩, #데일리룩)"> <br>
+        <h3>내용</h3> <textarea name="boardContents" placeholder="착장 제품, 스타일 정보 등 본인의 패션에대해 설명해주세요" cols="10" rows="10" class="form-control" ></textarea><br>
+
+        <h3>어떤 계절의 스타일인가요?</h3>
         <label>
             <input type="radio" name="season" value="Spring">봄
         </label>
@@ -31,21 +83,19 @@
         <label>
             <input type="radio" name="season" value="Winter">겨울
         </label><br>
-        제목: <input type="text" name="boardTitle"> <br>
-        스타일: <input type="text" name="lookStyle" placeholder="2가지 이상 예(#모던룩, #데일리룩)"> <br>
-        <textarea name="boardContents" placeholder="내용을 입력해주세요" cols="30" rows="10"></textarea>
 <!--        <div id="smartEditor">-->
 <!--            <textarea name="boardContents" id="boardContents" cols="50" rows="25" placeholder="내용을 입력하세요"-->
 <!--                          style="width: 500px"></textarea>-->
 <!--        </div>-->
 
+        <div style="background-color: white; height: 40px;"></div>
 
         <input type="submit" value="작성" onclick="add_savePoint()" class="btn btn-primary">
     </form>
 
 
 
-    </div>
+
 </div>
 </div>
 
@@ -80,6 +130,28 @@
 
 
 </script>
+<script>
+    document.getElementById('boardFile').addEventListener('change', function(event) {
+        const imagePreview = document.getElementById('imagePreview');
+        imagePreview.innerHTML = ''; // 이전에 표시된 이미지 초기화
 
+        const files = event.target.files;
+        for (const file of files) {
+            if (file.type.match('image.*')) {
+                const reader = new FileReader();
+                reader.onload = (function(file) {
+                    return function(event) {
+                        const image = new Image();
+                        image.src = event.target.result;
+                        image.style.maxWidth = '100%';
+                        image.style.marginBottom = '10px';
+                        imagePreview.appendChild(image);
+                    };
+                })(file);
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+</script>
 
 </html>

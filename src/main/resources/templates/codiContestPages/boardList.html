@@ -59,7 +59,7 @@
     width: auto; height: 40px; border: none; border-radius: 5px; font-size: 20px; padding: 10px;"><p style="margin-top: -5px;">글작성하기</p></button>
             </div>
             <div th:unless="${session.loginEmail != 'gkdudquf@naver.com'}"></div>
-            <nav style="margin-left: 400px;" aria-label="Page navigation example" class="mr-3">
+            <nav aria-label="Page navigation example" class="mr-3">
                 <ul class="pagination justify-content-center mb-0">
                     <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">
                         <a style="background-color: #558BCF; color: white; font-size: 20px;" class="page-link" href="#" th:href="@{/memberBoard/list(page=${boardList.pageable.pageNumber-1}, type=${type}, q=${q})}" tabindex="-1" aria-disabled="true">이전</a>

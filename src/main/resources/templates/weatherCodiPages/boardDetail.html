@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <meta charset="UTF-8">
@@ -7,48 +7,63 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
+<style>
+    input {
+        border: none;
+    }
+</style>
+
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div class="container">
-    <div class="text-center">
+    <div >
         <img th:src="@{|/upload/${board.storedFileName}}"
-             alt="" style="max-width: 100%; height: auto">
+             alt="" style=" width: 550px; height: 600px">
     </div>
     <div>
         <input type="hidden" id="id" th:value="${board.id}">
-        조회수: <input type="text" th:value="${board.boardHits}">
-        <h4>착용제품</h4>
+
+        <div style="position: absolute; left: 900px; top: 280px; font-size: 23px;">
+        <h1 style="margin-bottom: 40px;">착용 제품 정보</h1>
         <div>
-            <p th:text="${board.top}"></p>
+            <p th:text="${'상의 정보 : '+board.top}"></p>
             <p th:text="${board.topDetail}"></p>
-            <p th:text="${board.topPrice}"></p>
+            <p th:text="'₩' + ${board.getFormattedTopPrice()}"></p>
         </div>
-        <div>
-            <p th:text="${board.bottom}"></p>
+        <div style="margin-top: 40px;">
+            <p th:text="${'하의 정보 : '+board.bottom}"></p>
             <p th:text="${board.bottomDetail}"></p>
-            <p th:text="${board.bottomPrice}"></p>
+            <p th:text="${board.getFormattedBottomPrice()}"></p>
         </div>
-        <div>
-            <p th:text="${board.etc}"></p>
+        <div style="margin-top: 40px;">
+            <p th:text="${board.etc+' 정보'}"></p>
             <p th:text="${board.etcDetail}"></p>
-            <p th:text="${board.etcPrice}"></p>
+            <p th:text="${board.getFormattedETCPrice()}"></p>
         </div>
-        <div id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
-            <div th:if="${boardLikes.isEmpty()}">
-                <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
-            </div>
-            <div th:unless="${boardLikes.isEmpty()}">
-                <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
-            </div>
         </div>
-        <div id="countLikes">
+
+        <div id="countLikes" style="margin-top: 50px; font-size: 20px;">
             <div>
-                좋아요수: <input type="text" th:value="${countBoardLikes}">
+                <p style="position: absolute; top:850px; left: 300px;">조회수 :</p>
+                <span style="position: absolute; top:850px; left: 385px;" th:text="${board.boardHits}"></span>
+                </div>
+                <p style="position: absolute; top:850px; left: 420px;">좋아요 수 :</p>
+                <span style="position: absolute; top:850px; left: 525px;" th:text="${countBoardLikes}"></span>
+
+                <div style="position: absolute; top:850px; left: 770px;" id="likeButton" class="btn btn-outline-secondary" onclick="toggleLike()">
+                    <div th:if="${boardLikes.isEmpty()}">
+                        <i id="likeIcon"  class="bi bi-heart"></i> 좋아요
+                    </div>
+                    <div th:unless="${boardLikes.isEmpty()}">
+                        <i id="likeIcon"  class="bi bi-heart-fill"></i> 좋아요
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div style="background-color: white; height: 40px;"></div>
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
