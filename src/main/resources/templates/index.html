@@ -164,149 +164,150 @@
             <div>
                 <div class="day-div" style="display: block" id="D0D">
                     <div th:each="D0: ${D0}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D0.storedFileName[0], '[', '').replace(']', '')}|}"
+                        <img th:src="@{|/upload/${D0.storedFileName}}"
                              width="230" height="230" alt="">
                     </div>
                 </div>
-                <div class="day-div" style="display: none"  id="D1D">
+                <div class="day-div" style="display: none" id="D1D">
                     <div th:each="D1: ${D1}" varStatus="loop">
-                    <img th:src="@{|/upload/${#strings.replace(D1.storedFileName[0], '[', '').replace(']', '')}|}"
-                         width="230" height="230" alt="">
+                        <img th:src="@{|/upload/${D1.storedFileName}}"
+                             width="230" height="230" alt="">
+                    </div>
+
+                    <div class="day-div" style="display: none" id="D2D">
+                        <div th:each="D2: ${D2}" varStatus="loop">
+                            <img th:src="@{|/upload/${D2.storedFileName}}"
+                                 width="230" height="230" alt="">
+                        </div>
+                    </div>
+                    <div class="day-div" style="display: none" id="D3D">
+                        <div th:each="D3: ${D3}" varStatus="loop">
+                            <img th:src="@{|/upload/${D3.storedFileName}}"
+                                 width="230" height="230" alt="">
+                        </div>
+                    </div>
+                    <div class="day-div" style="display: none" id="D4D">
+                        <div th:each="D4: ${D4}" varStatus="loop">
+                            <img th:src="@{|/upload/${D4.storedFileName}}"
+                                 width="230" height="230" alt="">
+                        </div>
+                    </div>
+                    <div class="day-div" style="display: none" id="D5D">
+                        <div th:each="D5: ${D5}" varStatus="loop">
+                            <img th:src="@{|/upload/${D5.storedFileName}}"
+                                 width="230" height="230" alt="">
+                        </div>
+                    </div>
+                    <div class="day-div" style="display: none" id="D6D">
+                        <div th:each="D6: ${D6}" varStatus="loop">
+                            <img th:src="@{|/upload/${D6.storedFileName}}"
+                                 width="230" height="230" alt="">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="day-div" style="display: none" id="D2D">
-                    <div th:each="D2: ${D2}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D2.storedFileName[0], '[', '').replace(']', '')}|}"
-                             width="230" height="230" alt="">
-                    </div>
-                </div>
-                <div class="day-div" style="display: none" id="D3D">
-                    <div th:each="D3: ${D3}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D3.storedFileName[0], '[', '').replace(']', '')}|}"
-                             width="230" height="230" alt="">
-                    </div>
-                </div>
-                <div class="day-div" style="display: none" id="D4D">
-                    <div th:each="D4: ${D4}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D4.storedFileName[0], '[', '').replace(']', '')}|}"
-                             width="230" height="230" alt="">
-                    </div>
-                </div>
-                <div class="day-div" style="display: none" id="D5D">
-                    <div th:each="D5: ${D5}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D5.storedFileName[0], '[', '').replace(']', '')}|}"
-                             width="230" height="230" alt="">
-                    </div>
-                </div>
-                <div class="day-div" style="display: none" id="D6D">
-                    <div th:each="D6: ${D6}" varStatus="loop">
-                        <img th:src="@{|/upload/${#strings.replace(D6.storedFileName[0], '[', '').replace(']', '')}|}"
-                             width="230" height="230" alt="">
-                    </div>
-                </div>
+
             </div>
 
 
         </div>
 
 
-    </div>
-
-
-    <div id="rankBox" style="height: 930px; background-color: #f2f2f2; padding-top: 40px;">
-        <div>
-            <h1>실시간랭킹</h1>
-            <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-                <a href="/memberBoard/list" class="more-link"
-                   style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
-            </h4>
-            <div id="rankList" style="margin-top: 50px; margin-left: 0px;">
-                <table>
-                    <th:block th:each="ranking, iterationStatus: ${rankingList}">
-                        <th:block th:if="${iterationStatus.index % 2 == 0}">
-                            <tr>
-                        </th:block>
-                        <td style="padding-right: 150px;">
-                            <div class="image-container">
-                                <img th:src="@{|/upload/${#strings.replace(ranking.storedFileName[0], '[', '').replace(']', '')}|}"
-                                     width="230" height="230" alt="" th:onclick="rankDetail([[${ranking.id}]])">
-                            </div>
-                            <table style="float: right;">
+        <div id="rankBox" style="height: 930px; background-color: #f2f2f2; padding-top: 40px;">
+            <div>
+                <h1>실시간랭킹</h1>
+                <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
+                    <a href="/memberBoard/list" class="more-link"
+                       style="text-decoration: none; font-size: 15px; color: black;">더 보기 ></a>
+                </h4>
+                <div id="rankList" style="margin-top: 50px; margin-left: 0px;">
+                    <table>
+                        <th:block th:each="ranking, iterationStatus: ${rankingList}">
+                            <th:block th:if="${iterationStatus.index % 2 == 0}">
                                 <tr>
-                                    <td>
-                                        <span th:text="${ranking.lookStyle}"
-                                              style="margin-left: 60px; font-size: 20px;"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top: 30px;">
-                                        <span th:text="${ranking.boardWriter}"
-                                              style="margin-left: 60px; font-size: 20px;"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top: 30px;">
-                                        <span th:text="${ranking.season}"
-                                              style="margin-left: 60px; font-size: 20px;"></span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </th:block>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div id="marketBox" style="height: 500px;">
-        <h1 style="margin-top: 30px;">웨더장터</h1>
-        <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
-            <a href="/market/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더 보기
-                ></a>
-        </h4>
-
-        <div id="marketList" style="margin-top: 50px;">
-            <table>
-                <tr>
-                    <th:block th:each="product, iterationStatus: ${marketProductList}">
-                        <th:block th:if="${iterationStatus.index < 5}">
-                            <td th:class="${iterationStatus.index == 0}">
-                                <div class="image-container" style="margin-right: 15px;">
-                                    <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}"
-                                         style="width: 245px; height: 245px;   " alt=""
-                                         th:onclick="productDetail([[${product.id}]])">
+                            </th:block>
+                            <td style="padding-right: 150px;">
+                                <div class="image-container">
+                                    <img th:src="@{|/upload/${#strings.replace(ranking.storedFileName[0], '[', '').replace(']', '')}|}"
+                                         width="230" height="230" alt="" th:onclick="rankDetail([[${ranking.id}]])">
                                 </div>
-                                <table>
-                                    <tr>
-                                        <td th:text="${product.productTitle}"
-                                            style=" margin-left: 2px; font-size: 20px"></td>
-                                    </tr>
+                                <table style="float: right;">
                                     <tr>
                                         <td>
-                                            <span th:text="${product.getFormattedPrice()}"
-                                                  style="display: inline-block;  loat: left; font-size: 20px;"></span>
+                                        <span th:text="${ranking.lookStyle}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <div style="background-color: gainsboro; width: 245px; height: 2px; margin-top: 10px"></div>
-                                            <span><i class="bi bi-geo-alt"
-                                                     style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
-                                            <span th:text="${product.transactionArea.substring(0, 6)}"
-                                                  style="display: inline-block; font-size: 15px"></span>
+                                        <td style="padding-top: 30px;">
+                                        <span th:text="${ranking.boardWriter}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 30px;">
+                                        <span th:text="${ranking.season}"
+                                              style="margin-left: 60px; font-size: 20px;"></span>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </th:block>
-                    </th:block>
-                </tr>
-            </table>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="marketBox" style="height: 500px;">
+            <h1 style="margin-top: 30px;">웨더장터</h1>
+            <h4 style="display: block; margin-top: -50px; margin-left: 1200px">
+                <a href="/market/list" class="more-link" style="text-decoration: none; font-size: 15px; color: black;">더
+                    보기
+                    ></a>
+            </h4>
+
+            <div id="marketList" style="margin-top: 50px;">
+                <table>
+                    <tr>
+                        <th:block th:each="product, iterationStatus: ${marketProductList}">
+                            <th:block th:if="${iterationStatus.index < 5}">
+                                <td th:class="${iterationStatus.index == 0}">
+                                    <div class="image-container" style="margin-right: 15px;">
+                                        <img th:src="@{|/upload/${#strings.replace(product.storedFileName[0], '[', '').replace(']', '')}|}"
+                                             style="width: 245px; height: 245px;   " alt=""
+                                             th:onclick="productDetail([[${product.id}]])">
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <td th:text="${product.productTitle}"
+                                                style=" margin-left: 2px; font-size: 20px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <span th:text="${product.getFormattedPrice()}"
+                                                  style="display: inline-block;  loat: left; font-size: 20px;"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="background-color: gainsboro; width: 245px; height: 2px; margin-top: 10px"></div>
+                                                <span><i class="bi bi-geo-alt"
+                                                         style="display: inline-block; font-size: 15px; margin-top: 10px;"></i></span>
+                                                <span th:text="${product.transactionArea.substring(0, 6)}"
+                                                      style="display: inline-block; font-size: 15px"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </th:block>
+                        </th:block>
+                    </tr>
+                </table>
+            </div>
+
         </div>
 
     </div>
-
-</div>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
@@ -359,7 +360,7 @@
         const dayDivs = document.getElementsByClassName('day-div');
         console.log(dayDivs.length);
         // Loop through all the buttons to hide the images
-        for (let i = 0; i<dayDivs.length; i++) {
+        for (let i = 0; i < dayDivs.length; i++) {
 
             dayDivs[i].style.display = "none";
 
@@ -368,11 +369,12 @@
         }
         // If the clicked button matches the current button in the loop, show its corresponding div
         const targetDiv = document.getElementById(day);
-        console.log("targ" + targetDiv);
-        if (targetDiv) {
-            targetDiv.style.display = "block";
 
-        }
+        console.log("targ" + targetDiv);
+
+        targetDiv.style.display = "block";
+
+
     }
 
 </script>
