@@ -43,9 +43,16 @@
                 <a href="/adminBoard/firstSearch">
                     <i class="bi bi-search"></i>
                 </a>
-                <a href="#">
-                    <i class="bi bi-person-fill"></i>
-                </a>
+                <span th:if="${session.loginEmail == 'gkdudquf@naver.com'}">
+                    <a href="/admin/index">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+                </span>
+                <span th:unless="${session.loginEmail == 'gkdudquf@naver.com'}">
+                    <a href="/member/mypage">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+                </span>
             </li>
         </ul>
     </div>
