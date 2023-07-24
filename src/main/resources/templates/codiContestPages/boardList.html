@@ -55,12 +55,12 @@
 
         </div>
         <div class="d-flex align-items-center" style="margin-left: 520px; margin-bottom: 50px;">
-            <div th:if="${session.loginEmail != 'gkdudquf@naver.com'}">
+            <div th:if="${session.loginEmail != 'gkdudquf1@naver.com'}">
                 <button onclick="save()" style="background-color: #558BCF;  color: white; margin-left: -490px;
     width: auto; height: 40px; border: none; border-radius: 5px; font-size: 20px; padding: 10px;"><p
                         style="margin-top: -5px;">글작성하기</p></button>
             </div>
-            <div th:unless="${session.loginEmail != 'gkdudquf@naver.com'}"></div>
+            <div th:unless="${session.loginEmail != 'gkdudquf1@naver.com'}"></div>
             <nav aria-label="Page navigation example" class="mr-3">
                 <ul class="pagination justify-content-center mb-0">
                     <li class="page-item" th:classappend="${boardList.pageable.pageNumber == 0} ? 'disabled'">

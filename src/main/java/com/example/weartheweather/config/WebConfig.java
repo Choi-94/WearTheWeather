@@ -37,7 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/memberBoard/ranking", "/member/memberLogin", "/member/login/axios",
                         "/adminBoard/list", "/js/**", "/css/**", "/images/**", "/image/**"
                         , "/member/logout", "/static/**", "/upload/**","/adminBoard/detail/{id}",
-                        "/market/{id}", "/auth/**", "/*.ico", "/favicon/**","/adminBoard/detail/"
+                        "/market/{id}", "/auth/**", "/*.ico", "/favicon/**"
                 ); // 인터셉터 검증을 하지 않을 주소
     }
 

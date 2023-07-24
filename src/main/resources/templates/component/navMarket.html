@@ -24,10 +24,10 @@
                 <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/market/save'}">
                     <i class="bi bi-coin" style="">판매하기</i>
                 </a>
-                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/'}">
+                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : 'member/myTradeList'}">
                     <i class="bi bi-clipboard-check">거래내역</i>
                 </a>
-                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/'}">
+                <a th:href="${session.memberNickName == null ? '/member/memberLogin' : '/chat'}">
                     <i class="bi bi-chat-dots">웨더톡</i>
                 </a>
             </li>

@@ -77,8 +77,7 @@ public class MemberBoardController {
 
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model, HttpSession session,
-                           HttpServletRequest req, HttpServletResponse res
-                           ) {
+                           HttpServletRequest req, HttpServletResponse res) {
         memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         String boardLikes = "";
