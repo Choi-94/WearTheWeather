@@ -89,20 +89,30 @@
     const toggleLike = () => {
         const icon = document.getElementById("likeIcon");
         const id = document.querySelector("#id").value;
+        const redirectURI = "/adminBoard/detail/" + id;
+        const loginCheck = [[${session.memberNickName}]];
+        console.log(loginCheck);
+        console.log(redirectURI);
 
-        axios({
-            method: "get",
-            url: "/adminBoard/findByBoardLikes/" + id
-        }).then(res => {
-            icon.classList.remove("bi-heart");
-            icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
-            // location.href = "/adminBoard/detail/" + id;
-            count_adminLikes();
-        }).catch(err => {
-            icon.classList.remove("bi-heart-fill");
-            icon.innerHTML = '<i class="bi bi-heart"></i>';
-            count_adminLikes();
-        });
+        if (loginCheck != null) {
+            axios({
+                method: "get",
+                url: "/adminBoard/findByBoardLikes/" + id
+            }).then(res => {
+                icon.classList.remove("bi-heart");
+                icon.innerHTML = '<i class="bi bi-heart-fill"></i>';
+                // location.href = "/adminBoard/detail/" + id;
+                count_adminLikes();
+            }).catch(err => {
+                icon.classList.remove("bi-heart-fill");
+                icon.innerHTML = '<i class="bi bi-heart"></i>';
+                count_adminLikes();
+            });
+        } else {
+            location.href = "/member/memberLogin/?redirectURI=" + redirectURI;
+        }
+
+
     }
 
 

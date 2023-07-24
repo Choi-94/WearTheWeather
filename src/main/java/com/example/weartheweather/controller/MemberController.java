@@ -31,19 +31,21 @@ public class MemberController {
     public String saveForm(){
         return "/memberPages/memberSave";
     }
-//    @PostMapping("/login")
-//    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
-//                              @RequestParam(value = "redirectURI") String redirectURI) {
-//        System.out.println("MemberController.memberLogin");
-//        System.out.println("URI" + redirectURI);
-//        boolean loginResult = memberService.login(memberDTO);
-//        if (loginResult) {
-//            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-//            return "redirect:" + redirectURI;
-//        } else {
-//            return "memberPages/memberLogin";
-//        }
-//    }
+
+
+    @PostMapping("/login")
+    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session,
+                              @RequestParam(value = "redirectURI") String redirectURI) {
+        System.out.println("MemberController.memberLogin");
+        System.out.println("URI" + redirectURI);
+        boolean loginResult = memberService.login(memberDTO);
+        if (loginResult) {
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            return "redirect:" + redirectURI;
+        } else {
+            return "memberPages/memberLogin";
+        }
+    }
 
 
 
