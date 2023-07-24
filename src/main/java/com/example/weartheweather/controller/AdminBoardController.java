@@ -61,7 +61,6 @@ public class AdminBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", adminBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
-
         return "/weatherCodiPages/boardDetail";
     }
 

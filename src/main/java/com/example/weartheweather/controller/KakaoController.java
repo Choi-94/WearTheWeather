@@ -35,8 +35,8 @@ public class KakaoController {
     @Value("{cos.key}")
     private String cosKey;
     @GetMapping("/auth/kakao/callback")
-
-    public String handleKakaoCallback(@RequestParam("code") String code, Model model, HttpSession session) {
+    public String handleKakaoCallback(@RequestParam("code") String code, Model model, HttpSession session,
+                                      @RequestParam(value = "redirectURI", defaultValue = "/") String redirectURI) {
 
         System.out.println("code = " + code);
         //POST방식으로 key= value 데이터를 요청(카카오쪽으로)
@@ -126,16 +126,18 @@ public class KakaoController {
 
         MemberDTO kakaoMember  = memberService.findByEmail(memberEmail);
         if(kakaoMember==null){
-
             memberService.save(memberDTO);
+        }
             session.setAttribute("memberNickName",memberNickName);
             session.setAttribute("loginEmail",memberEmail);
-            return "index";
-        }else{
-            session.setAttribute("memberNickName",memberNickName);
-            session.setAttribute("loginEmail",memberEmail);
+
+        if (redirectURI != null) {
+            return "redirect:" + redirectURI;
+        } else {
             return "index";
         }
+
+
 
 
     }
