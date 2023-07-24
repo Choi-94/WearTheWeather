@@ -161,7 +161,7 @@
                 <a href="/adminBoard/list" class="more-link"
                    style="text-decoration: none;  font-size: 15px; color: black; ">더 보기 ></a>
             </h4>
-            <div>
+            <div style="margin-top: 50px">
                 <div class="day-div" style="display: block" id="D0D">
                     <div th:each="D0,iterationStatus: ${D0}" varStatus="loop">
                         <img th:src="@{|/upload/${D0.storedFileName}}" th:onclick="adminDetail([[${D0.id}]])"
@@ -192,21 +192,21 @@
                 <div class="day-div" style="display: none" id="D4D">
                     <div th:each="D4,iterationStatus: ${D4}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D4.storedFileName}}" th:onclck="adminDetail([[${D4.id}]])"
+                            <img th:src="@{|/upload/${D4.storedFileName}}" th:onclick="adminDetail([[${D4.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D5D">
                     <div th:each="D5,iterationStatus: ${D5}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D5.storedFileName}}" th:onclck="adminDetail([[${D5.id}]])"
+                            <img th:src="@{|/upload/${D5.storedFileName}}" th:onclick="adminDetail([[${D5.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
                 <div class="day-div" style="display: none" id="D6D">
                     <div th:each="D6,iterationStatus: ${D6}" varStatus="loop">
                         <th:block th:if="${iterationStatus.index < 5}">
-                            <img th:src="@{|/upload/${D6.storedFileName}}" th:onclck="adminDetail([[${D6.id}]])"
+                            <img th:src="@{|/upload/${D6.storedFileName}}" th:onclick="adminDetail([[${D6.id}]])"
                                  width="230" height="230" alt="">
                     </div>
                 </div>
@@ -528,7 +528,7 @@
     //     location.href = "/memberBoard/detail/" + id;
     // }
     const adminDetail = (id) => {
-        location.href = "/admin/detail/" + id;
+        location.href = "/adminBoard/detail/" + id;
     }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
