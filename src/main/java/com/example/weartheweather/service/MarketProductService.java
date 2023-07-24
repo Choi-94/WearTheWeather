@@ -23,10 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -209,5 +206,21 @@ public class MarketProductService {
 
     public void delete(Long id) {
         marketProductRepository.deleteById(id);
+    }
+    @Transactional
+    public List<MarketProductDTO> findAlltag(String productHashtag) {
+        List<MarketProductEntity> marketProductEntityList = marketProductRepository.findAll();
+        List<MarketProductDTO> marketProductDTOS = new ArrayList<>();
+
+        marketProductEntityList.forEach(marketProductEntity -> {
+            MarketProductDTO marketProductDTO = MarketProductDTO.toDTO(marketProductEntity);
+            if(marketProductDTO.getProductHashtag().contains(productHashtag)){
+                marketProductDTOS.add(marketProductDTO);
+            }else{
+
+            }
+        });
+        Collections.shuffle(marketProductDTOS);
+        return marketProductDTOS;
     }
 }
