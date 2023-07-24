@@ -88,7 +88,7 @@ public class AdminBoardDTO {
         adminBoardDTO.setOriginalFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getOriginalFileName());
         adminBoardDTO.setStoredFileName(adminBoardEntity.getAdminBoardFileEntityList().get(0).getStoredFileName());
         adminBoardDTO.setCreatedAt(UtilClass.dateFormat(adminBoardEntity.getCreatedAt()));
-        adminBoardDTO.setTotalTags(adminBoardEntity.getHashTags()+adminBoardEntity.getSeason()+adminBoardEntity.getBottom()
+        adminBoardDTO.setTotalTags(adminBoardEntity.getHashTags()+adminBoardEntity.getSeason()+adminBoardEntity.getBottom()+adminBoardEntity.getWeather()+adminBoardEntity.getTemp()
         +adminBoardEntity.getBottomDetail()+adminBoardEntity.getEtc()+adminBoardEntity.getEtcDetail()+adminBoardEntity.getTop()+adminBoardEntity.getTopDetail());
 
         return adminBoardDTO;

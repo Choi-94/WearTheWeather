@@ -310,7 +310,7 @@ public class AdminBoardService {
         List<AdminBoardEntity> adminBoardEntityList = adminBoardRepository.findAll();
         List<AdminBoardDTO> result = new ArrayList<>();
         System.out.println("톨값확인" + tall + "젠더값확인" + gender);
-        int tolerance = 5;
+        int tolerance = 2;
         adminBoardEntityList.forEach(adminBoardEntity -> {
             AdminBoardDTO adminBoardDTO = AdminBoardDTO.Search(adminBoardEntity);
             if (tall != 0 && !gender.trim().equals("")) {

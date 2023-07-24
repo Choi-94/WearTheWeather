@@ -77,8 +77,8 @@ public class MemberBoardController {
 
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model, HttpSession session,
-                           HttpServletRequest req, HttpServletResponse res,
-                           @RequestParam(value = "redirectURI") String redirectURI) {
+                           HttpServletRequest req, HttpServletResponse res
+                           ) {
         memberBoardService.CookieBoardView(id, req, res);
         String memberNickName = (String)session.getAttribute("memberNickName");
         String boardLikes = "";
@@ -103,7 +103,7 @@ public class MemberBoardController {
         model.addAttribute("boardLikes", boardLikes);
         model.addAttribute("board", memberBoardDTO);
         model.addAttribute("countBoardLikes", countBoardLikes);
-        model.addAttribute("redirectURI", redirectURI);
+
         return "/codiContestPages/boardDetail";
     }
 

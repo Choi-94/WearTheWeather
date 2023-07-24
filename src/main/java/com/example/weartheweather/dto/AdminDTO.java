@@ -6,5 +6,5 @@ import lombok.ToString;
 
 @Getter@Setter@ToString
 public class AdminDTO {
-    private String mail = "gkdudquf@naver.com";
+    private String mail = "gkdudquf1@naver.com";
 }

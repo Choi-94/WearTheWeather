@@ -20,7 +20,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return false;
         } else {
             String loginEmail = (String) session.getAttribute("loginEmail");
-            if (loginEmail.equals("gkdudquf@naver.com")) {
+            if (loginEmail.equals("gkdudquf1@naver.com")) {
                 return true;
             } else {
                 response.sendRedirect("/access-denied");
