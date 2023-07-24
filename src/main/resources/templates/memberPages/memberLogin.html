@@ -26,7 +26,7 @@
                 <input type="hidden" name="redirectURI" th:value="${redirectURI}">
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <input type="text" name="memberEmail" placeholder="이메일" class="form-control"> <br>
-                    <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control"> <br>
+                    <input type="password" name="memberPassword" placeholder="비밀번호" class="form-control"> <br>
                 </div>
                 <p id="login-result" style="color: red; display: none">이메일 또는 비밀번호가 틀렸습니다.</p>
                 <input type="button" value="로그인" onclick="login()" style="width: 190px; height: 50px; background-color: #558BCF; color: white; border: none; border-radius: 10px; font-size: 1.5em;">

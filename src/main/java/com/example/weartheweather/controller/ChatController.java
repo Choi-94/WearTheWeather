@@ -24,7 +24,7 @@ public class ChatController {
             String name = "master";
             session.setAttribute("sessionId", name);
         } else {
-            String name = "guest" + session.toString().substring(session.toString().indexOf("@"));
+            String name = id;
             session.setAttribute("sessionId", name);
         }
 

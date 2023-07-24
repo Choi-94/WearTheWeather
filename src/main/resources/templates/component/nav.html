@@ -43,12 +43,12 @@
                 <a href="/adminBoard/firstSearch">
                     <i class="bi bi-search"></i>
                 </a>
-                <span th:if="${session.loginEmail == 'gkdudquf@naver.com'}">
+                <span th:if="${session.loginEmail == 'gkdudquf1@naver.com'}">
                     <a href="/admin/index">
                         <i class="bi bi-person-fill"></i>
                     </a>
                 </span>
-                <span th:unless="${session.loginEmail == 'gkdudquf@naver.com'}">
+                <span th:unless="${session.loginEmail == 'gkdudquf1@naver.com'}">
                     <a href="/member/mypage">
                         <i class="bi bi-person-fill"></i>
                     </a>
@@ -70,7 +70,6 @@
         }
 
 
-
         const findByMyAlarm = () => {
             const resultArea = document.querySelector("#dropdownList");
             resultArea.innerHTML = "";
@@ -87,25 +86,25 @@
                     const boardId = item.boardId;
                     const productId = item.productId;
 
-                        const a = document.createElement('a');
-                        a.classList.add('dropdown-item', 'text-dark');
-                        if (item.type == "buys") {
-                            a.href = `/market/` + productId;
-                        } else if (item.type == "buyConfirm") {
-                            a.href = `/member/myTradeList/`;
-                        } else {
-                            a.href = `/memberBoard/detail/` + boardId;
-                        }
-                        a.textContent = message;
+                    const a = document.createElement('a');
+                    a.classList.add('dropdown-item', 'text-dark');
+                    if (item.type == "buys") {
+                        a.href = `/market/` + productId;
+                    } else if (item.type == "buyConfirm") {
+                        a.href = `/member/myTradeList/`;
+                    } else {
+                        a.href = `/memberBoard/detail/` + boardId;
+                    }
+                    a.textContent = message;
 
-                        a.addEventListener('click', function () {
-                            setIsRead(item.id); // 클릭한 게시물의 id를 전달합니다.
-                        });
+                    a.addEventListener('click', function () {
+                        setIsRead(item.id); // 클릭한 게시물의 id를 전달합니다.
+                    });
 
-                        li.style.display = 'block';
-
-                        li.appendChild(a);
-                        resultArea.appendChild(li);
+                    li.style.display = 'block';
+                    li.style.fontSize = '15px';
+                    li.appendChild(a);
+                    resultArea.appendChild(li);
 
                 });
             }).catch(err => {
