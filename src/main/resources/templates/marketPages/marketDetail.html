@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
     <link rel="stylesheet" href="/static/css/boardList.css">
@@ -8,7 +8,7 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
-<div id="section">
+<div class="container">
 
     <div th:unless="${session.memberNickName eq ProductDTO.productWriter}"></div>
     <div style="display: flex; align-items: flex-start;">
@@ -129,6 +129,18 @@
     <div class="grayBox3"></div>
     <div class="section3" style="height: 300px">
         <h2 style="margin-top:  20px">연관상품</h2>
+        <table>
+            <tr>
+                <div th:each="marketProductDTOListTag, iterationStatus: ${marketProductDTOListTag}" varStatus="loop">
+                    <th:block th:if="${iterationStatus.index < 6}">
+                        <td><img style="margin-right: 30px;"
+                                 th:src="@{|/upload/${#strings.replace(marketProductDTOListTag.storedFileName[0], '[', '').replace(']', '')}|}"
+                                 width="240" height="240" alt=""
+                                 th:onclick="TagDetail([[${marketProductDTOListTag.id}]])"></td>
+                    </th:block>
+                </div>
+            </tr>
+        </table>
 
     </div>
 </div>
@@ -221,6 +233,10 @@
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
         window.open(url, 'detail', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', location=no, status=no, scrollbar=yes');
+    }
+
+    function TagDetail(id) {
+        location.href = "/market/" + id;
     }
 </script>
 </html>

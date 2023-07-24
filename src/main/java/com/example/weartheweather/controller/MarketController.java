@@ -76,6 +76,7 @@ public class MarketController {
         String memberNickName = (String)session.getAttribute("memberNickName");
         MarketLikesDTO marketLikesDTO = marketProductService.findByMarketLikes(memberNickName, id);
         MarketProductDTO marketProductDTO = marketProductService.findById(id);
+        List<MarketProductDTO> marketProductDTOListTag = marketProductService.findAlltag(marketProductDTO.getProductHashtag());
         List<MarketProductDTO> marketProductDTOList = marketProductService.findByProductWriter(marketProductDTO.getProductWriter());
         String marketLikes = null;
         if (marketLikesDTO != null) {
@@ -87,6 +88,8 @@ public class MarketController {
         model.addAttribute("countMarketLikes", countMarketLikes);
         model.addAttribute("ProductDTO", marketProductDTO);
         model.addAttribute("marketProductList", marketProductDTOList);
+        model.addAttribute("marketProductDTOListTag",marketProductDTOListTag);
+        System.out.println("marketProductDTOListTag = " + marketProductDTOListTag);
         return "marketPages/marketDetail";
     }
 
