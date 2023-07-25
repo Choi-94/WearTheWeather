@@ -10,6 +10,7 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
+<div th:replace="component/chatNav :: chatBanner"></div>
 <div class="container">
   <nav style="max-width: 1296px; margin-top: 40px;">
     <div class="container-fluid">
@@ -117,7 +118,7 @@
               <div class="card shadow-sm">
                 <div class="card-img-wrapper">
                   <img th:src="@{|/upload/${board.storedFileName}}"
-                       alt="" class="card-img-top" th:onclick="detail([[${board.id}]])">
+                       width="419" height="419" alt="" class="card-img-top" th:onclick="detail([[${board.id}]])">
                 </div>
               </div>
             </div>

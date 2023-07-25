@@ -18,6 +18,7 @@
 <div th:replace="component/nav :: nav"></div>
 <div th:replace="component/mypageNav :: mypageNav"></div>
 <div th:replace="component/infonav :: infonav"></div>
+<div th:replace="component/chatNav :: chatBanner"></div>
 <div>총 건수 : <span th:text="${adminBoardLikeList.totalElements}"></span>
     <div class="container" id="section" style="margin-top: 70px; height:600px">
         <div th:if="${adminBoardLikeList.isEmpty()}">

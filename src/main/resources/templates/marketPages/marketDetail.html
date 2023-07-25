@@ -8,6 +8,7 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/navMarket :: navMarket"></div>
+<div th:replace="component/chatNav :: chatBanner"></div>
 <div class="container">
 
     <div th:unless="${session.memberNickName eq ProductDTO.productWriter}"></div>
